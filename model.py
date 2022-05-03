@@ -3,8 +3,9 @@
 # Import SQLAlchemy through the Flask extension
 from flask_sqlalchemy import SQLAlchemy
 
-# Create an instance of SQLAlchemy(); a db object that represents our database
+# Constructor function to create an instance of SQLAlchemy; a db object that represents our database
 db = SQLAlchemy()
+
 
 class User(db.Model):
     """A user."""
@@ -22,8 +23,9 @@ class User(db.Model):
     current_country = db.Column(db.String(50))
     about_me = db.Column(db.Text)
 
-    # followers = a list of Follower objects
-    # travel-itineraries = a list of Travel Itinerary objects
+    # followers = a list of Follower objects that are following a user; use User.query.filter(User.followers).all(), for example
+    # users_followed = a list of Follower objects that are users being followed; use User.query.filter(User.users_followed).all(), for example
+    # travel_itineraries = a list of TravelItinerary objects
 
     def __repr__(self):
         """A string representation of a User."""
@@ -31,7 +33,7 @@ class User(db.Model):
         return f"<User user_id={self.user_id} username={self.username} fname={self.fname} lname={self.lname} email={self.email} >"
 
 class Follower(db.Model):
-    """A follower."""
+    """A Follower."""
 
     __tablename__ = "followers"
 
@@ -40,12 +42,15 @@ class Follower(db.Model):
     user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     # Establish relationship between classes
-    user_to_follower = db.relationship("User", backref="followers")
+    # Attribute stores a User object associated with the defined foreign_key value
+    follower = db.relationship("User", foreign_keys=[follower_id], backref="followers")
+    user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="users_followed")
+
 
     def __repr__(self):
         """A string representation of a Follower."""
 
-        return f"<Follower follow_activity_id={self.follow_activity_id} follower_id={self.follow_id} user_followed_id={self.user_followed_id} >"
+        return f"<Follower follow_activity_id={self.follow_activity_id} follower_id={self.follower_id} user_followed_id={self.user_followed_id} follower ={self.follower} user_followed={self.user_followed}>"
 
 class TravelItinerary(db.Model):
     """A travel itinerary."""
@@ -76,8 +81,8 @@ class ItineraryItem(db.Model):
     itinerary_id = db.Column(db.Integer, db.ForeignKey("travel_itineraries.itinerary_id"))
     item_name = db.Column(db.String(50))
     date = db.Column(db.Date)
-    start_time = db.Column(db.Time)
-    end_time = db.Column (db.Time)
+    start_time = db.Column(db.String)
+    end_time = db.Column (db.String)
     description = db.Column(db.Text)
     locale = db.Column(db.String)
     territory = db.Column(db.String)
@@ -85,7 +90,7 @@ class ItineraryItem(db.Model):
     place_id = db.Column(db.String)
 
     # Establish a relationship between classes
-    itinerary_to_item = db.relationship("Travel Itinerary", backref="itinerary_items")
+    itinerary_to_item = db.relationship("TravelItinerary", backref="itinerary_items")
 
     def __repr__(self):
         "A string representation of an itineary item."
@@ -93,13 +98,12 @@ class ItineraryItem(db.Model):
         return f"<Itinerary Item item_id={self.item_id} itinerary_id={self.itinerary_id} item_name={self.item_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
 
 
-
 # Set-up project
-def connect_to_db(flask_app, db_name, echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///wanderlust", echo=True):
     """Connect to database."""
 
     # Set-up database configurations
-    flask_app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///{db_name}"    # Defines the location of the database; uses default user, password, host, and port
+    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri    # Defines the location of the database; uses default user, password, host, and port
     flask_app.config["SQLALCHEMY_ECHO"] = echo                                  # If True, we enable output of the raw SQL executed by SQLAlchemy
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False                  # Takes up a lot of memory, so set to False        
 
