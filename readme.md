@@ -12,9 +12,9 @@ As avid travelers, my friends and I strive to make the most out of our adventure
 
 While cloud storage platforms like [Google Drive](https://drive.google.com/) or [Dropbox](https://www.dropbox.com/) are useful for uploading and sharing the travel itineraries, which are often formatted through spreadsheet-programs such as [Microsoft Excel](https://www.microsoft.com/en-us/microsoft-365/excel), there is currently not a platform that provides a standard template design for a travel itinerary (which would help to improve readability for end-users) and publicly share the travel itinerary resource with a community of fellow travel enthusiasts. 
 
-Wanderlust is a community-driven travel planning application that allows users to create and share personally-curated travel itineraries through a standard form template. Users are able to filter travel itineraries by locale (city) or country destinations.
+*Wanderlust* is a community-driven travel planning application that allows users to create and share personally-curated travel itineraries through a standard form template. Users are able to filter travel itineraries by locale (city), territory (state) or country destinations.
 
-The application utilizes the Google Places API to auto-populate metadata about places, including name, address, location, website, price level, ratings, and more.
+The application utilizes the Google Places and Google Maps APIs to auto-populate metadata about places, including name, address, location, website, price level, ratings, and more.
 
 ## **Tech Stack**
 Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
