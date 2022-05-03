@@ -53,14 +53,14 @@ def show_user(username):
 
     # Need CRUD function to get user object based on username
 
-    return render_template("user_details.html")
+    return render_template("user_profile.html")
 
 
 @app.route("/create_itinerary")
 def show_create_itinerary():
     """Display form to create a travel itinerary"""
 
-    return render_template("create.html")
+    return render_template("create_itinerary.html")
 
 
 @app.route("/add_item")
@@ -72,9 +72,16 @@ def show_add_item():
 
 @app.route("/following")
 def list_following():
-    """Return page displaying all followers by the logged-in user"""
+    """Return page displaying all users followed by the logged-in user"""
 
-    return render_template("following.html")
+    return render_template("user_following.html")
+
+
+@app.route("/followers")
+def list_following():
+    """Return page displaying all followers of the logged-in user"""
+
+    return render_template("user_followers.html")
 
 
 @app.route("/logout")

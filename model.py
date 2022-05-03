@@ -14,7 +14,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, unique=True)
-    password = db.Column(db.String)             # hashing when creating a User instance 
+    password = db.Column(db.String)                             # hashing when creating a User instance 
     username = db.Column(db.String(20), unique=True)
     fname = db.Column(db.String(50))
     lname = db.Column(db.String(50))
@@ -42,8 +42,7 @@ class Follower(db.Model):
     follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
-    # Establish relationship between classes
-    # Attribute stores a User object associated with the defined foreign_key value
+    # Establish relationship between classes; stores a User object associated with the defined foreign_key value
     follower = db.relationship("User", foreign_keys=[follower_id], backref="followers")
     user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="users_followed")
 
