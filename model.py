@@ -25,19 +25,20 @@ class User(db.Model):
 
     # followers = a list of Follower objects that are following a user; use User.query.filter(User.followers).all(), for example
     # users_followed = a list of Follower objects that are users being followed; use User.query.filter(User.users_followed).all(), for example
-    # travel_itineraries = a list of TravelItinerary objects
+    # itineraries = a list of Itinerary objects
 
     def __repr__(self):
         """A string representation of a User."""
 
         return f"<User user_id={self.user_id} username={self.username} fname={self.fname} lname={self.lname} email={self.email} >"
 
+
 class Follower(db.Model):
     """A Follower."""
 
     __tablename__ = "followers"
 
-    follow_activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
@@ -50,35 +51,36 @@ class Follower(db.Model):
     def __repr__(self):
         """A string representation of a Follower."""
 
-        return f"<Follower follow_activity_id={self.follow_activity_id} follower_id={self.follower_id} user_followed_id={self.user_followed_id} follower ={self.follower} user_followed={self.user_followed}>"
+        return f"<Follower activity_id={self.activity_id} follower_id={self.follower_id} follower={self.follower.username} user_followed_id={self.user_followed_id} user_followed={self.user_followed.username}>"
 
-class TravelItinerary(db.Model):
+
+class Itinerary(db.Model):
     """A travel itinerary."""
 
-    __tablename__ = "travel_itineraries"
+    __tablename__ = "itineraries"
 
     itinerary_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     itinerary_name = db.Column(db.String)
     overview = db.Column(db.Text)
 
-    # itinerary_items = a list of Itinerary Item objects
+    # items = a list of itinerary Item objects
 
-    # Establish relationship between classes
-    user_to_itinerary = db.relationship("User", backref="travel_itineraries")
+    # Establish relationship between Itinerary class and User class
+    user = db.relationship("User", backref="itineraries")
 
     def __repr__(self):
-        """A string representation of a Travel Itinerary."""
+        """A string representation of a travel itinerary."""
 
-        return f"<Travel Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} >"
+        return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} >"
 
-class ItineraryItem(db.Model):
+class Item(db.Model):
     """An itinerary item."""
 
-    __tablename__ = "itinerary_items"
+    __tablename__ = "items"
 
     item_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    itinerary_id = db.Column(db.Integer, db.ForeignKey("travel_itineraries.itinerary_id"))
+    itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
     item_name = db.Column(db.String(50))
     date = db.Column(db.Date)
     start_time = db.Column(db.String)
@@ -89,13 +91,13 @@ class ItineraryItem(db.Model):
     country = db.Column(db.String)
     place_id = db.Column(db.String)
 
-    # Establish a relationship between classes
-    itinerary_to_item = db.relationship("TravelItinerary", backref="itinerary_items")
+    # Establish a relationship between Item class and Itinerary class
+    itinerary = db.relationship("Itinerary", backref="items")
 
     def __repr__(self):
         "A string representation of an itineary item."
 
-        return f"<Itinerary Item item_id={self.item_id} itinerary_id={self.itinerary_id} item_name={self.item_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
+        return f"<Item item_id={self.item_id} itinerary_id={self.itinerary_id} item_name={self.item_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
 
 
 # Set-up project
