@@ -17,9 +17,9 @@ Wanderlust is a community-driven travel planning application that allows users t
 The application utilizes the Google Places API to auto-populate metadata about places, including name, address, location, website, price level, ratings, and more.
 
 ## **Tech Stack**
-### Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM
-### Frontend: CSS 3, HTML5, JavaScript, Jinja2
-### APIs: Google Maps, Google Places
+Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
+Frontend: CSS 3, HTML5, JavaScript, Jinja2<br/> 
+APIs: Google Maps, Google Places
 
 ## **Features**
 ### [Section]
