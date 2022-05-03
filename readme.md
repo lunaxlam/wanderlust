@@ -23,9 +23,16 @@ APIs: Google Maps, Google Places
 
 ## **Features**
 ### [Section]
+Detail <br />
+
 ### [Section]
+Detail <br />
+
 ### [Section]
+Detail <br /> 
+
 ### [Section]
+Detail <br /> 
 
 ## **Installation**
 1.
