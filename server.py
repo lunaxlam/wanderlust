@@ -78,7 +78,7 @@ def list_following():
 
 
 @app.route("/followers")
-def list_following():
+def list_followers():
     """Return page displaying all followers of the logged-in user"""
 
     return render_template("user_followers.html")
