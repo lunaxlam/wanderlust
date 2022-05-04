@@ -18,7 +18,7 @@
         <!-- Import .js file -->
         <script src="static/js/wanderlust.js" defer></script>
 
-        <title>{% block title %}{% endblock %}</title>
+        <title>{% block title %}PAGE TITLE{% endblock %}</title>
 
         {% block head %}{% endblock %}
 
@@ -30,11 +30,16 @@
         </p>
         {% endfor %}
 
+        <header>
+            <nav></nav>
+        </header>
+
         {% block body %}
         {% endblock %}
 
         {% block after_body %}
         {% endblock %}
         
+        <footer></footer>
     </body>
 </html>
