@@ -2,7 +2,6 @@
 
 from flask import (Flask, render_template, request, redirect, session, flash)
 from model import connect_to_db, db
-import crud
 import os
 
 from jinja2 import StrictUndefined
@@ -21,16 +20,7 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 def show_index():
     """Return homepage"""
 
-    return render_template("homepage.html")
-
-
-@app.route("/itineraries")
-def list_itineraries():
-    """Return page displaying all itineraries Wanderlust has to offer"""
-
-    # Ability to filter out by locale, territory, country
-
-    return render_template("all_itineraries.html")
+    return render_template("index.html")
 
 
 @app.route("/login", methods=["GET"])
@@ -47,13 +37,22 @@ def process_login():
     return redirect("/")
 
 
-@app.route("/user/<username>")
-def show_user(username):
-    """Return page displaying user profile and list of user curated itineraries"""
+@app.route("/itineraries")
+def list_itineraries():
+    """Return page displaying all itineraries Wanderlust has to offer"""
 
-    # Need CRUD function to get user object based on username
+    # Ability to filter out by locale, territory, country
 
-    return render_template("user_profile.html")
+    return render_template("all_itineraries.html")
+
+
+@app.route("/itinerary/<itinerary_id>")
+def show_itinerary(itinerary_id):
+    """Return page displaying itinerary and list of itinerary items"""
+
+    # Need CRUD function to get itinerary object based on itinerary_id
+
+    return render_template("itinerary.html")
 
 
 @app.route("/create_itinerary")
@@ -70,14 +69,23 @@ def show_add_item():
     return render_template("add_item.html")
 
 
-@app.route("/following")
+@app.route("/<username>")
+def show_profile(username):
+    """Return page displaying user profile and list of user-curated itineraries"""
+
+    # Need CRUD function to get user object based on username
+
+    return render_template("user_profile.html")
+
+
+@app.route("/<username>/following")
 def list_following():
     """Return page displaying all users followed by the logged-in user"""
 
     return render_template("user_following.html")
 
 
-@app.route("/followers")
+@app.route("/<username>/followers")
 def list_followers():
     """Return page displaying all followers of the logged-in user"""
 
