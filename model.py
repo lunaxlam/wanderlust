@@ -131,6 +131,11 @@ class Itinerary(db.Model):
         return itinerary
 
     @classmethod
+    def get_itineraries(cls):
+
+        return db.session.query(Itinerary)
+
+    @classmethod
     def get_itinerary_by_itinerary_id(cls, itinerary_id):
         """Return an itinerary by itinerary_id"""
 
@@ -196,7 +201,7 @@ class Item(db.Model):
 
 # Set-up project
 def connect_to_db(flask_app, db_uri="postgresql:///wanderlust", echo=True):
-    """Connect to database."""
+    """Connect Flask app to database."""
 
     # Set-up database configurations
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri    # Defines the location of the database; uses default user, password, host, and port
