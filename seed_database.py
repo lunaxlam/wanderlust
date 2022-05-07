@@ -2,9 +2,9 @@
 
 import os
 import json
-from datetime import datetime
 from random import choice, randint
 from faker import Faker
+import requests
 
 import model
 import server
@@ -18,7 +18,6 @@ os.system("createdb wanderlust")
 model.connect_to_db(server.app)
 # Create tables defined in database schema
 model.db.create_all()
-
 
 # Create an instance of a faker generator to generate data
 fake = Faker()
@@ -45,13 +44,13 @@ addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"],
                 ["Vancouver", "British Columbia", "CAN"], ["Sveta Nedelja", "Zagreb", "CI"],
                 ["Odessa", "Odessa", "UKR"], ["Phom Penh", "Phnom Penh", "CAM"]]
 
-itinerary_names = ["Sleepless in Seattle August 2022", "Sweet Home Chicago December 2022", 
-                "Halloween in Salem MA October 2022", "Denver Trip May 2023",
-                "Midwest Roadtrip Summer 2023", "Christmas in Toronto 2022",
-                "Swetha's Birthday Weekend in Vancouver October 2022", "Eating Our Way through NYC July 2022"]
+itinerary_names = [f"Sleepless in Seattle August {randint(2022, 2030)}", f"Sweet Home Chicago December {randint(2022, 2030)}", 
+                f"Halloween in Salem MA October {randint(2022, 2030)}", f"Denver Trip May {randint(2022, 2030)}",
+                f"Midwest Roadtrip Summer {randint(2022, 2030)}", f"Christmas in Toronto {randint(2022, 2030)}",
+                f"Swetha's Birthday Weekend in Vancouver October {randint(2022, 2030)}", f"Eating Our Way through NYC July {randint(2022, 2030)}"]
 
 
-# Create 25 users to seed the database
+# Create 25 users to seed the database 
 users_db = []
 
 for n in range (25):
@@ -71,9 +70,8 @@ for n in range (25):
     new_user = model.User.create_user(email, password, username, fname, lname, locale, territory, country, about_me)
     users_db.append(new_user)
 
-# Add users to the database
+# Add and commit users to the database
 model.db.session.add_all(users_db)
-# Commit user to the database
 model.db.session.commit()
 
 
@@ -96,6 +94,7 @@ for n in range(40):
         new_follower = model.Follower.create_follower(follower_id, user_followed_id)
         followers_db.append(new_follower)
 
+# Add and commit followers to the database
 model.db.session.add_all(followers_db)
 model.db.session.commit()
 
@@ -105,7 +104,11 @@ itineraries_db = []
 for user in users_id:
 
     for num in range(1, randint(3, 5)):
-        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{num}. {choice(itinerary_names)}", overview=fake.paragraphs(nb=3))
+        address = choice(addresses)
+        locale = address[-3]
+        territory = address[-2]
+        country = address[-1]
+        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{num}. {choice(itinerary_names)}", overview=fake.text(max_nb_chars=50), locale=locale, territory=territory, country=country)
         itineraries_db.append(new_itinerary)
 
 model.db.session.add_all(itineraries_db)
@@ -119,24 +122,20 @@ all_itineraries = model.Itinerary.get_itineraries()
 for itinerary in all_itineraries:
     itineraries_id.append(itinerary.itinerary_id)
 
-# Create 1 to 4 items for each itinerary:
-items_db = []
+# Create 2 to 4 activity items for each itinerary:
+activities_db = []
 
 for itinerary in itineraries_id:
 
-    for num in range(1, randint(1, 5)):
-        new_item = model.Item.create_item(itinerary_id=itinerary, 
-                                            item_name=fake.text(max_nb_chars=50),
+    for num in range(1, randint(3, 5)):
+        new_activity = model.Activity.create_activity(itinerary_id=itinerary, 
+                                            activity_name="Dinner at Cotogna",
                                             date=fake.future_datetime(),
                                             start_time=fake.time(),
                                             end_time=fake.time(),
-                                            name_or_description=fake.text(max_nb_chars=20),
-                                            address=fake.address(),
-                                            locale=fake.city(),
-                                            territory=fake.country_code(),
-                                            country=fake.country(),
-                                            place_id=f"AESE8CDtyiuhjk{itinerary}")
-        items_db.append(new_item)
+                                            place_id=f"ChIJA0YvGPWAhYAReXmaDTTdWzU")
+        activities_db.append(new_activity)
 
-model.db.session.add_all(items_db)
+# Add and commit items to the database
+model.db.session.add_all(activities_db)
 model.db.session.commit()

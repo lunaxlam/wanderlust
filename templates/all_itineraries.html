@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}Wanderlust Travel Itineraries{% endblock %}
 
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/user/users">View Wanderers</a></ul>
+<ul><a href="/{ username }">My profile</a></ul>
+<ul><a href="/logout">Log-Out</a></ul>
+
+{% endblock %}
+
 {% block body %}
 
-{% endblock%}
+<h1>Wanderlust Travel Itineraries</h1>
+
+<ul><a href="/itinerary/{ itinerary_id }">Itinerary Name</a></ul>
+<ul><a href="/itinerary/{ itinerary_id }">Itinerary Name</a></ul>
+<ul><a href="/itinerary/{ itinerary_id }">Itinerary Name</a></ul>
+<ul><a href="/itinerary/{ itinerary_id }">Itinerary Name</a></ul>
+
+
+{% endblock %}

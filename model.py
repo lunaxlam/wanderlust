@@ -4,6 +4,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
 # Constructor function to create an instance of SQLAlchemy; a db object that represents our database
+# The db object can use SQLAlchemy class methods like db.create_all(), .add(), .commit()
 db = SQLAlchemy()
 
 
@@ -50,15 +51,21 @@ class User(db.Model):
 
     @classmethod
     def get_users(cls):
-        """Return all users"""
+        """Return all user objects"""
 
         return db.session.query(User)
 
     @classmethod
-    def get_user_by_username(cls, username): #Need to fix
+    def get_user_by_username(cls, username):
         """Return a user by username"""
 
         return User.query.filter(User.username == username).first()
+    
+    @classmethod
+    def get_user_by_email(cls, email):
+        """Return a user by email"""
+
+        return User.query.filter(User.email == email).first()
 
 
 class Follower(db.Model):
@@ -67,12 +74,12 @@ class Follower(db.Model):
     __tablename__ = "followers"
 
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) # lender_id
+    user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) #seller_id
 
     # Establish relationship between classes; stores a User object associated with the defined foreign_key value
-    follower = db.relationship("User", foreign_keys=[follower_id], backref="followers")
-    user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="users_followed")
+    follower = db.relationship("User", foreign_keys=[follower_id], backref="followers") 
+    user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="users_followed") 
 
     def __repr__(self):
         """A string representation of a Follower."""
@@ -87,6 +94,12 @@ class Follower(db.Model):
                             user_followed_id=user_followed_id)
         
         return follower
+    
+    @classmethod
+    def get_followers(cls):
+        """Return all follower objects"""
+
+        return db.session.query(Follower)
 
     @classmethod
     def get_followers_by_user_followed_id(cls, user_followed_id):
@@ -110,8 +123,11 @@ class Itinerary(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     itinerary_name = db.Column(db.String, nullable=False)
     overview = db.Column(db.Text, nullable=False)
+    locale = db.Column(db.String, nullable=False)
+    territory = db.Column(db.String, nullable=False)
+    country = db.Column(db.String, nullable=False)
 
-    # items = a list of itinerary Item objects
+    # activities = a list of itinerary Activity objects
 
     # Establish relationship between Itinerary class and User class
     user = db.relationship("User", backref="itineraries")
@@ -122,16 +138,20 @@ class Itinerary(db.Model):
         return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} >"
     
     @classmethod
-    def create_itinerary(cls, user_id, itinerary_name, overview):
+    def create_itinerary(cls, user_id, itinerary_name, overview, locale, territory, country):
         
         itinerary = Itinerary(user_id=user_id,
                                 itinerary_name=itinerary_name,
-                                overview=overview)
+                                overview=overview,
+                                locale=locale,
+                                territory=territory,
+                                country=country)
         
         return itinerary
 
     @classmethod
     def get_itineraries(cls):
+        """Return all itinerary objects"""
 
         return db.session.query(Itinerary)
 
@@ -148,58 +168,53 @@ class Itinerary(db.Model):
         return Itinerary.query.filter(Itinerary.user_id == user_id).all()
 
 
-class Item(db.Model):
-    """An itinerary item."""
+class Activity(db.Model):
+    """An itinerary activity item."""
 
-    __tablename__ = "items"
+    __tablename__ = "activities"
 
-    item_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
-    item_name = db.Column(db.String(50), nullable=False)
+    activity_name = db.Column(db.String(50), nullable=False)
     date = db.Column(db.Date, nullable=False)
     start_time = db.Column(db.String, nullable=True)
     end_time = db.Column (db.String, nullable=True)
-    name_or_description = db.Column(db.Text, nullable=False)
-    address = db.Column(db.String, nullable=True)
-    locale = db.Column(db.String, nullable=True)
-    territory = db.Column(db.String, nullable=True)
-    country = db.Column(db.String, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
     # Establish a relationship between Item class and Itinerary class
-    itinerary = db.relationship("Itinerary", backref="items")
+    itinerary = db.relationship("Itinerary", backref="activities")
 
     def __repr__(self):
         "A string representation of an itineary item."
 
-        return f"<Item item_id={self.item_id} itinerary_id={self.itinerary_id} item_name={self.item_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
+        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
 
     @classmethod
-    def create_item(cls, itinerary_id, item_name, date, start_time, end_time, name_or_description,
-                    address, locale, territory, country, place_id):
+    def create_activity(cls, itinerary_id, activity_name, date, start_time, end_time, place_id):
         
-        item = Item(itinerary_id=itinerary_id,
-                    item_name=item_name,
+        activity = Activity(itinerary_id=itinerary_id,
+                    activity_name=activity_name,
                     date=date,
                     start_time=start_time,
                     end_time=end_time,
-                    name_or_description=name_or_description,
-                    address=address,
-                    locale=locale,
-                    territory=territory,
-                    country=country,
                     place_id=place_id)
         
-        return item
+        return activity
     
     @classmethod
-    def get_items_by_itinerary_id(cls, itinerary_id):
+    def get_activities(cls):
+        """Return all itinerary activity item objects"""
+
+        return db.session.query(Activity)
+
+    @classmethod
+    def get_activity_by_itinerary_id(cls, itinerary_id):
         """Return all items by itinerary_id"""
 
-        return Item.query.filter(Item.itinerary_id == itinerary_id).all()
+        return Activity.query.filter(Activity.itinerary_id == itinerary_id).all()
 
 
-# Set-up project
+# Set-up project to connect SQLAlchemy to Postgres database; this is done through psycopg2
 def connect_to_db(flask_app, db_uri="postgresql:///wanderlust", echo=True):
     """Connect Flask app to database."""
 

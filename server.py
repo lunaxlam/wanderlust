@@ -1,7 +1,7 @@
 """Server for Wanderlust app."""
 
 from flask import (Flask, render_template, request, redirect, session, flash)
-from model import connect_to_db, db
+from model import connect_to_db, db, User, Follower, Itinerary, Activity
 import os
 
 from jinja2 import StrictUndefined
@@ -17,10 +17,20 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 
 
 @app.route("/")
-def show_index():
+def show_welcome():
     """Return homepage"""
 
-    return render_template("index.html")
+    # if user is not logged in:
+    return render_template("welcome.html")
+
+    # if user is logged in:
+    # return render_template("home.html")
+
+@app.route("/home")
+def for_testing_show_home():
+    """Return homepage"""
+
+    return render_template("home.html")
 
 
 @app.route("/login", methods=["GET"])
@@ -34,11 +44,24 @@ def show_login():
 def process_login():
     """Log user into site"""
 
-    return redirect("/")
+    # if successfully log in:
+    return redirect("/home")
+
+    # if not successfully log in:
+    # flash incorrect username or password message
+    # return render template login.html
 
 
-@app.route("/itineraries")
-def list_itineraries():
+@app.route("/create_user", methods=["GET"])
+def create_user():
+    """Show create user form"""
+
+    # if successfully log in:
+    return render_template("create_user.html")
+
+
+@app.route("/itineraries") # eventually remove this route
+def list_all_itineraries():
     """Return page displaying all itineraries Wanderlust has to offer"""
 
     # Ability to filter out by locale, territory, country
@@ -50,9 +73,10 @@ def list_itineraries():
 def show_itinerary(itinerary_id):
     """Return page displaying itinerary and list of itinerary items"""
 
-    # Need CRUD function to get itinerary object based on itinerary_id
+    itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
+    activities = Activity.get_activity_by_itinerary_id(itinerary_id)
 
-    return render_template("itinerary.html")
+    return render_template("itinerary.html", itinerary=itinerary, activities=activities)
 
 
 @app.route("/create_itinerary")
@@ -68,24 +92,32 @@ def show_add_item():
 
     return render_template("add_item.html")
 
+@app.route("/users")
+def show_users():
+    """Return page displaying all user profiles"""
+
+    users = User.get_users()
+
+    return render_template("all_users.html", users=users)
 
 @app.route("/<username>")
 def show_profile(username):
     """Return page displaying user profile and list of user-curated itineraries"""
 
-    # Need CRUD function to get user object based on username
+    user = User.get_user_by_username(username)
+    itineraries = Itinerary.get_itinerary_by_user_id(user.user_id)
 
-    return render_template("user_profile.html")
+    return render_template("user_profile.html", display_user=user, user_itineraries=itineraries)
 
 
-@app.route("/<username>/following")
+@app.route("/following")
 def list_following():
     """Return page displaying all users followed by the logged-in user"""
 
     return render_template("user_following.html")
 
 
-@app.route("/<username>/followers")
+@app.route("/followers")
 def list_followers():
     """Return page displaying all followers of the logged-in user"""
 

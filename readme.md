@@ -19,7 +19,7 @@ The application utilizes the Google Places and Google Maps APIs to auto-populate
 ## **Tech Stack**
 Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
 Frontend: CSS 3, HTML5, JavaScript, Jinja2<br/> 
-APIs: Google Maps, Google Places
+APIs: [Google Maps Platform - Maps API and Places API](https://developers.google.com/maps)
 
 ## **Features**
 ### [Section]

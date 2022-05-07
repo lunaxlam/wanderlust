@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Create a Travel Itinerary{% endblock %}
+{% block title %}Name of Itinerary{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderers</a></ul>
+<ul><a href="/{ username }">My profile</a></ul>
+<ul><a href="/logout">Log-Out</a></ul>
+
+{% endblock %}
 
 {% block body %}
 
-{% endblock%}
+<h1>Name of Itinerary</h1>
+
+
+{% endblock %}

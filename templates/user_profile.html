@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}User Profile{% endblock %}
+{% block title %}Followers{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderers</a></ul>
+<ul><a href="/logout">Log-Out</a></ul>
+
+{% endblock %}
 
 {% block body %}
 
-{% endblock%}
+<h1>Hi, I'm {{ display_user.username }}</h1>
+<div>About Me
+
+<ul>Location: {{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
+<ul>Bio: {{ display_user.about_me }}</ul>
+
+</div>
+
+<h2>My Travel Itineraries</h2>
+{% for itinerary in user_itineraries %}
+<ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
+{% endfor %}
+
+
+{% endblock %}

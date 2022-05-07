@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}A Travel Itinerary{% endblock %}
+{% block title %}{{ itinerary.itinerary_name}}{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderers</a></ul>
+<ul><a href="/{ username }">My profile</a></ul>
+<ul><a href="/logout">Log-Out</a></ul>
+
+{% endblock %}
 
 {% block body %}
 
-{% endblock%}
+<h1>Trip Name: {{ itinerary.itinerary_name }}</h1>
+<p>Overview: {{ itinerary.overview }}</p>
+<p>Locations: {{ itinerary.locale }}, {{itinerary.territory}}, {{itinerary.country }}</p>
+
+<div> Activities
+{% for activity in activities %}
+
+<ul>Activity: {{ activity.activity_name }}</ul>
+<ul>Date: {{ activity.date }}</ul>
+<ul>Start Time: {{ activity.start_time }}</ul>
+<ul>End Time: {{ activity.end_time }}</ul>
+<ul>Name of Location: </ul>
+<ul>Address: </ul>
+<ul>Phone: </ul>
+<ul>Ratings: </ul>
+<ul>Price Level: </ul>
+<ul>Place ID: {{ activity.place_id }}</ul>
+
+{% endfor %}
+</div>
+
+{% endblock %}
