@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/users">View Wanderers</a></ul>
+<ul><a href="/{ username }">My profile</a></ul>
+<ul><a href="/logout">Log-Out</a></ul>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Where will adventure take you?</h1>
+
+<ul><a href="/itineraries">View Wanderlust Travel Itineraries</a></ul>
+<ul><a href="/create_itinerary">Create a New Travel Itinerary</a></ul>
+
+
+{% endblock %}
