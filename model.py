@@ -37,6 +37,14 @@ class User(db.Model):
     def create_user(cls, email, password, username, fname, lname, locale, territory, country, about_me):
         """Create and return a new user"""
 
+        email = email.lower()
+        username = username.lower()
+        fname = fname.title()
+        lname = lname.title()
+        locale = locale.title()
+        territory = territory.title()
+        country = country.upper()
+
         user = User(email=email, 
                     password=password, 
                     username=username, 
@@ -102,6 +110,12 @@ class Follower(db.Model):
         return db.session.query(Follower)
 
     @classmethod
+    def get_follower_by_follower_id(cls, follower_id):
+        """Return a follower by follower_id"""
+
+        return Follower.query.filter(Follower.follower_id == follower_id).first()
+
+    @classmethod
     def get_followers_by_user_followed_id(cls, user_followed_id):
         """Return all followers that are following a specified user_followed_id"""
 
@@ -139,6 +153,11 @@ class Itinerary(db.Model):
     
     @classmethod
     def create_itinerary(cls, user_id, itinerary_name, overview, locale, territory, country):
+
+        itinerary_name = itinerary_name.title()
+        locale = locale.title()
+        territory = territory.title()
+        country = country.upper()
         
         itinerary = Itinerary(user_id=user_id,
                                 itinerary_name=itinerary_name,
@@ -192,6 +211,8 @@ class Activity(db.Model):
     @classmethod
     def create_activity(cls, itinerary_id, activity_name, date, start_time, end_time, place_id):
         
+        activity_name = activity_name.title()
+
         activity = Activity(itinerary_id=itinerary_id,
                     activity_name=activity_name,
                     date=date,
