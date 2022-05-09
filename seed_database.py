@@ -23,17 +23,17 @@ model.db.create_all()
 fake = Faker()
 
 
-bio = ["I teach Brazilian Jiu-Jitsu, play guitar, and like dogs.",
+bio = ["I teach Brazilian Jiu-Jitsu \U0001F94B, play guitar \U0001F3B8, and like dogs \U0001F436",
             "Traveler \U0001F30E Trekkie \U0001F596 Teacher \U0001F34E",
-            "Culinary genius, coffee fiend, doggo parent.",
-            "Constantly thinking about how to Kirby-fy everything in my life.",
+            "Culinary Genius \U0001F9C1 Coffee Fiend \U00002615 doggo parent \U000F2665 \U0001F429",
+            "Constantly thinking about how to Kirby-fy everything in my life \U0001F3AE",
             "Rookie neuroscientist. \U0001F9EA \U0001F52C",
             "Millenial butterfly and make-up artist \U0001F98B \U0001F3A8",
-            "Chasing moments, making memories!",
-            "World traveler. Educator. Artist.",
-            "Attorney, photographer, public speaker, educator",
-            "Life should be enjoyed. Travel and eat!",
-            "Super happy person who loves to contribute to public projects!"]
+            "Chasing moments, making memories! \U0001F60E",
+            "World traveler \U0001F30F Educator \U0001F34E Artist \U0001F3A8",
+            "Photographer \U0001F4F7 Public Speaker \U0001F3A4 Educator \U0001F34E",
+            "Life should be enjoyed. Travel and eat! \U0001F5FA \U0001F9CB",
+            "Super happy person who loves to contribute to public projects! "]
 
 addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"], 
                 ["Seattle", "WA", "USA"], ["Boston", "MA", "USA"], 

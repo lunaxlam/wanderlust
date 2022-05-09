@@ -20,53 +20,94 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 def show_welcome():
     """Return homepage"""
 
-    # if user is not logged in:
-    return render_template("welcome.html")
-
-    # if user is logged in:
-    # return render_template("home.html")
-
-@app.route("/home")
-def for_testing_show_home():
-    """Return homepage"""
-
     return render_template("home.html")
 
 
-@app.route("/login", methods=["GET"])
-def show_login():
-    """Show login form"""
-
-    return render_template("login.html")
-
-
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def process_login():
     """Log user into site"""
 
-    # if successfully log in:
-    return redirect("/home")
+    if request.method == "GET":
+        return render_template("login.html")
+    else:
+        # Authenticate the user
+        email = request.form.get("email")
 
-    # if not successfully log in:
-    # flash incorrect username or password message
-    # return render template login.html
+        user = User.get_user_by_email(email)
+
+        if user:
+            password = request.form.get("password")
+            
+            if password == user.password:
+                # Add user to the session via user's username
+                session["user"] = f"{user.username}"
+
+                flash(f"Success! Welcome back to Wanderlust, {user.username}")
+                
+                return redirect("/")
+            else:
+                flash("Incorrect password.")
+                
+                return redirect("/login")
+        else:
+            flash("Username does not exist!")
+            
+            return redirect("/create_user")
 
 
-@app.route("/create_user", methods=["GET"])
+@app.route("/create_user", methods=["GET", "POST"])
 def create_user():
-    """Show create user form"""
+    """Register a new user."""
 
-    # if successfully log in:
-    return render_template("create_user.html")
+    if request.method == "GET":
+        return render_template("create_user.html")
+    else:
+        # Check to see if user already exists in database
+        email = request.form.get("email")
+
+        if (User.get_user_by_email(email)):
+            flash("Your account already exists! Please log-in instead.")
+
+            return redirect("/login")
+        else: 
+            password = request.form.get("password")
+            username = request.form.get("username")
+            fname = request.form.get("fname")
+            lname = request.form.get("lname")
+            locale = request.form.get("locale")
+            territory = request.form.get("territory")
+            country = request.form.get("country")
+            about_me = request.form.get("about_me")
+
+            user = User.create_user(email, 
+                                        password,
+                                        username,
+                                        fname,
+                                        lname,
+                                        locale,
+                                        territory,
+                                        country,
+                                        about_me)
+            
+            db.session.add(user)
+            db.session.commit()
+
+            # Add user to the session via user's primary key
+            session["user"] = f"{user.username}"
+
+            flash("Success! Account created. Welcome to Wanderlust.")
+
+            return redirect("/")
+
 
 
 @app.route("/itineraries") # eventually remove this route
 def list_all_itineraries():
     """Return page displaying all itineraries Wanderlust has to offer"""
 
-    # Ability to filter out by locale, territory, country
+    itineraries = Itinerary.get_itineraries()
 
-    return render_template("all_itineraries.html")
+    return render_template("all_itineraries.html", itineraries=itineraries)
 
 
 @app.route("/itinerary/<itinerary_id>")
@@ -110,23 +151,39 @@ def show_profile(username):
     return render_template("user_profile.html", display_user=user, user_itineraries=itineraries)
 
 
-@app.route("/following")
-def list_following():
+@app.route("/<username>/following")
+def list_following(username):
     """Return page displaying all users followed by the logged-in user"""
 
-    return render_template("user_following.html")
+    user = User.get_user_by_username(username)
+
+    user_id = user.user_id
+
+    following = Follower.get_following_by_follower_id(user_id)
+
+    return render_template("following.html", following=following)
 
 
-@app.route("/followers")
-def list_followers():
+@app.route("/<username>/followers")
+def list_followers(username):
     """Return page displaying all followers of the logged-in user"""
 
-    return render_template("user_followers.html")
+    user = User.get_user_by_username(username)
+
+    user_id = user.user_id
+
+    followers = Follower.get_followers_by_user_followed_id(user_id)
+
+    return render_template("followers.html", followers=followers)
 
 
 @app.route("/logout")
 def process_logout():
     """Delete session and log-out user"""
+
+    session.pop("user")
+
+    flash("Logged out.")
 
     return redirect("/")
 
