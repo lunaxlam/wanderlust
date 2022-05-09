@@ -34,6 +34,14 @@
             <nav>
                 {% block nav%}
                 {% endblock %}
+
+                {% if "user" in session %}
+                <ul><a href="/{{ session['user'] }}">My profile</a></ul>
+                <ul><a href="/{{ session['user'] }}/followers">Followers</a></ul>
+                <ul><a href="/{{ session['user'] }}/following">Following</a></ul>
+                <ul><a href="/logout">Log-Out</a></ul>
+                {% endif %}
+
             </nav>
         </header>
 

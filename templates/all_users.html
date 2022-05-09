@@ -1,20 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Wanderlust Home{% endblock %}
+{% block title %}Wanderlust Community Members{% endblock %}
 
 {% block nav %}
 
 <ul><a href="/">Home</a></ul>
-<ul><a href="/{ username }">My profile</a></ul>
-<ul><a href="/logout">Log-Out</a></ul>
 
 {% endblock %}
 
 {% block body %}
 
-<h1>Users</h1>
+<h1>Wanderlust Community Members</h1>
 
 {% for user in users %}
-<ul><a href="/{{ user.username }}">Username</a></ul>
+<ul><a href="/{{ user.username }}">{{ user.username }}</a></ul>
 {% endfor %}
 
 {% endblock %}

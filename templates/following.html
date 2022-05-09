@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Following{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderlust Community</a></ul>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>{{ session['user'] }} is Following:</h1>
+
+{% for follower in following %}
+
+<ul><a href="/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></ul>
+
+{% endfor %}
+
+
+{% endblock %}

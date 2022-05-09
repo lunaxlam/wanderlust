@@ -1,20 +1,33 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Wanderlust Home{% endblock %}
 
 {% block nav %}
 
-<ul><a href="/users">View Wanderers</a></ul>
-<ul><a href="/{ username }">My profile</a></ul>
-<ul><a href="/logout">Log-Out</a></ul>
+{% if "user" in session %}
+
+<ul><a href="/users">View Wanderlust Community</a></ul>
+
+{% endif %}
 
 {% endblock %}
 
 {% block body %}
+
+{% if "user" in session %}
 
 <h1>Where will adventure take you?</h1>
 
 <ul><a href="/itineraries">View Wanderlust Travel Itineraries</a></ul>
 <ul><a href="/create_itinerary">Create a New Travel Itinerary</a></ul>
 
+{% else %}
+
+<h1>Welcome to Wanderlust!</h1>
+<h2>Adventure awaits...</h2>
+
+<ul><a href="/login">Log-in</a></ul>
+<ul><a href="/create_user">Create an account</a></ul>
+
+{% endif %}
 
 {% endblock %}

@@ -1,9 +1,30 @@
 {% extends 'base.html' %}
-{% block title %}Name of Itinerary{% endblock %}
+{% block title %}Create Account{% endblock %}
 
 {% block body %}
 
 <h1>Create Account</h1>
+<form action="/create_user" method="POST">
+    <label for="user-email">Enter your email: </label>
+    <input type="text" name="email" id="user-email">
+    <label for="user-password">Create a password: </label>
+    <input type="text" name="password" id="user-password">
+    <label for="user-username">Select a username: </label>
+    <input type="text" name="username" id="user-username">
+    <label for="user-fname">Enter your first name: </label>
+    <input type="text" name="fname" id="user-fname">
+    <label for="user-lname">Enter your last name: </label>
+    <input type="text" name="lname" id="user-lname">
+    <label for="user-locale">Current city: </label>
+    <input type="text" name="locale" id="user-locale">
+    <label for="user-territory">Current state/territory: </label>
+    <input type="text" name="territory" id="user-territory">
+    <label for="user-country">Current country: </label>
+    <input type="text" name="country" id="user-country">
+    <label for="user-about-me">About Me: </label>
+    <input type="text" name="about_me" id="user-about-me">
+    <input type="submit">
+</form>
 
 
 {% endblock %}
