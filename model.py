@@ -31,7 +31,7 @@ class User(db.Model):
     def __repr__(self):
         """A string representation of a User."""
 
-        return f"<User user_id={self.user_id} username={self.username} fname={self.fname} lname={self.lname} email={self.email} locale={self.locale} territory={self.territory} country={self.country}>"
+        return f"<User user_id={self.user_id} username={self.username} email={self.email} locale={self.locale} territory={self.territory} country={self.country}>"
 
     @classmethod
     def create_user(cls, email, password, username, fname, lname, locale, territory, country, about_me):
@@ -138,16 +138,18 @@ class Itinerary(db.Model):
     itinerary_name = db.Column(db.String, nullable=False)
     overview = db.Column(db.Text, nullable=False)
 
-    # activities = a list of itinerary Activity objects
-    # destinations = a list of Destination location objects
-
     # Establish relationship between Itinerary class and User class
     user = db.relationship("User", backref="itineraries")
+    
+    # activities = a list of itinerary Activity objects
+    
+    # Establish relationship with the Association table
+    locations = db.relationship("Location", secondary="destinations", backref="itineraries")
 
     def __repr__(self):
         """A string representation of a travel itinerary."""
 
-        return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} >"
+        return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id}>"
     
     @classmethod
     def create_itinerary(cls, user_id, itinerary_name, overview):
@@ -174,61 +176,21 @@ class Itinerary(db.Model):
     
     @classmethod
     def get_itinerary_by_locale(cls, locale):
-        """Return a list of all itineraries by destination locale"""
+        """Return a list of all itineraries by location locale"""
 
-        return cls.query.join(Destination).filter(Destination.locale == locale).all()
+        return cls.query.join(Location).filter(Location.locale == locale).all()
 
     @classmethod
     def get_itinerary_by_territory(cls, territory):
-        """Return a list of all itineraries by destination territory"""
+        """Return a list of all itineraries by location territory"""
 
-        return cls.query.join(Destination).filter(Destination.territory == territory).all()
+        return cls.query.join(Location).filter(Location.territory == territory).all()
     
     @classmethod
     def get_itinerary_by_country(cls, country):
-        """Return a list of all itineraries by destination country"""
+        """Return a list of all itineraries by location country"""
 
-        return cls.query.join(Destination).filter(Destination.country == country).all()
-
-
-class Destination(db.Model):
-    """A destination location."""
-
-    __tablename__ = "destinations"
-
-    destination_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
-    locale = db.Column(db.String(50), nullable=False)
-    territory = db.Column(db.String(50), nullable=False)
-    country = db.Column(db.String(50), nullable=False)
-
-    # Establish a relationship between Destination class and Itinerary class
-    itinerary = db.relationship("Itinerary", backref="destinations")
-
-    def __repr__(self):
-        "A string representation of a destination location item."
-
-        return f"<Destination destination_id={self.destination_id} itinerary_id={self.itinerary_id} locale={self.locale} territory={self.territory} country={self.country} >"
-
-    @classmethod
-    def create_destination(cls, itinerary_id, locale, territory, country):
-        
-        locale = locale.lower()
-        territory = territory.lower()
-        country = country.lower()
-
-        destination = Destination(itinerary_id=itinerary_id,
-                                    locale=locale,
-                                    territory=territory,
-                                    country=country)
-        
-        return destination
-    
-    @classmethod
-    def get_destinations(cls):
-        """Return all destination location objects"""
-
-        return cls.query
+        return cls.query.join(Location).filter(Location.country == country).all()
 
 
 class Activity(db.Model):
@@ -248,10 +210,13 @@ class Activity(db.Model):
     # Establish a relationship between Item class and Itinerary class
     itinerary = db.relationship("Itinerary", backref="activities")
 
+    # Establish relationship with the Association table
+    locations = db.relationship("Location", secondary="destinations", backref="activities")
+
     def __repr__(self):
         "A string representation of an itineary item."
 
-        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
+        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} date={self.date} start_time={self.start_time} end_time={self.end_time}>"
 
     @classmethod
     def create_activity(cls, itinerary_id, activity_name, date, start_time, end_time, notes, place_id):
@@ -273,6 +238,55 @@ class Activity(db.Model):
         """Return all itinerary activity items"""
 
         return cls.query
+
+
+class Location(db.Model):
+    """A location."""
+
+    __tablename__ = "locations"
+
+    location_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    locale = db.Column(db.String(50), nullable=False)
+    territory = db.Column(db.String(50), nullable=False)
+    country = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        "A string representation of a Location item."
+
+        return f"<Location location_id={self.location_id} locale={self.locale} territory={self.territory} country={self.country}>"
+
+    @classmethod
+    def create_location(cls, locale, territory, country):
+        
+        locale = locale.lower()
+        territory = territory.lower()
+        country = country.lower()
+
+        location = Location(locale=locale, territory=territory, country=country)
+        
+        return location
+    
+    @classmethod
+    def get_locations(cls):
+        """Return all Location objects"""
+
+        return cls.query
+
+
+class Destination(db.Model):
+    """An association table between Itinerary, Activity, and Location."""
+
+    __tablename__ = "destinations"
+
+    destination_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"), nullable=False)
+    activity_id = db.Column(db.Integer, db.ForeignKey("activities.activity_id"), nullable=False)
+    location_id = db.Column(db.Integer, db.ForeignKey("locations.location_id"), nullable=False)
+
+    def __repr__(self):
+        "A string representation of a destination location item."
+
+        return f"<Destination destination_id={self.destination_id} itinerary_id={self.itinerary_id} activity_id={self.activity_id} location_id={self.location_id}>"
 
 
 # Set-up project to connect SQLAlchemy to Postgres database; this is done through psycopg2

@@ -41,7 +41,7 @@ addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"],
                 ["Lagos", "Nigeria", "NE"], ["Taipei", "Northern Taiwan", "TAI"],
                 ["Toronto", "Ontario", "CAN"], ["Calgary", "Alberta", "CAN"],
                 ["Vancouver", "British Columbia", "CAN"], ["Sveta Nedelja", "Zagreb", "CI"],
-                ["Odessa", "Odessa", "UKR"], ["Phom Penh", "Phnom Penh", "CAM"]]
+                ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
 itinerary_names = [f"Sleepless in Seattle August {randint(2022, 2030)}", f"Sweet Home Chicago December {randint(2022, 2030)}", 
                 f"Halloween in Salem MA October {randint(2022, 2030)}", f"Denver Trip May {randint(2022, 2030)}",
@@ -112,37 +112,14 @@ model.db.session.add_all(itineraries_db)
 model.db.session.commit()
 
 
-# To create the destinations and activities tables, we need to get the itinerary_id of all itineraries in the database
+# To create activities for each itinerary, we will need the itinerary_id
 itineraries_id = []
 
+# To access the itinerary_id and also to create locations for each itinerary, get all itineraries
 all_itineraries = model.Itinerary.get_itineraries()
 
 for itinerary in all_itineraries:
     itineraries_id.append(itinerary.itinerary_id)
-
-
-# Create 2 to 4 destinations for each itinerary
-destinations_db = []
-
-for itinerary in itineraries_id:
-
-    for num in range(1, randint(3, 5)):
-
-        address = choice(addresses)
-        locale = address[-3]
-        territory = address[-2]
-        country = address[-1]
-
-        new_destination = model.Destination.create_destination(itinerary_id=itinerary, 
-                                                                locale=locale,
-                                                                territory=territory,
-                                                                country=country)
-        destinations_db.append(new_destination)
-
-# Add and commit destinations to the database
-model.db.session.add_all(destinations_db)
-model.db.session.commit()
-
 
 # Create 2 to 4 activity items for each itinerary:
 activities_db = []
@@ -162,3 +139,79 @@ for itinerary in itineraries_id:
 # Add and commit activities to the database
 model.db.session.add_all(activities_db)
 model.db.session.commit()
+
+
+# Create locations
+locations_db = []
+
+for address in addresses:
+    locale = address[-3]
+    territory = address[-2]
+    country = address[-1]
+
+    location = model.Location.create_location(locale=locale, territory=territory, country=country)
+
+    locations_db.append(location)
+
+model.db.session.add_all(locations_db)
+model.db.session.commit()
+
+
+# Create 2 to 4 locations for each itinerary
+all_locations = model.Location.get_locations().all()
+
+for itinerary in all_itineraries:
+
+    for num in range(1, randint(3, 5)):
+        location  = choice(all_locations)
+
+        # itinerary.location.append(location)
+# #         model.db.session.add(itinerary)
+
+# model.db.session.commit()
+
+
+
+# # Create 1 location for each itinerary
+
+# itinerary_locations = []
+
+# for itinerary in all_itineraries:
+
+#     address = choice(addresses)
+#     locale = address[-3]
+#     territory = address[-2]
+#     country = address[-1]
+
+#     location = model.Location.create_location(locale=locale, territory=territory, country=country)
+    
+#     itinerary_locations.append(location)
+
+# #         itinerary.locations.append(location)
+# #         model.db.session.add(itinerary)
+
+# # # Commit to database
+# # model.db.session.commit()
+
+
+
+
+# # To create locations for each activity, we need to get all activities in the database
+# all_activities = model.Activity.get_activities()
+
+# # Create 1 location for each activity
+# for activity in all_activities:
+
+#     address = choice(addresses)
+#     locale = address[-3]
+#     territory = address[-2]
+#     country = address[-1]
+
+#     location = model.Location.create_location(locale=locale, territory=territory, country=country)
+
+# #     activity.locations.append(location)
+    
+# #     model.db.session.add(activity)
+
+# # # Commit to database
+# # model.db.session.commit()
