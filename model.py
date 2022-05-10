@@ -73,7 +73,7 @@ class User(db.Model):
     def get_user_by_email(cls, email):
         """Return a user by email"""
 
-        return User.query.filter(User.email == email).first()
+        return User.query.filter(User.email == email).first()    
 
 
 class Follower(db.Model):
@@ -81,7 +81,7 @@ class Follower(db.Model):
 
     __tablename__ = "followers"
 
-    activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    follow_activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) # lender_id
     user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) #seller_id
 
@@ -92,7 +92,7 @@ class Follower(db.Model):
     def __repr__(self):
         """A string representation of a Follower."""
 
-        return f"<Follower activity_id={self.activity_id} follower_id={self.follower_id} follower={self.follower.username} user_followed_id={self.user_followed_id} user_followed={self.user_followed.username}>"
+        return f"<Follower follow_activity_id={self.follow_activity_id} follower_id={self.follower_id} follower={self.follower.username} user_followed_id={self.user_followed_id} user_followed={self.user_followed.username}>"
 
     @classmethod
     def create_follower(cls, follower_id, user_followed_id):
@@ -137,11 +137,9 @@ class Itinerary(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     itinerary_name = db.Column(db.String, nullable=False)
     overview = db.Column(db.Text, nullable=False)
-    locale = db.Column(db.String, nullable=False)
-    territory = db.Column(db.String, nullable=False)
-    country = db.Column(db.String, nullable=False)
 
     # activities = a list of itinerary Activity objects
+    # destinations = a list of Destination location objects
 
     # Establish relationship between Itinerary class and User class
     user = db.relationship("User", backref="itineraries")
@@ -152,19 +150,13 @@ class Itinerary(db.Model):
         return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} >"
     
     @classmethod
-    def create_itinerary(cls, user_id, itinerary_name, overview, locale, territory, country):
+    def create_itinerary(cls, user_id, itinerary_name, overview):
 
-        itinerary_name = itinerary_name.title()
-        locale = locale.title()
-        territory = territory.title()
-        country = country.upper()
+        itinerary_name = itinerary_name.capitalize()
         
         itinerary = Itinerary(user_id=user_id,
                                 itinerary_name=itinerary_name,
-                                overview=overview,
-                                locale=locale,
-                                territory=territory,
-                                country=country)
+                                overview=overview)
         
         return itinerary
 
@@ -185,6 +177,70 @@ class Itinerary(db.Model):
         """Return all itineraries by user_id"""
 
         return Itinerary.query.filter(Itinerary.user_id == user_id).all()
+    
+    @classmethod
+    def get_itinerary_by_locale(cls, locale):
+        """Return all itineraries by destination locale"""
+
+        return db.session.query(Itinerary).filter(Destination.locale == locale).all()
+
+    @classmethod
+    def get_itinerary_by_territory(cls, territory):
+        """Return all itineraries by destination territory"""
+
+        return db.session.query(Itinerary).filter(Destination.territory == territory).all()
+    
+    @classmethod
+    def get_itinerary_by_country(cls, country):
+        """Return all itineraries by destination country"""
+
+        return db.session.query(Itinerary).filter(Destination.country == country).all()
+
+
+class Destination(db.Model):
+    """A destination location."""
+
+    __tablename__ = "destinations"
+
+    destination_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
+    locale = db.Column(db.String(50), nullable=False)
+    territory = db.Column(db.String(50), nullable=False)
+    country = db.Column(db.String(50), nullable=False)
+
+    # Establish a relationship between Destination class and Itinerary class
+    itinerary = db.relationship("Itinerary", backref="destinations")
+
+    def __repr__(self):
+        "A string representation of a destination location item."
+
+        return f"<Destination destination_id={self.destination_id} itinerary_id={self.itinerary_id} locale={self.locale} territory={self.territory} country={self.country} >"
+
+    @classmethod
+    def create_destination(cls, itinerary_id, locale, territory, country):
+        
+        locale = locale.title()
+        territory = territory.title()
+        country = country.upper()
+
+        destination = Destination(itinerary_id=itinerary_id,
+                                    locale=locale,
+                                    territory=territory,
+                                    country=country)
+        
+        return destination
+    
+    @classmethod
+    def get_destinations(cls):
+        """Return all destination location objects"""
+
+        return db.session.query(Destination)
+
+    @classmethod
+    def get_destination_by_itinerary_id(cls, itinerary_id):
+        """Return all items by itinerary_id"""
+
+        return Destination.query.filter(Destination.itinerary_id == itinerary_id).all()
 
 
 class Activity(db.Model):
@@ -198,6 +254,7 @@ class Activity(db.Model):
     date = db.Column(db.Date, nullable=False)
     start_time = db.Column(db.String, nullable=True)
     end_time = db.Column (db.String, nullable=True)
+    notes = db.Column(db.Text, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
     # Establish a relationship between Item class and Itinerary class
@@ -209,7 +266,7 @@ class Activity(db.Model):
         return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} date={self.date} start_time={self.start_time} end_time={self.end_time} >"
 
     @classmethod
-    def create_activity(cls, itinerary_id, activity_name, date, start_time, end_time, place_id):
+    def create_activity(cls, itinerary_id, activity_name, date, start_time, end_time, notes, place_id):
         
         activity_name = activity_name.title()
 
@@ -218,6 +275,7 @@ class Activity(db.Model):
                     date=date,
                     start_time=start_time,
                     end_time=end_time,
+                    notes=notes,
                     place_id=place_id)
         
         return activity
@@ -230,7 +288,7 @@ class Activity(db.Model):
 
     @classmethod
     def get_activity_by_itinerary_id(cls, itinerary_id):
-        """Return all items by itinerary_id"""
+        """Return all itinerary activity items by itinerary_id"""
 
         return Activity.query.filter(Activity.itinerary_id == itinerary_id).all()
 
