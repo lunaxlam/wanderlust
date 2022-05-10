@@ -210,9 +210,6 @@ class Activity(db.Model):
     # Establish a relationship between Item class and Itinerary class
     itinerary = db.relationship("Itinerary", backref="activities")
 
-    # Establish relationship with the Association table
-    locations = db.relationship("Location", secondary="destinations", backref="activities")
-
     def __repr__(self):
         "A string representation of an itineary item."
 
@@ -280,13 +277,12 @@ class Destination(db.Model):
 
     destination_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"), nullable=False)
-    activity_id = db.Column(db.Integer, db.ForeignKey("activities.activity_id"), nullable=False)
     location_id = db.Column(db.Integer, db.ForeignKey("locations.location_id"), nullable=False)
 
     def __repr__(self):
         "A string representation of a destination location item."
 
-        return f"<Destination destination_id={self.destination_id} itinerary_id={self.itinerary_id} activity_id={self.activity_id} location_id={self.location_id}>"
+        return f"<Destination destination_id={self.destination_id} itinerary_id={self.itinerary_id} location_id={self.location_id}>"
 
 
 # Set-up project to connect SQLAlchemy to Postgres database; this is done through psycopg2

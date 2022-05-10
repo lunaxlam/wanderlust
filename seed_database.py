@@ -165,53 +165,7 @@ for itinerary in all_itineraries:
     for num in range(1, randint(3, 5)):
         location  = choice(all_locations)
 
-        # itinerary.location.append(location)
-# #         model.db.session.add(itinerary)
+        itinerary.locations.append(location)
+        model.db.session.add(itinerary)
 
-# model.db.session.commit()
-
-
-
-# # Create 1 location for each itinerary
-
-# itinerary_locations = []
-
-# for itinerary in all_itineraries:
-
-#     address = choice(addresses)
-#     locale = address[-3]
-#     territory = address[-2]
-#     country = address[-1]
-
-#     location = model.Location.create_location(locale=locale, territory=territory, country=country)
-    
-#     itinerary_locations.append(location)
-
-# #         itinerary.locations.append(location)
-# #         model.db.session.add(itinerary)
-
-# # # Commit to database
-# # model.db.session.commit()
-
-
-
-
-# # To create locations for each activity, we need to get all activities in the database
-# all_activities = model.Activity.get_activities()
-
-# # Create 1 location for each activity
-# for activity in all_activities:
-
-#     address = choice(addresses)
-#     locale = address[-3]
-#     territory = address[-2]
-#     country = address[-1]
-
-#     location = model.Location.create_location(locale=locale, territory=territory, country=country)
-
-# #     activity.locations.append(location)
-    
-# #     model.db.session.add(activity)
-
-# # # Commit to database
-# # model.db.session.commit()
+model.db.session.commit()
