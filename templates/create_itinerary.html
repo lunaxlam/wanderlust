@@ -10,7 +10,19 @@
 
 {% block body %}
 
-<h1>Create a new itinerary</h1>
-
+<h1>Create a New Itinerary</h1>
+<form action="/create_itinerary" method="POST">
+    <label for="itinerary-name">Itinerary Name: </label>
+    <input type="text" name="name" id="itinerary-name">
+    <label for="itinerary-overview">Overview: </label>
+    <textarea name="overview" id="itinerary-overview"></textarea>
+    <label for="itinerary-locale">City you will visit (separate by comma if more than one): </label>
+    <input type="text" name="locale" id="itinerary-locale">
+    <label for="user-locale">State/territory that you will visit (separate by comma if more than one): </label>
+    <input type="text" name="territory" id="itinerary-territory">
+    <label for="user-country">Country that you plan to visit (separate by comma if more than one): </label>
+    <input type="text" name="country" id="itinerary-country">
+    <input type="submit" name="submit">
+</form>
 
 {% endblock %}

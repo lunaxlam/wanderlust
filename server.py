@@ -1,7 +1,7 @@
 """Server for Wanderlust app."""
 
 from flask import (Flask, render_template, request, redirect, session, flash)
-from model import connect_to_db, db, User, Follower, Itinerary, Activity
+from model import connect_to_db, db, User, Follower, Itinerary, Destination, Activity
 import os
 
 from jinja2 import StrictUndefined
@@ -41,6 +41,7 @@ def process_login():
             if password == user.password:
                 # Add user to the session via user's username
                 session["user"] = f"{user.username}"
+                session["user_id"] = user.user_id
 
                 flash(f"Success! Welcome back to Wanderlust, {user.username}")
                 
@@ -80,25 +81,25 @@ def create_user():
             about_me = request.form.get("about_me")
 
             user = User.create_user(email, 
-                                        password,
-                                        username,
-                                        fname,
-                                        lname,
-                                        locale,
-                                        territory,
-                                        country,
-                                        about_me)
+                                    password,
+                                    username,
+                                    fname,
+                                    lname,
+                                    locale,
+                                    territory,
+                                    country,
+                                    about_me)
             
             db.session.add(user)
             db.session.commit()
 
             # Add user to the session via user's primary key
             session["user"] = f"{user.username}"
+            session["user_id"] = user.user_id
 
             flash("Success! Account created. Welcome to Wanderlust.")
 
             return redirect("/")
-
 
 
 @app.route("/itineraries") # eventually remove this route
@@ -116,22 +117,47 @@ def show_itinerary(itinerary_id):
 
     itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
     activities = Activity.get_activity_by_itinerary_id(itinerary_id)
+    destinations = Destination.get_destination_by_itinerary_id(itinerary_id)
 
-    return render_template("itinerary.html", itinerary=itinerary, activities=activities)
+    return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations)
 
 
-@app.route("/create_itinerary")
-def show_create_itinerary():
+@app.route("/create_itinerary", methods=["GET", "POST"])
+def create_itinerary():
     """Display form to create a travel itinerary"""
 
-    return render_template("create_itinerary.html")
+    if request.method == "GET":
+        return render_template("create_itinerary.html")
+    else:
+        itinerary_name = request.form.get("name")
+        overview = request.form.get("overview")
+        locale = request.form.get("locale")
+        territory = request.form.get("territory")
+        country = request.form.get("country")
+            
+        itinerary = Itinerary.create_itinerary(session["user_id"],
+                                                itinerary_name, 
+                                                overview,
+                                                locale,
+                                                territory,
+                                                country)
+            
+        db.session.add(itinerary)
+        db.session.commit()
+
+        flash(f"Success! {itinerary_name} created.")
+
+        itinerary_id = itinerary.itinerary_id
+
+        return redirect(f"/itinerary/{itinerary_id}")
 
 
-@app.route("/add_item")
-def show_add_item():
-    """Display form to add items to a travel itinerary"""
+@app.route("/<itinerary_id>/add_activity", methods=["POST"])
+def add_activity(itinerary_id):
+    """ """
 
-    return render_template("add_item.html")
+    return redirect(f"/itinerary/{itinerary_id}")
+
 
 @app.route("/users")
 def show_users():
@@ -141,7 +167,7 @@ def show_users():
 
     return render_template("all_users.html", users=users)
 
-@app.route("/<username>")
+@app.route("/user/<username>")
 def show_profile(username):
     """Return page displaying user profile and list of user-curated itineraries"""
 
@@ -151,7 +177,7 @@ def show_profile(username):
     return render_template("user_profile.html", display_user=user, user_itineraries=itineraries)
 
 
-@app.route("/<username>/following")
+@app.route("/user/<username>/following")
 def list_following(username):
     """Return page displaying all users followed by the logged-in user"""
 
@@ -161,10 +187,10 @@ def list_following(username):
 
     following = Follower.get_following_by_follower_id(user_id)
 
-    return render_template("following.html", following=following)
+    return render_template("following.html", following=following, user=user)
 
 
-@app.route("/<username>/followers")
+@app.route("/user/<username>/followers")
 def list_followers(username):
     """Return page displaying all followers of the logged-in user"""
 
@@ -174,7 +200,7 @@ def list_followers(username):
 
     followers = Follower.get_followers_by_user_followed_id(user_id)
 
-    return render_template("followers.html", followers=followers)
+    return render_template("followers.html", followers=followers, user=user)
 
 
 @app.route("/logout")

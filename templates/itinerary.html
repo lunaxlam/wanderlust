@@ -10,11 +10,43 @@
 
 {% block body %}
 
+<h2>Creator: {{itinerary.user.username}}</h2>
 <h1>Trip Name: {{ itinerary.itinerary_name }}</h1>
 <p>Overview: {{ itinerary.overview }}</p>
-<p>Locations: {{ itinerary.locale }}, {{itinerary.territory}}, {{itinerary.country }}</p>
+<p>Locations: 
+    {% for destination in destinations %}
 
-<div> Activities
+    {{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}
+
+    {% endfor %}
+
+</p>
+
+{% if session["user_id"] == itinerary.user_id %}
+
+<h2>Add New Activity</h2>
+<form action="/{{ itinerary.itinerary_id}}/add_activity" method="POST">
+    <label for="activity-name">Name of Activity: </label>
+    <input type="text" name="name" id="activity-name">
+    <label for="activity-date">Date of Activity: </label>
+    <inpput type="date" id="activity-date">
+    <label for="activity-start">Start Time: </label>
+    <input type="time" name="start_time" id="activity-start">
+    <label for="activity-end">End Time: </label>
+    <input type="time" name="end_time" id="activity-end">
+    
+
+    <label for="user-country">Country that you plan to visit (separate by comma if more than one): </label>
+    <input type="text" name="country" id="itinerary-country">
+    <input type="submit" name="submit">
+</form>
+
+{% endif %}
+
+{% if activities|length > 0 %}
+
+<h2>Activities</h2>
+
 {% for activity in activities %}
 
 <ul>Activity: {{ activity.activity_name }}</ul>
@@ -27,9 +59,11 @@
 <ul>Ratings: </ul>
 <ul>Price Level: </ul>
 <ul>Place ID: {{ activity.place_id }}</ul>
+<ul>Notes: {{ activity.notes }}</ul>
 
 {% endfor %}
-</div>
+
+{% endif %}
 
 <!-- Script to load Places API -->
 <script async

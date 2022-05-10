@@ -10,13 +10,20 @@
 
 {% block body %}
 
-<h1>{{ session['user'] }}'s Followers:</h1>
+<h1>{{ user.username }}'s Followers:</h1>
+
+{% if followers|length > 0 %}
 
 {% for follower in followers %}
 
-<ul><a href="/{{ follower.follower.username }}">{{ follower.follower.username }}</a></ul>
+<ul><a href="/user/{{ follower.follower.username }}">{{ follower.follower.username }}</a></ul>
 
 {% endfor %}
 
+{% else %}
+
+<p>No current followers.</p>
+
+{% endif %}
 
 {% endblock %}

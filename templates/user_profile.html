@@ -12,16 +12,23 @@
 
 <h1>Hi, I'm {{ display_user.username }}</h1>
 <div>About Me
-
-<ul>Location: {{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
-<ul>Bio: {{ display_user.about_me }}</ul>
-
+    <ul>Location: {{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
+    <ul>Bio: {{ display_user.about_me }}</ul>
 </div>
+
+{% if display_user.username != session["user"] %}
+<div>
+    <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
+    <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
+</div>
+
+{% endif %}
+
+<div>2.0 Feature: Click here to Follow Me</div>
 
 <h2>My Travel Itineraries</h2>
 {% for itinerary in user_itineraries %}
 <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
 {% endfor %}
-
 
 {% endblock %}

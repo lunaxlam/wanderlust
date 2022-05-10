@@ -6,9 +6,9 @@
 <h1>Create Account</h1>
 <form action="/create_user" method="POST">
     <label for="user-email">Enter your email: </label>
-    <input type="text" name="email" id="user-email">
+    <input type="email" name="email" id="user-email">
     <label for="user-password">Create a password: </label>
-    <input type="text" name="password" id="user-password">
+    <input type="password" name="password" id="user-password">
     <label for="user-username">Select a username: </label>
     <input type="text" name="username" id="user-username">
     <label for="user-fname">Enter your first name: </label>
@@ -22,9 +22,8 @@
     <label for="user-country">Current country: </label>
     <input type="text" name="country" id="user-country">
     <label for="user-about-me">About Me: </label>
-    <input type="text" name="about_me" id="user-about-me">
-    <input type="submit">
+    <textarea name="about_me" id="user-about-me"></textarea>
+    <input type="submit" name="submit">
 </form>
-
 
 {% endblock %}
