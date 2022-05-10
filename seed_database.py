@@ -25,15 +25,14 @@ fake = Faker()
 
 bio = ["I teach Brazilian Jiu-Jitsu \U0001F94B, play guitar \U0001F3B8, and like dogs \U0001F436",
             "Traveler \U0001F30E Trekkie \U0001F596 Teacher \U0001F34E",
-            "Culinary Genius \U0001F9C1 Coffee Fiend \U00002615 doggo parent \U000F2665 \U0001F429",
+            "Culinary Genius \U0001F9C1 Coffee Fiend \U00002615 doggo parent \U0001F429",
             "Constantly thinking about how to Kirby-fy everything in my life \U0001F3AE",
             "Rookie neuroscientist. \U0001F9EA \U0001F52C",
             "Millenial butterfly and make-up artist \U0001F98B \U0001F3A8",
             "Chasing moments, making memories! \U0001F60E",
             "World traveler \U0001F30F Educator \U0001F34E Artist \U0001F3A8",
             "Photographer \U0001F4F7 Public Speaker \U0001F3A4 Educator \U0001F34E",
-            "Life should be enjoyed. Travel and eat! \U0001F5FA \U0001F9CB",
-            "Super happy person who loves to contribute to public projects! "]
+            "Life should be enjoyed. Travel and eat! \U0001F5FA \U0001F9CB"]
 
 addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"], 
                 ["Seattle", "WA", "USA"], ["Boston", "MA", "USA"], 
@@ -47,7 +46,7 @@ addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"],
 itinerary_names = [f"Sleepless in Seattle August {randint(2022, 2030)}", f"Sweet Home Chicago December {randint(2022, 2030)}", 
                 f"Halloween in Salem MA October {randint(2022, 2030)}", f"Denver Trip May {randint(2022, 2030)}",
                 f"Midwest Roadtrip Summer {randint(2022, 2030)}", f"Christmas in Toronto {randint(2022, 2030)}",
-                f"Swetha's Birthday Weekend in Vancouver October {randint(2022, 2030)}", f"Eating Our Way through NYC July {randint(2022, 2030)}"]
+                f"Louis Birthday Weekend September {randint(2022, 2030)}", f"Eating Our Way through NYC July {randint(2022, 2030)}"]
 
 
 # Create 25 users to seed the database 
@@ -104,23 +103,43 @@ itineraries_db = []
 for user in users_id:
 
     for num in range(1, randint(3, 5)):
-        address = choice(addresses)
-        locale = address[-3]
-        territory = address[-2]
-        country = address[-1]
-        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{num}. {choice(itinerary_names)}", overview=fake.text(max_nb_chars=50), locale=locale, territory=territory, country=country)
+        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{num}. {choice(itinerary_names)}", overview=fake.text(max_nb_chars=50))
         itineraries_db.append(new_itinerary)
 
 model.db.session.add_all(itineraries_db)
 model.db.session.commit()
 
-# To create the items tables, we need to get the itinerary_id of all itineraries in the database
+# To create the next two tables, we need to get the itinerary_id of all itineraries in the database
 itineraries_id = []
 
 all_itineraries = model.Itinerary.get_itineraries()
 
 for itinerary in all_itineraries:
     itineraries_id.append(itinerary.itinerary_id)
+
+
+# Create 2 to 4 destinations for each itinerary
+destinations_db = []
+
+for itinerary in itineraries_id:
+
+    for num in range(1, randint(3, 5)):
+
+        address = choice(addresses)
+        locale = address[-3]
+        territory = address[-2]
+        country = address[-1]
+
+        new_destination = model.Destination.create_destination(itinerary_id=itinerary, 
+                                                                locale=locale,
+                                                                territory=territory,
+                                                                country=country)
+        destinations_db.append(new_destination)
+
+# Add and commit items to the database
+model.db.session.add_all(destinations_db)
+model.db.session.commit()
+
 
 # Create 2 to 4 activity items for each itinerary:
 activities_db = []
@@ -133,6 +152,7 @@ for itinerary in itineraries_id:
                                             date=fake.future_datetime(),
                                             start_time=fake.time(),
                                             end_time=fake.time(),
+                                            notes=fake.text(max_nb_chars=50),
                                             place_id=f"ChIJA0YvGPWAhYAReXmaDTTdWzU")
         activities_db.append(new_activity)
 
