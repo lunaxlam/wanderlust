@@ -97,6 +97,7 @@ for n in range(40):
 model.db.session.add_all(followers_db)
 model.db.session.commit()
 
+
 # Create 2 to 4 travel itineraries for each user
 itineraries_db = []
 
@@ -106,10 +107,12 @@ for user in users_id:
         new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{num}. {choice(itinerary_names)}", overview=fake.text(max_nb_chars=50))
         itineraries_db.append(new_itinerary)
 
+# Add and commit itineraries to the database
 model.db.session.add_all(itineraries_db)
 model.db.session.commit()
 
-# To create the next two tables, we need to get the itinerary_id of all itineraries in the database
+
+# To create the destinations and activities tables, we need to get the itinerary_id of all itineraries in the database
 itineraries_id = []
 
 all_itineraries = model.Itinerary.get_itineraries()
@@ -136,7 +139,7 @@ for itinerary in itineraries_id:
                                                                 country=country)
         destinations_db.append(new_destination)
 
-# Add and commit items to the database
+# Add and commit destinations to the database
 model.db.session.add_all(destinations_db)
 model.db.session.commit()
 
@@ -156,6 +159,6 @@ for itinerary in itineraries_id:
                                             place_id=f"ChIJA0YvGPWAhYAReXmaDTTdWzU")
         activities_db.append(new_activity)
 
-# Add and commit items to the database
+# Add and commit activities to the database
 model.db.session.add_all(activities_db)
 model.db.session.commit()

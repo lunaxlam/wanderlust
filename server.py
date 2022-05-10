@@ -116,8 +116,8 @@ def show_itinerary(itinerary_id):
     """Return page displaying itinerary and list of itinerary items"""
 
     itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
-    activities = Activity.get_activity_by_itinerary_id(itinerary_id)
-    destinations = Destination.get_destination_by_itinerary_id(itinerary_id)
+    activities = itinerary.activities
+    destinations = itinerary.destinations
 
     return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations)
 
@@ -172,7 +172,7 @@ def show_profile(username):
     """Return page displaying user profile and list of user-curated itineraries"""
 
     user = User.get_user_by_username(username)
-    itineraries = Itinerary.get_itinerary_by_user_id(user.user_id)
+    itineraries = user.itineraries
 
     return render_template("user_profile.html", display_user=user, user_itineraries=itineraries)
 
@@ -183,9 +183,7 @@ def list_following(username):
 
     user = User.get_user_by_username(username)
 
-    user_id = user.user_id
-
-    following = Follower.get_following_by_follower_id(user_id)
+    following = user.following
 
     return render_template("following.html", following=following, user=user)
 
@@ -196,9 +194,7 @@ def list_followers(username):
 
     user = User.get_user_by_username(username)
 
-    user_id = user.user_id
-
-    followers = Follower.get_followers_by_user_followed_id(user_id)
+    followers = user.followers
 
     return render_template("followers.html", followers=followers, user=user)
 

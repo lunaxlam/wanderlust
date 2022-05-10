@@ -15,7 +15,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)                             # hashing when creating a User instance 
+    password = db.Column(db.String, nullable=False)                        #### !!! Sprint 2: hashing and salting when creating a User instance 
     username = db.Column(db.String(20), nullable=False, unique=True)
     fname = db.Column(db.String(50), nullable=False)
     lname = db.Column(db.String(50), nullable=False)
@@ -31,7 +31,7 @@ class User(db.Model):
     def __repr__(self):
         """A string representation of a User."""
 
-        return f"<User user_id={self.user_id} username={self.username} fname={self.fname} lname={self.lname} email={self.email} >"
+        return f"<User user_id={self.user_id} username={self.username} fname={self.fname} lname={self.lname} email={self.email} locale={self.locale} territory={self.territory} country={self.country}>"
 
     @classmethod
     def create_user(cls, email, password, username, fname, lname, locale, territory, country, about_me):
@@ -41,9 +41,9 @@ class User(db.Model):
         username = username.lower()
         fname = fname.title()
         lname = lname.title()
-        locale = locale.title()
-        territory = territory.title()
-        country = country.upper()
+        locale = locale.lower()
+        territory = territory.lower()
+        country = country.lower()
 
         user = User(email=email, 
                     password=password, 
@@ -61,19 +61,37 @@ class User(db.Model):
     def get_users(cls):
         """Return all user objects"""
 
-        return db.session.query(User)
+        return cls.query
 
     @classmethod
     def get_user_by_username(cls, username):
-        """Return a user by username"""
+        """Return a user object by username"""
 
-        return User.query.filter(User.username == username).first()
+        return cls.query.filter(cls.username == username).first()
     
     @classmethod
     def get_user_by_email(cls, email):
-        """Return a user by email"""
+        """Return a user object by email"""
 
-        return User.query.filter(User.email == email).first()    
+        return cls.query.filter(cls.email == email).first()    
+
+    @classmethod
+    def get_user_by_locale(cls, locale):
+        """Returns a list of all users by locale"""
+
+        return cls.query.filter(cls.locale == locale).all()
+    
+    @classmethod
+    def get_user_by_territory(cls, territory):
+        """Returns a list of all users by territory"""
+
+        return cls.query.filter(cls.territory == territory).all()
+    
+    @classmethod
+    def get_user_by_country(cls, country):
+        """Returns a list of all users by country"""
+
+        return cls.query.filter(cls.country == country).all()
 
 
 class Follower(db.Model):
@@ -82,12 +100,12 @@ class Follower(db.Model):
     __tablename__ = "followers"
 
     follow_activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) # lender_id
-    user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) #seller_id
+    follower_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    user_followed_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     # Establish relationship between classes; stores a User object associated with the defined foreign_key value
-    follower = db.relationship("User", foreign_keys=[follower_id], backref="followers") 
-    user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="users_followed") 
+    follower = db.relationship("User", foreign_keys=[follower_id], backref="following") 
+    user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="followers") 
 
     def __repr__(self):
         """A string representation of a Follower."""
@@ -107,25 +125,7 @@ class Follower(db.Model):
     def get_followers(cls):
         """Return all follower objects"""
 
-        return db.session.query(Follower)
-
-    @classmethod
-    def get_follower_by_follower_id(cls, follower_id):
-        """Return a follower by follower_id"""
-
-        return Follower.query.filter(Follower.follower_id == follower_id).first()
-
-    @classmethod
-    def get_followers_by_user_followed_id(cls, user_followed_id):
-        """Return all followers that are following a specified user_followed_id"""
-
-        return Follower.query.filter(Follower.user_followed_id == user_followed_id).all()
-
-    @classmethod
-    def get_following_by_follower_id(cls, follower_id):
-        """Return all followers that are being followed by a specified follower_id"""
-
-        return Follower.query.filter(Follower.follower_id == follower_id).all()
+        return cls.query
 
 
 class Itinerary(db.Model):
@@ -164,37 +164,31 @@ class Itinerary(db.Model):
     def get_itineraries(cls):
         """Return all itinerary objects"""
 
-        return db.session.query(Itinerary)
+        return cls.query
 
     @classmethod
     def get_itinerary_by_itinerary_id(cls, itinerary_id):
-        """Return an itinerary by itinerary_id"""
+        """Return an itinerary object by itinerary_id"""
 
-        return Itinerary.query.filter(Itinerary.itinerary_id == itinerary_id).first()
-
-    @classmethod
-    def get_itinerary_by_user_id(cls, user_id):
-        """Return all itineraries by user_id"""
-
-        return Itinerary.query.filter(Itinerary.user_id == user_id).all()
+        return cls.query.filter(cls.itinerary_id == itinerary_id).first()
     
     @classmethod
     def get_itinerary_by_locale(cls, locale):
-        """Return all itineraries by destination locale"""
+        """Return a list of all itineraries by destination locale"""
 
-        return db.session.query(Itinerary).filter(Destination.locale == locale).all()
+        return cls.query.join(Destination).filter(Destination.locale == locale).all()
 
     @classmethod
     def get_itinerary_by_territory(cls, territory):
-        """Return all itineraries by destination territory"""
+        """Return a list of all itineraries by destination territory"""
 
-        return db.session.query(Itinerary).filter(Destination.territory == territory).all()
+        return cls.query.join(Destination).filter(Destination.territory == territory).all()
     
     @classmethod
     def get_itinerary_by_country(cls, country):
-        """Return all itineraries by destination country"""
+        """Return a list of all itineraries by destination country"""
 
-        return db.session.query(Itinerary).filter(Destination.country == country).all()
+        return cls.query.join(Destination).filter(Destination.country == country).all()
 
 
 class Destination(db.Model):
@@ -219,9 +213,9 @@ class Destination(db.Model):
     @classmethod
     def create_destination(cls, itinerary_id, locale, territory, country):
         
-        locale = locale.title()
-        territory = territory.title()
-        country = country.upper()
+        locale = locale.lower()
+        territory = territory.lower()
+        country = country.lower()
 
         destination = Destination(itinerary_id=itinerary_id,
                                     locale=locale,
@@ -234,13 +228,7 @@ class Destination(db.Model):
     def get_destinations(cls):
         """Return all destination location objects"""
 
-        return db.session.query(Destination)
-
-    @classmethod
-    def get_destination_by_itinerary_id(cls, itinerary_id):
-        """Return all items by itinerary_id"""
-
-        return Destination.query.filter(Destination.itinerary_id == itinerary_id).all()
+        return cls.query
 
 
 class Activity(db.Model):
@@ -282,15 +270,9 @@ class Activity(db.Model):
     
     @classmethod
     def get_activities(cls):
-        """Return all itinerary activity item objects"""
+        """Return all itinerary activity items"""
 
-        return db.session.query(Activity)
-
-    @classmethod
-    def get_activity_by_itinerary_id(cls, itinerary_id):
-        """Return all itinerary activity items by itinerary_id"""
-
-        return Activity.query.filter(Activity.itinerary_id == itinerary_id).all()
+        return cls.query
 
 
 # Set-up project to connect SQLAlchemy to Postgres database; this is done through psycopg2
