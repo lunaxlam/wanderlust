@@ -116,8 +116,7 @@ class Follower(db.Model):
     def create_follower(cls, follower_id, user_followed_id):
         """Create and return a follower"""
 
-        follower = Follower(follower_id=follower_id,
-                            user_followed_id=user_followed_id)
+        follower = Follower(follower_id=follower_id, user_followed_id=user_followed_id)
         
         return follower
     
@@ -141,24 +140,22 @@ class Itinerary(db.Model):
     # Establish relationship between Itinerary class and User class
     user = db.relationship("User", backref="itineraries")
     
-    # activities = a list of itinerary Activity objects
-    
     # Establish relationship with the Association table
     locations = db.relationship("Location", secondary="destinations", backref="itineraries")
+
+    # activities = a list of itinerary Activity objects
 
     def __repr__(self):
         """A string representation of a travel itinerary."""
 
-        return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id}>"
+        return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} locations={self.locations}>"
     
     @classmethod
     def create_itinerary(cls, user_id, itinerary_name, overview):
 
         itinerary_name = itinerary_name.capitalize()
         
-        itinerary = Itinerary(user_id=user_id,
-                                itinerary_name=itinerary_name,
-                                overview=overview)
+        itinerary = Itinerary(user_id=user_id, itinerary_name=itinerary_name, overview=overview)
         
         return itinerary
 
@@ -178,19 +175,19 @@ class Itinerary(db.Model):
     def get_itinerary_by_locale(cls, locale):
         """Return a list of all itineraries by location locale"""
 
-        return cls.query.join(Location).filter(Location.locale == locale).all()
+        return cls.query.join(cls.locations).filter(Location.locale == locale).all()
 
     @classmethod
     def get_itinerary_by_territory(cls, territory):
         """Return a list of all itineraries by location territory"""
 
-        return cls.query.join(Location).filter(Location.territory == territory).all()
+        return cls.query.join(cls.locations).filter(Location.territory == territory).all()
     
     @classmethod
     def get_itinerary_by_country(cls, country):
         """Return a list of all itineraries by location country"""
 
-        return cls.query.join(Location).filter(Location.country == country).all()
+        return cls.query.join(cls.locations).filter(Location.country == country).all()
 
 
 class Activity(db.Model):
@@ -271,7 +268,7 @@ class Location(db.Model):
 
 
 class Destination(db.Model):
-    """An association table between Itinerary, Activity, and Location."""
+    """An association table between Itinerary and Location."""
 
     __tablename__ = "destinations"
 
