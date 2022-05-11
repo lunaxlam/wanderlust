@@ -1,7 +1,7 @@
 """Server for Wanderlust app."""
 
 from flask import (Flask, render_template, request, redirect, session, flash)
-from model import connect_to_db, db, User, Follower, Itinerary, Destination, Activity
+from model import connect_to_db, db, User, Itinerary, Location
 import os
 
 from jinja2 import StrictUndefined
@@ -102,7 +102,7 @@ def create_user():
             return redirect("/")
 
 
-@app.route("/itineraries") # eventually remove this route
+@app.route("/itineraries") 
 def list_all_itineraries():
     """Return page displaying all itineraries Wanderlust has to offer"""
 
@@ -117,7 +117,7 @@ def show_itinerary(itinerary_id):
 
     itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
     activities = itinerary.activities
-    destinations = itinerary.destinations
+    destinations = itinerary.locations
 
     return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations)
 
@@ -135,13 +135,17 @@ def create_itinerary():
         territory = request.form.get("territory")
         country = request.form.get("country")
             
-        itinerary = Itinerary.create_itinerary(session["user_id"],
-                                                itinerary_name, 
-                                                overview,
-                                                locale,
-                                                territory,
-                                                country)
+        itinerary = Itinerary.create_itinerary(session["user_id"], itinerary_name, overview)
             
+        db.session.add(itinerary)
+        db.session.commit()
+
+        location = Location.create_location(locale, territory, country)
+
+        db.session.add(location)
+        db.session.commit()
+
+        itinerary.locations.append(location)
         db.session.add(itinerary)
         db.session.commit()
 
@@ -169,7 +173,7 @@ def show_users():
 
 @app.route("/user/<username>")
 def show_profile(username):
-    """Return page displaying user profile and list of user-curated itineraries"""
+    """Return page displaying user profile and user-curated itineraries"""
 
     user = User.get_user_by_username(username)
     itineraries = user.itineraries

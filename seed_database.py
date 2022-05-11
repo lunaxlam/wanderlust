@@ -157,15 +157,14 @@ model.db.session.add_all(locations_db)
 model.db.session.commit()
 
 
-# Create 2 to 4 locations for each itinerary
+# Create a locations for each itinerary
 all_locations = model.Location.get_locations().all()
 
 for itinerary in all_itineraries:
 
-    for num in range(1, randint(3, 5)):
-        location  = choice(all_locations)
+    location  = choice(all_locations)
 
-        itinerary.locations.append(location)
-        model.db.session.add(itinerary)
+    itinerary.locations.append(location)
+    model.db.session.add(itinerary)
 
 model.db.session.commit()
