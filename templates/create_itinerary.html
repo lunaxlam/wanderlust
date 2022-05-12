@@ -13,15 +13,15 @@
 <h1>Create a New Itinerary</h1>
 <form action="/create_itinerary" method="POST">
     <label for="itinerary-name">Itinerary Name: </label>
-    <input type="text" name="name" id="itinerary-name">
+    <input type="text" name="name" id="itinerary-name" required>
     <label for="itinerary-overview">Overview: </label>
-    <textarea name="overview" id="itinerary-overview"></textarea>
+    <textarea name="overview" id="itinerary-overview" required></textarea>
     <label for="itinerary-locale">City you will visit (separate by comma if more than one): </label>
-    <input type="text" name="locale" id="itinerary-locale">
+    <input type="text" name="locale" id="itinerary-locale" required>
     <label for="user-locale">State/territory that you will visit (separate by comma if more than one): </label>
-    <input type="text" name="territory" id="itinerary-territory">
+    <input type="text" name="territory" id="itinerary-territory" required>
     <label for="user-country">Country that you plan to visit (separate by comma if more than one): </label>
-    <input type="text" name="country" id="itinerary-country">
+    <input type="text" name="country" id="itinerary-country" required>
     <input type="submit" name="submit">
 </form>
 

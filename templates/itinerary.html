@@ -10,10 +10,11 @@
 
 {% block body %}
 
-<h2>Creator: {{itinerary.user.username}}</h2>
-<h1>Trip Name: {{ itinerary.itinerary_name }}</h1>
+<h1>Itinerary Name: {{ itinerary.itinerary_name }}</h1>
+<h2>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h2>
 <p>Overview: {{ itinerary.overview }}</p>
 <p>Locations: 
+
     {% for destination in destinations %}
 
     {{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}
@@ -24,7 +25,7 @@
 
 {% if session["user_id"] == itinerary.user_id %}
 <br><br>
-<h2>Add New Activity</h2>
+<h2>Add New Itinerary Activity</h2>
 
 <h3> Find a Location</h3>
 <h4> Search by Point of Interest</h4>
@@ -35,27 +36,14 @@
     <input type="text" name="locale" id="search-locale">
     <label for="search-territory">State or Territory:</label>
     <input type="text" name="territory" id="search-territory">
-    <input type="submit" name="submit">
-</form>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-<h3>Activity Details </h3>
-<form action="/itinerary/{{ itinerary.itinerary_id}}/add_activity" method="POST">
-    <label for="activity-name">Name of Activity:</label>
-    <input type="text" name="name" id="activity-name">
-    <label for="activity-date">Date:</label>
-    <input type="date" name="date" id="activity-date">
-    <label for="activity-start">Start Time:</label>
-    <input type="time" name="start_time" id="activity-start">
-    <label for="activity-end">End Time:</label>
-    <input type="time" name="end_time" id="activity-end">
-    <label for="activity-notes">Notes:</label>
-    <textarea name="notes" id="activity-notes"></textarea>
+    <label for="search-country">Country:</label>
+    <input type="text" name="country" id="search-country">
     <input type="submit" name="submit">
 </form>
 
 {% endif %}
+
+<br><br>
 
 {% if activities|length > 0 %}
 
@@ -67,16 +55,28 @@
 <ul>Date: {{ activity.date }}</ul>
 <ul>Start Time: {{ activity.start_time }}</ul>
 <ul>End Time: {{ activity.end_time }}</ul>
+<ul>Place ID: {{ activity.place_id }}</ul>
+
+<br>
+{% endfor %}
+
+<h1>Test Test Test</h1>
+<div id="saved_place"></div>
+
+{% endif %}
+
+<br>
+<br>
+<br>
+<br>
+
 <ul>Name of Location: </ul>
 <ul>Address: </ul>
 <ul>Phone: </ul>
 <ul>Ratings: </ul>
 <ul>Price Level: </ul>
-<ul>Place ID: {{ activity.place_id }}</ul>
-<ul>Notes: {{ activity.notes }}</ul>
+<ul>Place ID: </ul>
+<ul>Notes: </ul>
 
-{% endfor %}
-
-{% endif %}
 
 {% endblock %}

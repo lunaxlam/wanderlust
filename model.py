@@ -232,6 +232,12 @@ class Activity(db.Model):
         """Return all itinerary activity items"""
 
         return cls.query
+    
+    @classmethod
+    def get_activities_by_itinerary_id(cls, itinerary_id):
+        """Return all itinerary activity items by itinerary_id"""
+
+        return cls.query.filter(cls.itinerary_id == itinerary_id)
 
 
 class Location(db.Model):

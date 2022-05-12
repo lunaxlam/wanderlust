@@ -106,26 +106,6 @@ def create_user():
             return redirect("/")
 
 
-@app.route("/itineraries") 
-def list_all_itineraries():
-    """Return page displaying all itineraries Wanderlust has to offer"""
-
-    itineraries = Itinerary.get_itineraries()
-
-    return render_template("all_itineraries.html", itineraries=itineraries)
-
-
-@app.route("/itinerary/<itinerary_id>")
-def show_itinerary(itinerary_id):
-    """Return page displaying itinerary and list of itinerary items"""
-
-    itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
-    activities = itinerary.activities
-    destinations = itinerary.locations
-
-    return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations, API_KEY=API_KEY)
-
-
 @app.route("/create_itinerary", methods=["GET", "POST"])
 def create_itinerary():
     """Display form to create a travel itinerary"""
@@ -160,94 +140,116 @@ def create_itinerary():
         return redirect(f"/itinerary/{itinerary_id}")
 
 
+@app.route("/itineraries") 
+def list_all_itineraries():
+    """Return page displaying all itineraries Wanderlust has to offer"""
+
+    itineraries = Itinerary.get_itineraries()
+
+    return render_template("all_itineraries.html", itineraries=itineraries)
+
+
+@app.route("/itinerary/<itinerary_id>")
+def show_itinerary(itinerary_id):
+    """Return page displaying itinerary and list of itinerary items"""
+
+    itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
+    activities = itinerary.activities
+    destinations = itinerary.locations
+
+    return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations)
+
+
 @app.route("/itinerary/<itinerary_id>/search")
-def find_place(itinerary_id):
-    """Search for locations on Google Places"""
+def search_place(itinerary_id):
+    """Search for places on Google Places"""
 
     keyword = request.args.get("keyword", "")
     locale = request.args.get("locale", "")
+    territory = request.args.get("territory", "")
     country = request.args.get("country", "")
 
-    query = f"{keyword} {locale} {country}"
+    query = f"{keyword}+{locale}+{territory}+{country}"
 
-    endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+    endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json"
     payload = {"query": query, "key": API_KEY}
 
     response = requests.get(endpoint, params=payload)
 
-    results = response.json()
+    data = response.json()
 
-    locations = results["results"]
+    results = data["results"]
 
-    if len(locations) > 0:
-        return render_template("search_results.html", locations=locations)
+    if len(results) > 0:
+        return render_template("search_results.html", itinerary_id=itinerary_id, results=results)
     else:
         flash("Search is too ambiguous. Try again.")
         return redirect(f"/itinerary/{itinerary_id}")
 
 
-@app.route("/search/<place_id>/details")
-def view_place_details(place_id):
+@app.route("/itinerary/<itinerary_id>/search/<place_id>/details")
+def view_place_details(itinerary_id, place_id):
     """View details for a location on Google Places"""
     
-    endpoint = "https://maps.googleapis.com/maps/api/place/details/json?"
+    endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
     payload = {"place_id": place_id, "key": API_KEY}
 
     response = requests.get(endpoint, params=payload)
 
-    result = response.json()
+    data = response.json()
 
-    data = result["result"]
-    name = data["name"]
-    google_url = data["url"]
-    address = data["formatted_address"]
-    phone = data["formatted_phone_number"]
-    website = data["website"]
-    rating = data["rating"]
-    user_ratings_total = data["user_ratings_total"]
-    hours = data["opening_hours"]["weekday_text"]
-    coordinates = data["geometry"]["location"]
+    results = data["result"]
 
-    # Store in sessions object to use later
-    session["place_info"] = [coordinates, name, address.split(","), google_url]
+    # # Store in sessions object to use later
+    session["place_data"] = {"name": results["name"],
+                            "location": results["geometry"]["location"],
+                            "address": results["formatted_address"],
+                            "place_url": results["url"]}
 
     return render_template("place_details.html",
                             API_KEY=API_KEY,
-                            name=name,
-                            google_url=google_url,
-                            address=address,
-                            phone=phone,
-                            website=website,
-                            rating=rating,
-                            total_reviewers=user_ratings_total,
-                            hours=hours)
+                            itinerary_id=itinerary_id,
+                            results=results)
 
 
-@app.route("/api/place_info")
-def coordinates_info():
-    """JSON information of lat/long coordinates"""
+@app.route("/api/search_place_data")
+def search_place_data():
+    """JSON information of a search place"""
 
-    return jsonify(session["place_info"])
+    return jsonify(session["place_data"])
 
 
-@app.route("/itinerary/<itinerary_id>/add_activity", methods=["POST"])
-def add_activity(itinerary_id):
+@app.route("/itinerary/<itinerary_id>/<place_id>/add_activity", methods=["GET", "POST"])
+def add_activity(itinerary_id, place_id):
     """Create an activity and add to itinerary"""
 
-    itinerary_id = itinerary_id
-    activity_name = request.form.get("name")
-    date = request.form.get("date")
-    start_time = request.form.get("start_time")
-    end_time = request.form.get("end_time")
-    notes = request.form.get("notes")
-    place_id = "thisisjustatesttoserveasaPLACEHOLDER"
+    if request.method == "GET":
+        return render_template("add_activity.html", itinerary_id=itinerary_id, place_id=place_id)
+    else:
+        itinerary_id = itinerary_id
+        place_id = place_id
+        activity_name = request.form.get("name")
+        date = request.form.get("date")
+        start_time = request.form.get("start_time")
+        end_time = request.form.get("end_time")
+        notes = request.form.get("notes")
 
-    new_activity = Activity.create_activity(itinerary_id, activity_name, date, start_time, end_time, notes, place_id)
+        new_activity = Activity.create_activity(itinerary_id, activity_name, date, start_time, end_time, notes, place_id)
 
-    db.session.add(new_activity)
-    db.session.commit()
+        db.session.add(new_activity)
+        db.session.commit()
 
-    return redirect(f"/itinerary/{itinerary_id}")
+        return redirect(f"/itinerary/{itinerary_id}")
+
+
+@app.route("/api/saved_activities")
+def saved_place_data():
+    """JSON information about previously saved activities and Google Place id data"""
+
+    Activity.get_activities
+
+
+    return redirect("/")
 
 
 @app.route("/users")
@@ -257,6 +259,7 @@ def show_users():
     users = User.get_users()
 
     return render_template("all_users.html", users=users)
+
 
 @app.route("/user/<username>")
 def show_profile(username):
