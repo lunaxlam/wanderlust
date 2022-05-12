@@ -23,21 +23,35 @@
 </p>
 
 {% if session["user_id"] == itinerary.user_id %}
-
+<br><br>
 <h2>Add New Activity</h2>
-<form action="/{{ itinerary.itinerary_id}}/add_activity" method="POST">
-    <label for="activity-name">Name of Activity: </label>
-    <input type="text" name="name" id="activity-name">
-    <label for="activity-date">Date of Activity: </label>
-    <inpput type="date" id="activity-date">
-    <label for="activity-start">Start Time: </label>
-    <input type="time" name="start_time" id="activity-start">
-    <label for="activity-end">End Time: </label>
-    <input type="time" name="end_time" id="activity-end">
-    
 
-    <label for="user-country">Country that you plan to visit (separate by comma if more than one): </label>
-    <input type="text" name="country" id="itinerary-country">
+<h3> Find a Location</h3>
+<h4> Search by Point of Interest</h4>
+<form action="/itinerary/{{ itinerary.itinerary_id }}/search">
+    <label for="search-keyword">Name of business or point of interest:</label>
+    <input type="text" name="keyword" id="search-keyword">
+    <label for="search-locale">City or Locale:</label>
+    <input type="text" name="locale" id="search-locale">
+    <label for="search-territory">State or Territory:</label>
+    <input type="text" name="territory" id="search-territory">
+    <input type="submit" name="submit">
+</form>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<h3>Activity Details </h3>
+<form action="/itinerary/{{ itinerary.itinerary_id}}/add_activity" method="POST">
+    <label for="activity-name">Name of Activity:</label>
+    <input type="text" name="name" id="activity-name">
+    <label for="activity-date">Date:</label>
+    <input type="date" name="date" id="activity-date">
+    <label for="activity-start">Start Time:</label>
+    <input type="time" name="start_time" id="activity-start">
+    <label for="activity-end">End Time:</label>
+    <input type="time" name="end_time" id="activity-end">
+    <label for="activity-notes">Notes:</label>
+    <textarea name="notes" id="activity-notes"></textarea>
     <input type="submit" name="submit">
 </form>
 
@@ -65,8 +79,4 @@
 
 {% endif %}
 
-<!-- Script to load Places API -->
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_hPin4GqH_r3ThjDy2qGyEc4uhPeQVcg&libraries=places&callback=initMap">
-</script>
 {% endblock %}

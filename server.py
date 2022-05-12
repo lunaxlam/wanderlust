@@ -1,8 +1,9 @@
 """Server for Wanderlust app."""
 
-from flask import (Flask, render_template, request, redirect, session, flash)
-from model import connect_to_db, db, User, Itinerary, Location
+from flask import Flask, render_template, request, redirect, session, flash, jsonify
+from model import connect_to_db, db, User, Itinerary, Location, Activity
 import os
+import requests
 
 from jinja2 import StrictUndefined
 
@@ -14,6 +15,9 @@ app.jinja_env.undefined = StrictUndefined
 
 # Set a secret key to enable use of Flask sessions
 app.secret_key = os.environ['FLASK_SECRET_KEY']
+
+# Google API key
+API_KEY = os.environ['GOOGLE_API_KEY']
 
 
 @app.route("/")
@@ -119,7 +123,7 @@ def show_itinerary(itinerary_id):
     activities = itinerary.activities
     destinations = itinerary.locations
 
-    return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations)
+    return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations, API_KEY=API_KEY)
 
 
 @app.route("/create_itinerary", methods=["GET", "POST"])
@@ -156,9 +160,92 @@ def create_itinerary():
         return redirect(f"/itinerary/{itinerary_id}")
 
 
-@app.route("/<itinerary_id>/add_activity", methods=["POST"])
+@app.route("/itinerary/<itinerary_id>/search")
+def find_place(itinerary_id):
+    """Search for locations on Google Places"""
+
+    keyword = request.args.get("keyword", "")
+    locale = request.args.get("locale", "")
+    country = request.args.get("country", "")
+
+    query = f"{keyword} {locale} {country}"
+
+    endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+    payload = {"query": query, "key": API_KEY}
+
+    response = requests.get(endpoint, params=payload)
+
+    results = response.json()
+
+    locations = results["results"]
+
+    if len(locations) > 0:
+        return render_template("search_results.html", locations=locations)
+    else:
+        flash("Search is too ambiguous. Try again.")
+        return redirect(f"/itinerary/{itinerary_id}")
+
+
+@app.route("/search/<place_id>/details")
+def view_place_details(place_id):
+    """View details for a location on Google Places"""
+    
+    endpoint = "https://maps.googleapis.com/maps/api/place/details/json?"
+    payload = {"place_id": place_id, "key": API_KEY}
+
+    response = requests.get(endpoint, params=payload)
+
+    result = response.json()
+
+    data = result["result"]
+    name = data["name"]
+    google_url = data["url"]
+    address = data["formatted_address"]
+    phone = data["formatted_phone_number"]
+    website = data["website"]
+    rating = data["rating"]
+    user_ratings_total = data["user_ratings_total"]
+    hours = data["opening_hours"]["weekday_text"]
+    coordinates = data["geometry"]["location"]
+
+    # Store in sessions object to use later
+    session["place_info"] = [coordinates, name, address.split(","), google_url]
+
+    return render_template("place_details.html",
+                            API_KEY=API_KEY,
+                            name=name,
+                            google_url=google_url,
+                            address=address,
+                            phone=phone,
+                            website=website,
+                            rating=rating,
+                            total_reviewers=user_ratings_total,
+                            hours=hours)
+
+
+@app.route("/api/place_info")
+def coordinates_info():
+    """JSON information of lat/long coordinates"""
+
+    return jsonify(session["place_info"])
+
+
+@app.route("/itinerary/<itinerary_id>/add_activity", methods=["POST"])
 def add_activity(itinerary_id):
-    """ """
+    """Create an activity and add to itinerary"""
+
+    itinerary_id = itinerary_id
+    activity_name = request.form.get("name")
+    date = request.form.get("date")
+    start_time = request.form.get("start_time")
+    end_time = request.form.get("end_time")
+    notes = request.form.get("notes")
+    place_id = "thisisjustatesttoserveasaPLACEHOLDER"
+
+    new_activity = Activity.create_activity(itinerary_id, activity_name, date, start_time, end_time, notes, place_id)
+
+    db.session.add(new_activity)
+    db.session.commit()
 
     return redirect(f"/itinerary/{itinerary_id}")
 

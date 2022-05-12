@@ -1,10 +1,8 @@
 """Script to seed database."""
 
 import os
-import json
 from random import choice, randint
 from faker import Faker
-import requests
 
 import model
 import server

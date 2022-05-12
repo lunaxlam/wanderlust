@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Location Results{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderlust Community</a></ul>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Search Results</h1>
+
+{% for location in locations %}
+
+<p>Location Name: <a href="/search/{{ location['place_id'] }}/details" target="blank">{{ location["name"] }}</a></p>
+<p>Location Address: {{ location["formatted_address"] }}</p>
+<br>
+{% endfor %}
+
+<br><br>
+
+
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{ name }}{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderlust Community</a></ul>
+
+{% endblock %}
+
+{% block body %}
+
+<div id="map"></div>
+<h1>{{ name }}</h1>
+<p>Address: <a href="{{ google_url }}" target="_blank">{{ address }}</a></p>
+<p>Phone: {{ phone }}</p>
+<p>Website: <a href="{{ website }}" target="_blank">{{ website }}</a></p>
+<p>Rating: {{ rating }} out of {{ total_reviewers }} total reviews</p>
+<p>Business Hours: 
+    {% for hour in hours %}
+    
+    <ul>{{ hour }}</ul>
+    
+    {% endfor %}</p>
+
+
+<!-- Script to load Google Maps -->
+<script src="/static/js/place_map.js"></script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
+</script>
+{% endblock %}
