@@ -1,6 +1,5 @@
 """Models for Wanderlust app."""
 
-# Import SQLAlchemy through the Flask extension
 from flask_sqlalchemy import SQLAlchemy
 
 # Constructor function to create an instance of SQLAlchemy; a db object that represents our database
@@ -152,8 +151,6 @@ class Itinerary(db.Model):
     
     @classmethod
     def create_itinerary(cls, user_id, itinerary_name, overview):
-
-        itinerary_name = itinerary_name.capitalize()
         
         itinerary = Itinerary(user_id=user_id, itinerary_name=itinerary_name, overview=overview)
         
@@ -237,7 +234,7 @@ class Activity(db.Model):
     def get_activities_by_itinerary_id(cls, itinerary_id):
         """Return all itinerary activity items by itinerary_id"""
 
-        return cls.query.filter(cls.itinerary_id == itinerary_id)
+        return cls.query.filter(cls.itinerary_id == itinerary_id).all()
 
 
 class Location(db.Model):

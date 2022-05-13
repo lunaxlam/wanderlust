@@ -39,9 +39,7 @@
 </p>
 {% endif %}
 
-<p>Add to Itinerary Activity: <a href="/itinerary/{{ itinerary_id }}/{{ results['place_id'] }}/add_activity">plz click me</a></p>
-
-{{ session["place_data"] }}
+<p><a href="/itinerary/{{ itinerary_id }}/{{ results['place_id'] }}/add_activity">Add to Itinerary Activity</a></p>
 
 <!-- Script to load Google Maps -->
 <script src="/static/js/maps.js"></script>

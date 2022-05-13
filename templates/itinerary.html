@@ -45,38 +45,12 @@
 
 <br><br>
 
-{% if activities|length > 0 %}
-
 <h2>Activities</h2>
-
-{% for activity in activities %}
-
-<ul>Activity: {{ activity.activity_name }}</ul>
-<ul>Date: {{ activity.date }}</ul>
-<ul>Start Time: {{ activity.start_time }}</ul>
-<ul>End Time: {{ activity.end_time }}</ul>
-<ul>Place ID: {{ activity.place_id }}</ul>
-
-<br>
-{% endfor %}
-
-<h1>Test Test Test</h1>
 <div id="saved_place"></div>
 
-{% endif %}
-
-<br>
-<br>
-<br>
-<br>
-
-<ul>Name of Location: </ul>
-<ul>Address: </ul>
-<ul>Phone: </ul>
-<ul>Ratings: </ul>
-<ul>Price Level: </ul>
-<ul>Place ID: </ul>
-<ul>Notes: </ul>
 
 
+
+<!-- Script to load fetch request -->
+<script src="/static/js/ajaxDisplayActivity.js"></script>
 {% endblock %}

@@ -41,16 +41,24 @@ addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"],
                 ["Vancouver", "British Columbia", "CAN"], ["Sveta Nedelja", "Zagreb", "CI"],
                 ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
-itinerary_names = [f"Sleepless in Seattle August {randint(2022, 2030)}", f"Sweet Home Chicago December {randint(2022, 2030)}", 
-                f"Halloween in Salem MA October {randint(2022, 2030)}", f"Denver Trip May {randint(2022, 2030)}",
-                f"Midwest Roadtrip Summer {randint(2022, 2030)}", f"Christmas in Toronto {randint(2022, 2030)}",
-                f"Louis Birthday Weekend September {randint(2022, 2030)}", f"Eating Our Way through NYC July {randint(2022, 2030)}"]
+itinerary_names = [f"Sleepless in Seattle Tour - Summer {randint(2022, 2030)}", f"Holidays at Sweet Home Chicago {randint(2022, 2030)}", 
+                f"A Screaming Halloween Weekend in Salem MA", f"Exploring Denver in May {randint(2022, 2030)}",
+                f"West Coast Best Coast Summer {randint(2022, 2030)} Roadtrip", f"Trip to Toronto {randint(2022, 2030)}",
+                f"Louis Birthday Weekend in Door County Labor Day {randint(2022, 2030)}", f"Manhattan Walking Food Tour {randint(2022, 2030)}"]
 
+lorem_ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
-# Create 25 users to seed the database 
+notes = ["Reservations allowed up to 24 hours in advance", "No cell phoones allowed", "18 and older only",
+        "Check personal belongings before entering", "5 persons-max per reservation",  "Masks required"]
+
+place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJ-bfVTh8VkFQRDZLQnmioK9s",
+             "ChIJ_VQLhrpqkFQR5sDjZ1AhuHI", "ChIJfy4MvqG3t4kRuL_QjoJGc-k", "ChIJX4k2TVVfXIYRIsTnhA-P-Rc",
+             "ChIJywjU6WG_woAR3NrWwrEH_3M", "ChIJb8Jg9pZYwokR-qHGtvSkLzs", "ChIJM0FkBix__YcRupUSQ2SfW04"]
+
+# Create users to seed the database 
 users_db = []
 
-for n in range (25):
+for n in range (15):
     fname = fake.unique.first_name()
     lname = fake.unique.last_name()
     domain = fake.free_email_domain()
@@ -80,10 +88,10 @@ all_users = model.User.get_users()
 for user in all_users:
     users_id.append(user.user_id)
 
-# Create 40 followers
+# Create followers
 followers_db = []
 
-for n in range(40):
+for n in range(20):
     follower_id = choice(users_id)
     user_followed_id = choice(users_id)
 
@@ -96,13 +104,13 @@ model.db.session.add_all(followers_db)
 model.db.session.commit()
 
 
-# Create 2 to 4 travel itineraries for each user
+# Create a few travel itineraries for each user
 itineraries_db = []
 
 for user in users_id:
 
-    for num in range(1, randint(3, 5)):
-        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{num}. {choice(itinerary_names)}", overview=fake.text(max_nb_chars=50))
+    for num in range(randint(2, 4)):
+        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{choice(itinerary_names)}", overview=lorem_ipsum)
         itineraries_db.append(new_itinerary)
 
 # Add and commit itineraries to the database
@@ -119,19 +127,19 @@ all_itineraries = model.Itinerary.get_itineraries()
 for itinerary in all_itineraries:
     itineraries_id.append(itinerary.itinerary_id)
 
-# Create 2 to 4 activity items for each itinerary:
+# Create a few activity items for each itinerary:
 activities_db = []
 
 for itinerary in itineraries_id:
 
-    for num in range(1, randint(3, 5)):
+    for num in range(randint(2, 4)):
         new_activity = model.Activity.create_activity(itinerary_id=itinerary, 
-                                            activity_name="Dinner at Cotogna",
+                                            activity_name="Lorem ipsum",
                                             date=fake.future_datetime(),
                                             start_time=fake.time(),
                                             end_time=fake.time(),
-                                            notes=fake.text(max_nb_chars=50),
-                                            place_id=f"ChIJA0YvGPWAhYAReXmaDTTdWzU")
+                                            notes=choice(notes),
+                                            place_id=choice(place_ids))
         activities_db.append(new_activity)
 
 # Add and commit activities to the database

@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, session, flash, jso
 from model import connect_to_db, db, User, Itinerary, Location, Activity
 import os
 import requests
+import json, json_encoder
 
 from jinja2 import StrictUndefined
 
@@ -154,10 +155,11 @@ def show_itinerary(itinerary_id):
     """Return page displaying itinerary and list of itinerary items"""
 
     itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
-    activities = itinerary.activities
     destinations = itinerary.locations
+   
+    session["itinerary_id"] = itinerary_id
 
-    return render_template("itinerary.html", itinerary=itinerary, activities=activities, destinations=destinations)
+    return render_template("itinerary.html", itinerary=itinerary, destinations=destinations)
 
 
 @app.route("/itinerary/<itinerary_id>/search")
@@ -244,12 +246,37 @@ def add_activity(itinerary_id, place_id):
 
 @app.route("/api/saved_activities")
 def saved_place_data():
-    """JSON information about previously saved activities and Google Place id data"""
+    """JSON information about previously saved activities including place_id data"""
 
-    Activity.get_activities
+    db_activities = {}
 
+    activities = Activity.get_activities_by_itinerary_id(session["itinerary_id"])
 
-    return redirect("/")
+    for i, activity in enumerate(activities):
+
+        # activity_time = {"start_time": activity.start_time,
+        #                 "end_time": activity.end_time}
+
+        # times = json.dumps(activity_time, cls=json_encoder.DateTimeEncoder)
+        
+        endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
+        payload = {"place_id": activity.place_id, 
+                    "key": API_KEY}
+
+        response = requests.get(endpoint, params=payload)
+        data = response.json()
+        
+        results = data["result"] 
+
+        db_activities[f"{i}"] = {"activity_id": activity.activity_id,
+                                "itinerary_id": activity.itinerary_id,
+                                "activity_name": activity.activity_name,
+                                "date": activity.date,
+                                "notes": activity.notes,
+                                "place_id": activity.place_id,
+                                "results": results}
+        
+    return jsonify(db_activities)
 
 
 @app.route("/users")
