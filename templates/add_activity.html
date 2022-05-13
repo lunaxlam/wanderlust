@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Add New Activity{% endblock %}
+
+{% block nav %}
+
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderlust Community</a></ul>
+
+{% endblock %}
+
+{% block body %}
+
+<h2>Place Details</h2>
+<div id="search_place"></div>
+
+<br>
+
+<h1>Create Activity</h1>
+<form action="/itinerary/{{ itinerary_id}}/{{ place_id }}/add_activity" method="POST">
+    <label for="activity-name">Name of Activity:</label>
+    <input type="text" name="name" id="activity-name">
+    <label for="activity-date">Date:</label>
+    <input type="date" name="date" id="activity-date">
+    <label for="activity-start">Start Time:</label>
+    <input type="time" name="start_time" id="activity-start">
+    <label for="activity-end">End Time:</label>
+    <input type="time" name="end_time" id="activity-end">
+    <label for="activity-notes">Notes:</label>
+    <textarea name="notes" id="activity-notes"></textarea>
+    <input type="submit" name="submit">
+</form>
+
+
+<!-- Script to load fetch request -->
+<script src="/static/js/ajaxAddActivity.js"></script>
+{% endblock %}
