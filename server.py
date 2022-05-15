@@ -230,12 +230,11 @@ def add_activity(itinerary_id, place_id):
         itinerary_id = itinerary_id
         place_id = place_id
         activity_name = request.form.get("name")
-        date = request.form.get("date")
-        start_time = request.form.get("start_time")
-        end_time = request.form.get("end_time")
+        start = request.form.get("start")
+        end = request.form.get("end")
         notes = request.form.get("notes")
 
-        new_activity = Activity.create_activity(itinerary_id, activity_name, date, start_time, end_time, notes, place_id)
+        new_activity = Activity.create_activity(itinerary_id, activity_name, start, end, notes, place_id)
 
         db.session.add(new_activity)
         db.session.commit()
@@ -265,9 +264,8 @@ def saved_place_data():
         db_activities[f"{i}"] = {"activity_id": activity.activity_id,
                                 "itinerary_id": activity.itinerary_id,
                                 "activity_name": activity.activity_name,
-                                "date": activity.date,
-                                "start_time": activity.start_time,
-                                "end_time": activity.end_time,
+                                "start": activity.start,
+                                "end": activity.end,
                                 "notes": activity.notes,
                                 "place_id": activity.place_id,
                                 "results": results}

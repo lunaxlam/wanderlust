@@ -2,6 +2,8 @@
 
 from flask_sqlalchemy import SQLAlchemy
 
+from datetime import datetime
+
 # Constructor function to create an instance of SQLAlchemy; a db object that represents our database
 # The db object can use SQLAlchemy class methods like db.create_all(), .add(), .commit()
 db = SQLAlchemy()
@@ -195,9 +197,8 @@ class Activity(db.Model):
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
     activity_name = db.Column(db.String(50), nullable=False)
-    date = db.Column(db.Date, nullable=True)
-    start_time = db.Column(db.String, nullable=True)
-    end_time = db.Column (db.String, nullable=True)
+    start = db.Column(db.String, nullable=True)
+    end = db.Column (db.String, nullable=True)
     notes = db.Column(db.Text, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
@@ -207,18 +208,24 @@ class Activity(db.Model):
     def __repr__(self):
         "A string representation of an itineary item."
 
-        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} date={self.date} start_time={self.start_time} end_time={self.end_time}>"
+        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} start={self.start} end_time={self.end}>"
 
     @classmethod
-    def create_activity(cls, itinerary_id, activity_name, date, start_time, end_time, notes, place_id):
+    def create_activity(cls, itinerary_id, activity_name, start, end, notes, place_id):
         
         activity_name = activity_name.title()
 
+        if isinstance(start, str) and isinstance(end, str):
+            start = datetime.strptime(start, "%Y-%m-%dT%H:%M")
+            end = datetime.strptime(end, "%Y-%m-%dT%H:%M")
+
+        start = start.strftime("%A, %B %-m, %Y - %-I:%M %p")
+        end = end.strftime("%A, %B %-m, %Y - %-I:%M %p")
+
         activity = Activity(itinerary_id=itinerary_id,
                     activity_name=activity_name,
-                    date=date,
-                    start_time=start_time,
-                    end_time=end_time,
+                    start=start,
+                    end=end,
                     notes=notes,
                     place_id=place_id)
         

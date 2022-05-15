@@ -7,6 +7,8 @@ from faker import Faker
 import model
 import server
 
+from datetime import datetime
+
 
 # Drop existing database by running dropdb command using os.system
 os.system("dropdb wanderlust")
@@ -132,12 +134,17 @@ activities_db = []
 
 for itinerary in itineraries_id:
 
+    start = datetime.utcnow()
+    end = datetime.now()
+
+    # start = datetime_object1.strftime("%A, %B %-m, %Y - %-I:%M %p")
+    # end = datetime_object2.strftime("%A, %B %-m, %Y - %-I:%M %p")
+
     for num in range(randint(2, 4)):
         new_activity = model.Activity.create_activity(itinerary_id=itinerary, 
                                             activity_name="Lorem ipsum",
-                                            date=fake.future_datetime(),
-                                            start_time=fake.time(),
-                                            end_time=fake.time(),
+                                            start=start,
+                                            end=end,
                                             notes=choice(notes),
                                             place_id=choice(place_ids))
         activities_db.append(new_activity)
