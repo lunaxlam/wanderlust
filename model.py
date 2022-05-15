@@ -216,22 +216,19 @@ class Activity(db.Model):
         
         activity_name = activity_name.title()
 
+        # Convert string-datetime into datetime object
         if isinstance(start, str) and isinstance(end, str):
             start = datetime.strptime(start, "%Y-%m-%dT%H:%M")
             end = datetime.strptime(end, "%Y-%m-%dT%H:%M")
 
-           
+        # Update string output of datetime object
         start_time = start.strftime("%-I:%M %p")
         end_time = end.strftime("%-I:%M %p")
 
-        # start_date = start.strftime("%A, %B %-m, %Y")
-        # end_date = end.strftime("%A, %B %-m, %Y")
-
+        # Set string output of datetime object to locale representation
         start_date = start.strftime("%x")
         end_date = end.strftime("%x")
 
-
-        
         if start_date != end_date:
             dates = f"{start_date} to {end_date}"
             start_time = f"{start_time} on {start_date}"
