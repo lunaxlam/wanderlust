@@ -264,8 +264,10 @@ def saved_place_data():
         db_activities[f"{i}"] = {"activity_id": activity.activity_id,
                                 "itinerary_id": activity.itinerary_id,
                                 "activity_name": activity.activity_name,
-                                "start": activity.start,
-                                "end": activity.end,
+                                "start_date": activity.start_date,
+                                "end_date": activity.end_date,
+                                "start": activity.start_time,
+                                "end": activity.end_time,
                                 "notes": activity.notes,
                                 "place_id": activity.place_id,
                                 "results": results}

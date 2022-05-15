@@ -137,9 +137,6 @@ for itinerary in itineraries_id:
     start = datetime.utcnow()
     end = datetime.now()
 
-    # start = datetime_object1.strftime("%A, %B %-m, %Y - %-I:%M %p")
-    # end = datetime_object2.strftime("%A, %B %-m, %Y - %-I:%M %p")
-
     for num in range(randint(2, 4)):
         new_activity = model.Activity.create_activity(itinerary_id=itinerary, 
                                             activity_name="Lorem ipsum",

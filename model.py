@@ -197,8 +197,10 @@ class Activity(db.Model):
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
     activity_name = db.Column(db.String(50), nullable=False)
-    start = db.Column(db.String, nullable=True)
-    end = db.Column (db.String, nullable=True)
+    start_date = db.Column(db.String, nullable=True)
+    end_date = db.Column (db.String, nullable=True)
+    start_time = db.Column(db.String, nullable=True)
+    end_time = db.Column (db.String, nullable=True)
     notes = db.Column(db.Text, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
@@ -216,16 +218,27 @@ class Activity(db.Model):
         activity_name = activity_name.title()
 
         if isinstance(start, str) and isinstance(end, str):
-            start = datetime.strptime(start, "%Y-%m-%dT%H:%M")
-            end = datetime.strptime(end, "%Y-%m-%dT%H:%M")
+            start_datetime_obj = datetime.strptime(start, "%Y-%m-%dT%H:%M")
+            end_datetime_obj= datetime.strptime(end, "%Y-%m-%dT%H:%M")
 
-        start = start.strftime("%A, %B %-m, %Y - %-I:%M %p")
-        end = end.strftime("%A, %B %-m, %Y - %-I:%M %p")
+            start_time = start_datetime_obj.strftime("%A, %B %-m, %Y - %-I:%M %p")
+            end_time = end_datetime_obj.strftime("%A, %B %-m, %Y - %-I:%M %p")
+
+            start_date = start_datetime_obj.strftime("%A, %B %-m, %Y")
+            end_date = end_datetime_obj.strftime("%A, %B %-m, %Y")
+        else:
+            start_time = start.strftime("%A, %B %-m, %Y - %-I:%M %p")
+            end_time = end.strftime("%A, %B %-m, %Y - %-I:%M %p")
+
+            start_date = start.strftime("%A, %B %-m, %Y")
+            end_date = end.strftime("%A, %B %-m, %Y")
 
         activity = Activity(itinerary_id=itinerary_id,
                     activity_name=activity_name,
-                    start=start,
-                    end=end,
+                    start_date=start_date,
+                    end_date=end_date,
+                    start_time=start_time,
+                    end_time=end_time,
                     notes=notes,
                     place_id=place_id)
         
