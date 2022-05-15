@@ -134,8 +134,8 @@ activities_db = []
 
 for itinerary in itineraries_id:
 
-    start = datetime.utcnow()
-    end = datetime.now()
+    start = datetime.now()
+    end = datetime.utcnow()
 
     for num in range(randint(2, 4)):
         new_activity = model.Activity.create_activity(itinerary_id=itinerary, 

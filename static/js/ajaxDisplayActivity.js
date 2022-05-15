@@ -11,17 +11,18 @@ fetch('/api/saved_activities')
 
         for (const i in data) {
 
+            console.log(data[i]["dates"])
+
             document.querySelector('#saved_place').insertAdjacentHTML(
                 'beforeend',
                 `<section>
                     <ul>Name: ${data[i]["activity_name"]} </ul>
-                    <ul>Dates: ${data[i]["start_date"]} to ${data[i]["end_date"]} </ul> 
+                    <ul>Date: ${data[i]["dates"]}</ul> 
                     <ul>Start: ${data[i]["start"]} </ul> 
                     <ul>End: ${data[i]["end"]} </ul>   
                     <ul>Location: ${data[i]["results"]["name"]} </ul>                    
                     <ul>Address: <a href='${data[i]["results"]["url"]}'>${data[i]["results"]["formatted_address"]}</a></ul>
                     <ul>Phone: ${data[i]["results"]["formatted_phone_number"]} </ul>
-                    <ul>Ratings: ${data[i]["results"]["rating"]} out of ${data[i]["results"]["user_ratings_total"]} total reviews</ul>
                     <ul>Notes: ${data[i]["notes"]} </ul>
                 </section><br>`
             )

@@ -197,8 +197,7 @@ class Activity(db.Model):
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
     activity_name = db.Column(db.String(50), nullable=False)
-    start_date = db.Column(db.String, nullable=True)
-    end_date = db.Column (db.String, nullable=True)
+    dates = db.Column(db.String, nullable=True)
     start_time = db.Column(db.String, nullable=True)
     end_time = db.Column (db.String, nullable=True)
     notes = db.Column(db.Text, nullable=True)
@@ -218,25 +217,32 @@ class Activity(db.Model):
         activity_name = activity_name.title()
 
         if isinstance(start, str) and isinstance(end, str):
-            start_datetime_obj = datetime.strptime(start, "%Y-%m-%dT%H:%M")
-            end_datetime_obj= datetime.strptime(end, "%Y-%m-%dT%H:%M")
+            start = datetime.strptime(start, "%Y-%m-%dT%H:%M")
+            end = datetime.strptime(end, "%Y-%m-%dT%H:%M")
 
-            start_time = start_datetime_obj.strftime("%A, %B %-m, %Y - %-I:%M %p")
-            end_time = end_datetime_obj.strftime("%A, %B %-m, %Y - %-I:%M %p")
+           
+        start_time = start.strftime("%-I:%M %p")
+        end_time = end.strftime("%-I:%M %p")
 
-            start_date = start_datetime_obj.strftime("%A, %B %-m, %Y")
-            end_date = end_datetime_obj.strftime("%A, %B %-m, %Y")
+        # start_date = start.strftime("%A, %B %-m, %Y")
+        # end_date = end.strftime("%A, %B %-m, %Y")
+
+        start_date = start.strftime("%x")
+        end_date = end.strftime("%x")
+
+
+        
+        if start_date != end_date:
+            dates = f"{start_date} to {end_date}"
+            start_time = f"{start_time} on {start_date}"
+            end_time = f"{end_time} on {end_date}"
         else:
-            start_time = start.strftime("%A, %B %-m, %Y - %-I:%M %p")
-            end_time = end.strftime("%A, %B %-m, %Y - %-I:%M %p")
-
-            start_date = start.strftime("%A, %B %-m, %Y")
-            end_date = end.strftime("%A, %B %-m, %Y")
+            dates = start_date
+ 
 
         activity = Activity(itinerary_id=itinerary_id,
                     activity_name=activity_name,
-                    start_date=start_date,
-                    end_date=end_date,
+                    dates=dates,
                     start_time=start_time,
                     end_time=end_time,
                     notes=notes,
