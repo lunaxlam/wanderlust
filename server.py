@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect, session, flash, jso
 from model import connect_to_db, db, User, Itinerary, Location, Activity
 import os
 import requests
-import json, json_encoder
 
 from jinja2 import StrictUndefined
 
@@ -254,11 +253,6 @@ def saved_place_data():
 
     for i, activity in enumerate(activities):
 
-        # activity_time = {"start_time": activity.start_time,
-        #                 "end_time": activity.end_time}
-
-        # times = json.dumps(activity_time, cls=json_encoder.DateTimeEncoder)
-        
         endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
         payload = {"place_id": activity.place_id, 
                     "key": API_KEY}
@@ -272,6 +266,8 @@ def saved_place_data():
                                 "itinerary_id": activity.itinerary_id,
                                 "activity_name": activity.activity_name,
                                 "date": activity.date,
+                                "start_time": activity.start_time,
+                                "end_time": activity.end_time,
                                 "notes": activity.notes,
                                 "place_id": activity.place_id,
                                 "results": results}

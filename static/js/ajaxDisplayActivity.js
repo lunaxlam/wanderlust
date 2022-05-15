@@ -18,7 +18,6 @@ fetch('/api/saved_activities')
                     <ul>Date: ${data[i]["date"]} </ul>
                     <ul>Start Time: ${data[i]["start_time"]} </ul> 
                     <ul>End Time: ${data[i]["end_time"]} </ul>                    
-                    <ul>Location: ${data[i]["date"]} </ul>
                     <ul>Address: <a href='${data[i]["results"]["url"]}'>${data[i]["results"]["formatted_address"]}</a></ul>
                     <ul>Phone: ${data[i]["results"]["formatted_phone_number"]} </ul>
                     <ul>Ratings: ${data[i]["results"]["rating"]} out of ${data[i]["results"]["user_ratings_total"]} total reviews</ul>

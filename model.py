@@ -1,4 +1,4 @@
-"""Models for Wanderlust app."""
+"""Models for Wanderlust app"""
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -196,8 +196,8 @@ class Activity(db.Model):
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
     activity_name = db.Column(db.String(50), nullable=False)
     date = db.Column(db.Date, nullable=True)
-    start_time = db.Column(db.Time, nullable=True)
-    end_time = db.Column (db.Time, nullable=True)
+    start_time = db.Column(db.String, nullable=True)
+    end_time = db.Column (db.String, nullable=True)
     notes = db.Column(db.Text, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
