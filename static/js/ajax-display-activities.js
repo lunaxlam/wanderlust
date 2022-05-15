@@ -21,7 +21,7 @@ fetch('/api/saved_activities')
                     <ul>Start: ${data[i]["start"]} </ul> 
                     <ul>End: ${data[i]["end"]} </ul>   
                     <ul>Location: ${data[i]["results"]["name"]} </ul>                    
-                    <ul>Address: <a href='${data[i]["results"]["url"]}'>${data[i]["results"]["formatted_address"]}</a></ul>
+                    <ul>Address: <a href='${data[i]["results"]["url"]}' target='_blank'>${data[i]["results"]["formatted_address"]}</a></ul>
                     <ul>Phone: ${data[i]["results"]["formatted_phone_number"]} </ul>
                     <ul>Notes: ${data[i]["notes"]} </ul>
                 </section><br>`
@@ -29,5 +29,5 @@ fetch('/api/saved_activities')
         }
     })
     .catch(() => {
-        alert('Something wrong with dataset!')
+        alert('Something wrong with the dataset!')
     });

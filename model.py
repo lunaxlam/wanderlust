@@ -1,7 +1,6 @@
 """Models for Wanderlust app"""
 
 from flask_sqlalchemy import SQLAlchemy
-
 from datetime import datetime
 
 # Constructor function to create an instance of SQLAlchemy; a db object that represents our database
@@ -226,8 +225,8 @@ class Activity(db.Model):
         end_time = end.strftime("%-I:%M %p")
 
         # Set string output of datetime object to locale representation
-        start_date = start.strftime("%x")
-        end_date = end.strftime("%x")
+        start_date = start.strftime("%x %Z")
+        end_date = end.strftime("%x %Z")
 
         if start_date != end_date:
             dates = f"{start_date} to {end_date}"
