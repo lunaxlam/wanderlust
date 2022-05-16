@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}{{ display_user.username }}'s page{% endblock %}
 
-{% block nav %}
 
+{% block nav %}
 <ul><a href="/">Home</a></ul>
 <ul><a href="/users">View Wanderlust Community</a></ul>
-
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 <h1>{{ display_user.username }} </h1>
+
 <div id="about-me">
     <ul>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
     <ul>{{ display_user.about_me }}</ul>
@@ -24,7 +24,6 @@
 </div><br>
 
 {% else %}
-
 <h2><a href="/create_itinerary">Ready to Plan Another Trip?</a></h2><br>
 
 {% endif %}

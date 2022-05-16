@@ -18,10 +18,12 @@
 
         <title>{% block title %}PAGE TITLE{% endblock %}</title>
 
-        {% block head %}{% endblock %}
+        {% block head %}
+        {% endblock %}
 
     </head>
     <body>
+        
         {% for msg in get_flashed_messages() %}
         <p class="flash-msg">
             {{ msg }}
@@ -49,7 +51,8 @@
         {% block after_body %}
         {% endblock %}
         
-        <footer></footer>
+        <footer>
+        </footer>
 
     </body>
 </html>

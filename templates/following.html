@@ -1,27 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}Following{% endblock %}
 
-{% block nav %}
 
+{% block nav %}
 <ul><a href="/">Home</a></ul>
 <ul><a href="/users">View Wanderlust Community</a></ul>
-
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 <h1>{{ user.username }} is Following:</h1>
 
 {% if following|length > 0 %}
 
 {% for follower in following %}
-
 <ul><a href="/user/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></ul>
-
 {% endfor %}
 
 {% else %}
-
 <p>Not currently following anyone.</p>
 
 {% endif %}

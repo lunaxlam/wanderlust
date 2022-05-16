@@ -24,6 +24,12 @@
 
 {% endfor %}
 
+{% if  "next_page_token" in data %}
+
+<a href="/itinerary/{{ itinerary_id }}/search/{{ data['next_page_token'] }}"><button>More Results</button></a>
+
+{% endif %}
+
 <br><br>
 
 {% endblock %}

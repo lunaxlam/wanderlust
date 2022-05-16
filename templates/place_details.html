@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}{{ results["name"] }}{% endblock %}
 
-{% block nav %}
 
+{% block nav %}
 <ul><a href="/">Home</a></ul>
 <ul><a href="/users">View Wanderlust Community</a></ul>
-
 {% endblock %}
+
 
 {% block body %}
 
 <div id="map"></div>
+
+
 <h1>{{ results["name"] }}</h1>
 
 {% if "formatted_address" in results %}
@@ -39,11 +41,14 @@
 </p>
 {% endif %}
 
+
 <p><a href="/itinerary/{{ itinerary_id }}/{{ results['place_id'] }}/add_activity"><button>Add Location to New Activity</button></a></p>
+
 
 <!-- Script to load Google Maps -->
 <script src="/static/js/maps.js"></script>
 <script async
     src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
 </script>
+
 {% endblock %}

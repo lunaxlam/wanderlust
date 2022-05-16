@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Create a New Itinerary{% endblock %}
 
-{% block nav %}
 
+{% block nav %}
 <ul><a href="/">Home</a></ul>
 <ul><a href="/users">View Wanderlust Community</a></ul>
-
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 <h1>Plan Your Trip</h1>
+
 <form action="/create_itinerary" method="POST">
     <label for="itinerary-name">Name Your Trip: </label>
     <input type="text" name="name" id="itinerary-name" required><br>

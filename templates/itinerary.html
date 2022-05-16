@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}{{ itinerary.itinerary_name}}{% endblock %}
 
-{% block nav %}
 
+{% block nav %}
 <ul><a href="/">Home</a></ul>
 <ul><a href="/users">View Wanderlust Community</a></ul>
-
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 <h1>{{ itinerary.itinerary_name }}</h1>
 <h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
 <p>Overview: {{ itinerary.overview }}</p>
@@ -28,6 +27,7 @@
 <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
 <br>
 <br>
+
 
 <h2>Add New Activity</h2>
 
@@ -55,4 +55,5 @@
 
 <!-- Script to load fetch request -->
 <script src="/static/js/ajax-saved-activities.js"></script>
+
 {% endblock %}
