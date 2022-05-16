@@ -166,9 +166,8 @@ def itinerary_locale_info():
     itineraries = Itinerary.get_itinerary_by_locale(locale)
 
     for i, itinerary in enumerate(itineraries):
-
-        db_itineraries_locale[f"{i}"] = {"itinerary.itinerary_id": itinerary.itinerary_id,
-                                        "itinerary.itinerary_name": itinerary.itinerary_name
+        db_itineraries_locale[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
+                                        "itinerary_name": itinerary.itinerary_name,
         }
 
     return jsonify(db_itineraries_locale)
@@ -185,9 +184,8 @@ def itinerary_territory_info():
     itineraries = Itinerary.get_itinerary_by_territory(territory)
 
     for i, itinerary in enumerate(itineraries):
-
-        db_itineraries_territory[f"{i}"] = {"itinerary.itinerary_id": itinerary.itinerary_id,
-                                        "itinerary.itinerary_name": itinerary.itinerary_name
+        db_itineraries_territory[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
+                                        "itinerary_name": itinerary.itinerary_name,
         }
 
     return jsonify(db_itineraries_territory)
@@ -204,9 +202,8 @@ def itinerary_country_info():
     itineraries = Itinerary.get_itinerary_by_country(country)
 
     for i, itinerary in enumerate(itineraries):
-
-        db_itineraries_country[f"{i}"] = {"itinerary.itinerary_id": itinerary.itinerary_id,
-                                        "itinerary.itinerary_name": itinerary.itinerary_name
+        db_itineraries_country[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
+                                        "itinerary_name": itinerary.itinerary_name,
         }
 
     return jsonify(db_itineraries_country)
@@ -254,10 +251,17 @@ def search_place(itinerary_id):
     results = data["results"]
 
     if len(results) > 0:
-        return render_template("search_results.html", itinerary_id=itinerary_id, results=results)
+        return render_template("search_results.html", itinerary_id=itinerary_id, results=results, data=data)
     else:
         flash("Search is too ambiguous. Try again.")
         return redirect(f"/itinerary/{itinerary_id}")
+
+
+@app.route("/itinerary/<itinerary_id>/search/<next_page_token>")
+def search_place_next(itinerary_id, next_page_token):
+    """Search for additional results on Google Places"""
+
+    return redirect("/")
 
 
 @app.route("/itinerary/<itinerary_id>/search/<place_id>/details")
