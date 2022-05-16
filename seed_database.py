@@ -33,8 +33,8 @@ bio = ["I teach Brazilian Jiu-Jitsu \U0001F94B, play guitar \U0001F3B8, and like
             "Photographer \U0001F4F7 Public Speaker \U0001F3A4 Educator \U0001F34E",
             "Life should be enjoyed. Travel and eat! \U0001F5FA \U0001F9CB"]
 
-addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"], 
-                ["Seattle", "WA", "USA"], ["Boston", "MA", "USA"], 
+addresses = [["Chicago", "Illinois", "USA"], ["New York", "New York", "USA"], 
+                ["Seattle", "Washington", "USA"], ["Boston", "Massachusetts", "USA"], 
                 ["Hong Kong Island", "Hong Kong", "HK"], ["Venice", "Veneto", "ITA"],
                 ["London", "England", "UK"], ["Liverpool", "England", "UK"],
                 ["Lagos", "Nigeria", "NE"], ["Taipei", "Northern Taiwan", "TAI"],
@@ -92,7 +92,7 @@ for user in all_users:
 # Create followers
 followers_db = []
 
-for n in range(20):
+for n in range(50):
     follower_id = choice(users_id)
     user_followed_id = choice(users_id)
 
