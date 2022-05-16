@@ -1,27 +1,99 @@
 'use strict';
 
-// Display itineraries
+// Display itineraries by locale
 
 const localeBtn = document.querySelector('#locale-btn')
 
 localeBtn.addEventListener('click', (evt) => {
     evt.preventDefault();
 
-    fetch('/api/itineraries/by_locale')
+    const locale = document.querySelector('#locale-select').value
+
+    const queryString = new URLSearchParams({locale}).toString()
+
+    fetch(`/api/itineraries/by_locale?${queryString}`)
         .then((response) => response.json())
-        .catch(() => {
-            alert('Something wrong with the route!')
-        })
         .then((data) => {
+
+            const mount = document.querySelector('#all-itineraries')
+            
+            mount.innerHTML = ``
 
             for (const i in data) {
 
-            console.log(data[i])
-            document.querySelector('#all-itineraries').innerHTML = 
+                const itinerary_id = data[i]["itinerary_id"]
+                const itinerary_name = data[i]["itinerary_name"]
 
-            data[i]
+                mount.insertAdjacentHTML(
+                    'beforeend',
+                    `<ul><a href="/itinerary/${itinerary_id}">${itinerary_name}</a></ul>`
+                )
+            }    
+        })
+})
 
-            }
-           
+
+// Display itineraries by territory
+
+const territoryBtn = document.querySelector('#territory-btn')
+
+territoryBtn.addEventListener('click', (evt) => {
+    evt.preventDefault();
+
+    const territory = document.querySelector('#territory-select').value
+
+    const queryString = new URLSearchParams({territory}).toString()
+
+    fetch(`/api/itineraries/by_territory?${queryString}`)
+        .then((response) => response.json())
+        .then((data) => {
+
+            const mount = document.querySelector('#all-itineraries')
+            
+            mount.innerHTML = ``
+
+            for (const i in data) {
+
+                const itinerary_id = data[i]["itinerary_id"]
+                const itinerary_name = data[i]["itinerary_name"]
+
+                mount.insertAdjacentHTML(
+                    'beforeend',
+                    `<ul><a href="/itinerary/${itinerary_id}">${itinerary_name}</a></ul>`
+                )
+            }    
+        })
+})
+
+
+// Display itineraries by territory
+
+const countryBtn = document.querySelector('#country-btn')
+
+countryBtn.addEventListener('click', (evt) => {
+    evt.preventDefault();
+
+    const country = document.querySelector('#country-select').value
+
+    const queryString = new URLSearchParams({country}).toString()
+
+    fetch(`/api/itineraries/by_country?${queryString}`)
+        .then((response) => response.json())
+        .then((data) => {
+
+            const mount = document.querySelector('#all-itineraries')
+            
+            mount.innerHTML = ``
+
+            for (const i in data) {
+
+                const itinerary_id = data[i]["itinerary_id"]
+                const itinerary_name = data[i]["itinerary_name"]
+
+                mount.insertAdjacentHTML(
+                    'beforeend',
+                    `<ul><a href="/itinerary/${itinerary_id}">${itinerary_name}</a></ul>`
+                )
+            }    
         })
 })
