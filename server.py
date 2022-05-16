@@ -1,7 +1,7 @@
 """Server for Wanderlust app."""
 
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
-from model import connect_to_db, db, User, Itinerary, Location, Activity
+from model import connect_to_db, db, User, Itinerary, Location, Activity, Country
 import os
 import requests
 
@@ -65,7 +65,10 @@ def create_user():
     """Register a new user."""
 
     if request.method == "GET":
-        return render_template("create_user.html")
+
+        countries = Country.get_countries()
+
+        return render_template("create_user.html", countries=countries)
     else:
         # Check to see if user already exists in database
         email = request.form.get("email")
@@ -111,7 +114,9 @@ def create_itinerary():
     """Display form to create a travel itinerary"""
 
     if request.method == "GET":
-        return render_template("create_itinerary.html")
+
+        countries = Country.get_countries()
+        return render_template("create_itinerary.html", countries=countries)
     else:
         itinerary_name = request.form.get("name")
         overview = request.form.get("overview")
@@ -145,8 +150,66 @@ def list_all_itineraries():
     """Return page displaying all itineraries Wanderlust has to offer"""
 
     itineraries = Itinerary.get_itineraries()
+    locations = Location.get_locations()
 
-    return render_template("all_itineraries.html", itineraries=itineraries)
+    return render_template("all_itineraries.html", itineraries=itineraries, locations=locations)
+
+
+@app.route("/api/itineraries/by_locale")
+def itinerary_locale_info():
+    """JSON information about itineraries by locale"""
+
+    db_itineraries_locale = {}
+
+    locale = request.args.get("locale")
+
+    itineraries = Itinerary.get_itinerary_by_locale(locale)
+
+    for i, itinerary in enumerate(itineraries):
+
+        db_itineraries_locale[f"{i}"] = {"itinerary.itinerary_id": itinerary.itinerary_id,
+                                        "itinerary.itinerary_name": itinerary.itinerary_name
+        }
+
+    return jsonify(db_itineraries_locale)
+
+
+@app.route("/api/itineraries/by_territory")
+def itinerary_territory_info():
+    """JSON information about itineraries by territory"""
+
+    db_itineraries_territory = {}
+
+    territory = request.args.get("territory")
+
+    itineraries = Itinerary.get_itinerary_by_territory(territory)
+
+    for i, itinerary in enumerate(itineraries):
+
+        db_itineraries_territory[f"{i}"] = {"itinerary.itinerary_id": itinerary.itinerary_id,
+                                        "itinerary.itinerary_name": itinerary.itinerary_name
+        }
+
+    return jsonify(db_itineraries_territory)
+
+
+@app.route("/api/itineraries/by_country")
+def itinerary_country_info():
+    """JSON information about itineraries by country"""
+
+    db_itineraries_country = {}
+
+    country = request.args.get("country")
+
+    itineraries = Itinerary.get_itinerary_by_country(country)
+
+    for i, itinerary in enumerate(itineraries):
+
+        db_itineraries_country[f"{i}"] = {"itinerary.itinerary_id": itinerary.itinerary_id,
+                                        "itinerary.itinerary_name": itinerary.itinerary_name
+        }
+
+    return jsonify(db_itineraries_country)
 
 
 @app.route("/itinerary/<itinerary_id>")
@@ -159,6 +222,15 @@ def show_itinerary(itinerary_id):
     session["itinerary_id"] = itinerary_id
 
     return render_template("itinerary.html", itinerary=itinerary, destinations=destinations)
+
+
+@app.route("/itinerary/<itinerary_id>/delete_itinerary")
+def delete_itinerary(itinerary_id):
+    """Delete itinerary from database"""
+
+    Itinerary.delete_itinerary(itinerary_id)
+
+    return redirect(f"/user/{session['user']}")
 
 
 @app.route("/itinerary/<itinerary_id>/search")
@@ -269,9 +341,22 @@ def saved_place_data():
                                 "end": activity.end_time,
                                 "notes": activity.notes,
                                 "place_id": activity.place_id,
-                                "results": results}
+                                "results": results
+        }
         
     return jsonify(db_activities)
+
+
+@app.route("/api/delete_activity")
+def delete_activity():
+    """Delete activity from database"""
+
+    activity_id = request.args.get("activity_id")
+
+    Activity.delete_activity(activity_id)
+
+    return {"success": True,
+            "status": f"Success! Activity deleted."}
 
 
 @app.route("/users")
@@ -321,7 +406,7 @@ def process_logout():
 
     session.pop("user")
 
-    flash("Logged out.")
+    flash("Goodbye!")
 
     return redirect("/")
 

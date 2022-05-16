@@ -10,25 +10,31 @@
 
 {% block body %}
 
-<h1>Hello, I'm {{ display_user.username }}</h1>
-<div>About Me
-    <ul>Location: {{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
-    <ul>Bio: {{ display_user.about_me }}</ul>
-</div>
+<h1>{{ display_user.username }} </h1>
+<div id="about-me">
+    <ul>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
+    <ul>{{ display_user.about_me }}</ul>
+</div><br>
 
 {% if display_user.username != session["user"] %}
+<h2>2.0 Feature: Click here to Follow Me</h2>
 <div>
     <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
     <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
-</div>
+</div><br>
+
+{% else %}
+
+<h2><a href="/create_itinerary">Ready to Plan Another Trip?</a></h2><br>
 
 {% endif %}
 
-<div>2.0 Feature: Click here to Follow Me</div>
 
 <h2>My Travel Itineraries</h2>
 {% for itinerary in user_itineraries %}
+
 <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
+
 {% endfor %}
 
 {% endblock %}

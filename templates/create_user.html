@@ -5,24 +5,28 @@
 
 <h1>Create Account</h1>
 <form action="/create_user" method="POST">
-    <label for="user-email">Enter your email: </label>
-    <input type="email" name="email" id="user-email" required>
-    <label for="user-password">Set a password: </label>
-    <input type="password" name="password" id="user-password" required>
-    <label for="user-username">Create a username: </label>
-    <input type="text" name="username" id="user-username" required>
-    <label for="user-fname">Your first name: </label>
-    <input type="text" name="fname" id="user-fname" required>
-    <label for="user-lname">Your last name: </label>
-    <input type="text" name="lname" id="user-lname" required>
-    <label for="user-locale">Your current city: </label>
-    <input type="text" name="locale" id="user-locale" required>
-    <label for="user-territory">Your current state/territory: </label>
-    <input type="text" name="territory" id="user-territory" required>
-    <label for="user-country">Your current country: </label>
-    <input type="text" name="country" id="user-country" required>
-    <label for="user-about-me">Create a brief bio: </label>
-    <textarea name="about_me" id="user-about-me"></textarea>
+    <label for="user-email">Email: </label>
+    <input type="email" name="email" id="user-email" pattern="(\w+|\d+)\@(\w+|\d+)." required><br>
+    <label for="user-password">Password: </label>
+    <input type="password" name="password" id="user-password" required><br>
+    <label for="user-username">Username: </label>
+    <input type="text" name="username" id="user-username" required><br>
+    <label for="user-fname">First Name: </label>
+    <input type="text" name="fname" id="user-fname" required><br>
+    <label for="user-lname">Last Name: </label>
+    <input type="text" name="lname" id="user-lname" required><br>
+    <label for="user-locale">Locale: </label>
+    <input type="text" name="locale" id="user-locale" required><br>
+    <label for="user-territory">Territory: </label>
+    <input type="text" name="territory" id="user-territory" required><br>
+    <label for="user-country">Country: </label>
+    <select name="country" id="country">
+        {% for country in countries %}
+        <option value="{{ country.country_code }}">{{ country.country_name }}</option>
+        {% endfor %}
+    </select><br>
+    <label for="user-about-me">Brief Bio: </label>
+    <textarea name="about_me" id="user-about-me"></textarea><br>
     <input type="submit" name="submit" required>
 </form>
 

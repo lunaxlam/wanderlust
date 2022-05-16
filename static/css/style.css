@@ -75,3 +75,50 @@ a {
 a:hover {
 	text-decoration: underline;
 }
+
+/* Custom Styling */
+
+body {
+    background-color: #F8F4F0;
+    font-family: Roboto, Arial;
+    color: #2f4f4f;
+    margin: 5px;
+    padding: 10px;
+}
+
+nav {
+	margin: 10px 0 10px 0;
+}
+
+h1 {
+	font-size: 26px;
+	font-weight: bold;
+	text-align: center;
+	padding: 10px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.start {
+	text-align: center;
+	padding: 5px;
+}
+
+#about-me {
+	text-align: center;
+}
+/* Flash Message Styling */
+
+.flash-msg {
+    background-color: lightgoldenrodyellow;
+    color: black;
+    border: 2px dashed red;
+    padding: 10px;
+}

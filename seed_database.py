@@ -22,7 +22,6 @@ model.db.create_all()
 # Create an instance of a faker generator to generate data
 fake = Faker()
 
-
 bio = ["I teach Brazilian Jiu-Jitsu \U0001F94B, play guitar \U0001F3B8, and like dogs \U0001F436",
             "Traveler \U0001F30E Trekkie \U0001F596 Teacher \U0001F34E",
             "Culinary Genius \U0001F9C1 Coffee Fiend \U00002615 doggo parent \U0001F429",
@@ -43,10 +42,10 @@ addresses = [["Chicago", "IL", "USA"], ["New York", "NY", "USA"],
                 ["Vancouver", "British Columbia", "CAN"], ["Sveta Nedelja", "Zagreb", "CI"],
                 ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
-itinerary_names = [f"Sleepless in Seattle Tour - Summer {randint(2022, 2030)}", f"Holidays at Sweet Home Chicago {randint(2022, 2030)}", 
-                f"A Screaming Halloween Weekend in Salem MA", f"Exploring Denver in May {randint(2022, 2030)}",
-                f"West Coast Best Coast Summer {randint(2022, 2030)} Roadtrip", f"Trip to Toronto {randint(2022, 2030)}",
-                f"Louis Birthday Weekend in Door County Labor Day {randint(2022, 2030)}", f"Manhattan Walking Food Tour {randint(2022, 2030)}"]
+itinerary_names = [f"Summer Vacation {randint(2022, 2030)}", f"Home for the Holidays {randint(2022, 2030)}", 
+                f"A Screaming Halloween Weekend", f"May Adventures {randint(2022, 2030)}",
+                f"Summer Road Trip {randint(2022, 2030)} Roadtrip", f"Anniversary Trip {randint(2022, 2030)}",
+                f"Labor Day Weekend {randint(2022, 2030)}", f"Wedding Season {randint(2022, 2030)}"]
 
 lorem_ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
@@ -177,4 +176,23 @@ for itinerary in all_itineraries:
     itinerary.locations.append(location)
     model.db.session.add(itinerary)
 
+model.db.session.commit()
+
+
+# Create Wanderlust approved countries
+countries = []
+
+with open("countrycodes.csv", "r") as f:
+    for line in f:
+        country = line.rstrip()
+        country = country.split("|")
+        countries.append(country)
+
+countries_db = []
+
+for country in countries:
+    new_country = model.Country.create_country(country[0], country[1])
+    countries_db.append(new_country)
+
+model.db.session.add_all(countries_db)
 model.db.session.commit()

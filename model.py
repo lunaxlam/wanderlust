@@ -9,7 +9,7 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    """A user."""
+    """A user"""
 
     __tablename__ = "users"
 
@@ -29,7 +29,7 @@ class User(db.Model):
     # itineraries = a list of Itinerary objects
 
     def __repr__(self):
-        """A string representation of a User."""
+        """A string representation of a User"""
 
         return f"<User user_id={self.user_id} username={self.username} email={self.email} locale={self.locale} territory={self.territory} country={self.country}>"
 
@@ -41,9 +41,9 @@ class User(db.Model):
         username = username.lower()
         fname = fname.title()
         lname = lname.title()
-        locale = locale.lower()
-        territory = territory.lower()
-        country = country.lower()
+        locale = locale.title()
+        territory = territory.title()
+        country = country.upper()
 
         user = User(email=email, 
                     password=password, 
@@ -95,7 +95,7 @@ class User(db.Model):
 
 
 class Follower(db.Model):
-    """A Follower."""
+    """A Follower"""
 
     __tablename__ = "followers"
 
@@ -108,7 +108,7 @@ class Follower(db.Model):
     user_followed = db.relationship("User", foreign_keys=[user_followed_id], backref="followers") 
 
     def __repr__(self):
-        """A string representation of a Follower."""
+        """A string representation of a Follower"""
 
         return f"<Follower follow_activity_id={self.follow_activity_id} follower_id={self.follower_id} follower={self.follower.username} user_followed_id={self.user_followed_id} user_followed={self.user_followed.username}>"
 
@@ -128,7 +128,7 @@ class Follower(db.Model):
 
 
 class Itinerary(db.Model):
-    """A travel itinerary."""
+    """A travel itinerary"""
 
     __tablename__ = "itineraries"
 
@@ -146,16 +146,26 @@ class Itinerary(db.Model):
     # activities = a list of itinerary Activity objects
 
     def __repr__(self):
-        """A string representation of a travel itinerary."""
+        """A string representation of a travel itinerary"""
 
         return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} locations={self.locations}>"
     
     @classmethod
     def create_itinerary(cls, user_id, itinerary_name, overview):
+        """Create and return an itinerary"""
         
         itinerary = Itinerary(user_id=user_id, itinerary_name=itinerary_name, overview=overview)
         
         return itinerary
+
+    @classmethod
+    def delete_itinerary(cls, itinerary_id):
+        """Delete itinerary from database"""
+
+        itinerary = cls.query.filter_by(itinerary_id=itinerary_id).first()
+        
+        db.session.delete(itinerary)
+        db.session.commit()
 
     @classmethod
     def get_itineraries(cls):
@@ -189,7 +199,7 @@ class Itinerary(db.Model):
 
 
 class Activity(db.Model):
-    """An itinerary activity item."""
+    """An itinerary activity item"""
 
     __tablename__ = "activities"
 
@@ -206,12 +216,13 @@ class Activity(db.Model):
     itinerary = db.relationship("Itinerary", backref="activities")
 
     def __repr__(self):
-        "A string representation of an itineary item."
+        "A string representation of an itineary activity item"
 
         return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} start={self.start} end_time={self.end}>"
 
     @classmethod
     def create_activity(cls, itinerary_id, activity_name, start, end, notes, place_id):
+        """Create and return an itinerary activity item"""
         
         activity_name = activity_name.title()
 
@@ -235,7 +246,6 @@ class Activity(db.Model):
         else:
             dates = start_date
  
-
         activity = Activity(itinerary_id=itinerary_id,
                     activity_name=activity_name,
                     dates=dates,
@@ -245,6 +255,15 @@ class Activity(db.Model):
                     place_id=place_id)
         
         return activity
+    
+    @classmethod
+    def delete_activity(cls, activity_id):
+        """Delete activity from database"""
+
+        activity = cls.query.filter_by(activity_id=activity_id).first()
+        
+        db.session.delete(activity)
+        db.session.commit()
     
     @classmethod
     def get_activities(cls):
@@ -260,7 +279,7 @@ class Activity(db.Model):
 
 
 class Location(db.Model):
-    """A location."""
+    """A location"""
 
     __tablename__ = "locations"
 
@@ -270,16 +289,17 @@ class Location(db.Model):
     country = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
-        "A string representation of a Location item."
+        "A string representation of a Location item"
 
         return f"<Location location_id={self.location_id} locale={self.locale} territory={self.territory} country={self.country}>"
 
     @classmethod
     def create_location(cls, locale, territory, country):
+        """Create and return a location"""
         
-        locale = locale.lower()
-        territory = territory.lower()
-        country = country.lower()
+        locale = locale.title()
+        territory = territory.title()
+        country = country.upper()
 
         location = Location(locale=locale, territory=territory, country=country)
         
@@ -293,7 +313,7 @@ class Location(db.Model):
 
 
 class Destination(db.Model):
-    """An association table between Itinerary and Location."""
+    """An association table between Itinerary and Location"""
 
     __tablename__ = "destinations"
 
@@ -302,9 +322,38 @@ class Destination(db.Model):
     location_id = db.Column(db.Integer, db.ForeignKey("locations.location_id"), nullable=False)
 
     def __repr__(self):
-        "A string representation of a destination location item."
+        "A string representation of a destination location item"
 
         return f"<Destination destination_id={self.destination_id} itinerary_id={self.itinerary_id} location_id={self.location_id}>"
+
+
+class Country(db.Model):
+    """A country"""
+
+    __tablename__ = "countries"
+
+    code_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    country_code = db.Column(db.String(3), nullable=False)
+    country_name = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        "A string representation of a country"
+
+        return f"<Country id={self.code_id} name={self.country_name} code={self.country_code}>"
+    
+    @classmethod
+    def create_country(cls, country_code, country_name):
+        """Create and return a country"""
+
+        country = Country(country_code=country_code, country_name=country_name)
+
+        return country
+
+    @classmethod
+    def get_countries(cls):
+        """Return all countries"""
+
+        return cls.query
 
 
 # Set-up project to connect SQLAlchemy to Postgres database; this is done through psycopg2

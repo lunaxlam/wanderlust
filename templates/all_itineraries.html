@@ -8,10 +8,53 @@
 
 {% block body %}
 
-<h1>Wanderlust Travel Itineraries</h1>
+<h1>Wanderlust Travel Itineraries</h1><br>
 
+<h3>Filter itineraries by:</h3>
+<form action="/api/itineraries/by_locale">
+    <label for="locale-select">Locale:</label>
+    <select name="locale" id="locale-select">
+        {% for location in locations %}
+
+        <option value="{{ location.locale }}">{{ location.locale }}</option>
+       
+        {% endfor %}
+    </select>
+    <input type="submit" name="submit" id="locale-btn">
+</form>
+
+<form action="/api/itineraries/by_territory">
+    <label for="territory-select">Territory:</label>
+    <select name="territory" id="territory-select">
+        {% for location in locations %}
+
+        <option value="{{ location.territory }}">{{ location.territory }}</option>
+       
+        {% endfor %}
+    </select>
+    <input type="submit" name="submit" id="territory-btn">
+</form>
+
+<form action="/api/itineraries/by_country">
+    <label for="country-select">Country:</label>
+    <select name="country" id="country-select">
+        {% for location in locations %}
+
+        <option value="{{ location.country }}">{{ location.country }}</option>
+       
+        {% endfor %}
+    </select>
+    <input type="submit" name="submit" id="country-btn">
+</form>
+
+<br><br>
 {% for itinerary in itineraries %}
+<div id="all-itineraries">
 <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
 {% endfor %}
+</div>
 
+
+<!-- Script to load fetch request -->
+<script src="/static/js/ajax-all-itineraries.js"></script>
 {% endblock %}

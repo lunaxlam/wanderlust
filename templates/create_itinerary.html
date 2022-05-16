@@ -12,16 +12,20 @@
 
 <h1>Plan Your Trip</h1>
 <form action="/create_itinerary" method="POST">
-    <label for="itinerary-name">Itinerary Name: </label>
-    <input type="text" name="name" id="itinerary-name" required>
-    <label for="itinerary-overview">Description: </label>
-    <textarea name="overview" id="itinerary-overview" required></textarea>
-    <label for="itinerary-locale">Citie(s) you plan to visit: </label>
-    <input type="text" name="locale" id="itinerary-locale" required>
-    <label for="user-locale">State(s) you plan to visit: </label>
-    <input type="text" name="territory" id="itinerary-territory" required>
-    <label for="user-country">Countr(ies) you plan to visit: </label>
-    <input type="text" name="country" id="itinerary-country" required>
+    <label for="itinerary-name">Name Your Trip: </label>
+    <input type="text" name="name" id="itinerary-name" required><br>
+    <label for="itinerary-overview">Brief Description: </label>
+    <input type="text" name="overview" id="itinerary-overview" required><br>
+    <label for="itinerary-locale">Destination City: </label>
+    <input type="text" name="locale" id="itinerary-locale" required><br>
+    <label for="user-locale">Destination Territory: </label>
+    <input type="text" name="territory" id="itinerary-territory" required><br>
+    <label for="user-country">Destination Country: </label>
+    <select name="country" id="country">
+        {% for country in countries %}
+        <option value="{{ country.country_code }}">{{ country.country_name }}</option>
+        {% endfor %}
+    </select><br>
     <input type="submit" name="submit">
 </form>
 

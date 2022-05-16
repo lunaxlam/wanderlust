@@ -10,8 +10,8 @@
 
 {% block body %}
 
-<h1>Itinerary Name: {{ itinerary.itinerary_name }}</h1>
-<h2>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h2>
+<h1>{{ itinerary.itinerary_name }}</h1>
+<h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
 <p>Overview: {{ itinerary.overview }}</p>
 <p>Locations: 
 
@@ -24,17 +24,21 @@
 </p>
 
 {% if session["user_id"] == itinerary.user_id %}
-<br><br>
-<h2>Add New Itinerary Activity</h2>
+<br>             
+<a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
+<br>
+<br>
+
+<h2>Add New Activity</h2>
 
 <h3> Find a Location</h3>
 <h4> Search by Point of Interest</h4>
 <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
     <label for="search-keyword">Name of business or point of interest:</label>
     <input type="text" name="keyword" id="search-keyword">
-    <label for="search-locale">City or Locale:</label>
+    <label for="search-locale">Locale:</label>
     <input type="text" name="locale" id="search-locale">
-    <label for="search-territory">State or Territory:</label>
+    <label for="search-territory">Territory:</label>
     <input type="text" name="territory" id="search-territory">
     <label for="search-country">Country:</label>
     <input type="text" name="country" id="search-country">
@@ -46,9 +50,9 @@
 <br><br>
 
 <h2>Activities</h2>
-<div id="saved_place"></div>
+<div id="saved-place"></div>
 
 
 <!-- Script to load fetch request -->
-<script src="/static/js/ajax-display-activities.js"></script>
+<script src="/static/js/ajax-saved-activities.js"></script>
 {% endblock %}

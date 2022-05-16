@@ -9,7 +9,7 @@ fetch('/api/search_place_data')
         const place_address = data["address"]
         const place_url = data["place_url"]
 
-        document.querySelector('#search_place').innerHTML =
+        document.querySelector('#search-place').innerHTML =
         `<ul>${place_name}</ul>` +
         `<ul>${place_address}</ul>` +
         `<ul><a href="${place_url}" target="_blank">View on Google Maps</a></ul>`
