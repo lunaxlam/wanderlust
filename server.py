@@ -155,58 +155,28 @@ def list_all_itineraries():
     return render_template("all_itineraries.html", itineraries=itineraries, locations=locations)
 
 
-@app.route("/api/itineraries/by_locale")
-def itinerary_locale_info():
-    """JSON information about itineraries by locale"""
+@app.route("/api/itineraries/by_location")
+def itineraries_by_location():
+    """JSON information about itineraries by location"""
 
-    db_itineraries_locale = {}
+    db_itineraries_location = {}
 
-    locale = request.args.get("locale")
+    location_type = request.args.get("type")
+    location_name = request.args.get("name")
 
-    itineraries = Itinerary.get_itinerary_by_locale(locale)
-
+    if location_type == "locale":
+        itineraries = Itinerary.get_itinerary_by_locale(location_name)
+    elif location_type == "territory":
+        itineraries = Itinerary.get_itinerary_by_territory(location_name)
+    elif location_type == "country":
+        itineraries = Itinerary.get_itinerary_by_country(location_name)
+    
     for i, itinerary in enumerate(itineraries):
-        db_itineraries_locale[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
+        db_itineraries_location[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
                                         "itinerary_name": itinerary.itinerary_name,
         }
 
-    return jsonify(db_itineraries_locale)
-
-
-@app.route("/api/itineraries/by_territory")
-def itinerary_territory_info():
-    """JSON information about itineraries by territory"""
-
-    db_itineraries_territory = {}
-
-    territory = request.args.get("territory")
-
-    itineraries = Itinerary.get_itinerary_by_territory(territory)
-
-    for i, itinerary in enumerate(itineraries):
-        db_itineraries_territory[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
-                                        "itinerary_name": itinerary.itinerary_name,
-        }
-
-    return jsonify(db_itineraries_territory)
-
-
-@app.route("/api/itineraries/by_country")
-def itinerary_country_info():
-    """JSON information about itineraries by country"""
-
-    db_itineraries_country = {}
-
-    country = request.args.get("country")
-
-    itineraries = Itinerary.get_itinerary_by_country(country)
-
-    for i, itinerary in enumerate(itineraries):
-        db_itineraries_country[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
-                                        "itinerary_name": itinerary.itinerary_name,
-        }
-
-    return jsonify(db_itineraries_country)
+    return jsonify(db_itineraries_location)
 
 
 @app.route("/itinerary/<itinerary_id>")
