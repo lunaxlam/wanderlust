@@ -56,6 +56,9 @@ class User(db.Model):
                     country=country, 
                     about_me=about_me)
         
+        db.session.add(user)
+        db.session.commit()
+        
         return user
 
     @classmethod
@@ -156,6 +159,8 @@ class Itinerary(db.Model):
         """Create and return an itinerary"""
         
         itinerary = cls(user_id=user_id, itinerary_name=itinerary_name, overview=overview)
+        db.session.add(itinerary)
+        db.session.commit()
         
         return itinerary
 
@@ -275,6 +280,9 @@ class Activity(db.Model):
                     notes=notes,
                     place_id=place_id)
         
+        db.session.add(activity)
+        db.session.commit()
+        
         return activity
     
     @classmethod
@@ -342,6 +350,9 @@ class Location(db.Model):
         country = country.upper()
 
         location = cls(locale=locale, territory=territory, country=country)
+
+        db.session.add(location)
+        db.session.commit()
         
         return location
     
