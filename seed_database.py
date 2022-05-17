@@ -44,13 +44,11 @@ addresses = [["Chicago", "Illinois", "USA"], ["New York", "New York", "USA"],
 
 itinerary_names = [f"Summer Vacation {randint(2022, 2030)}", f"Home for the Holidays {randint(2022, 2030)}", 
                 f"A Screaming Halloween Weekend", f"May Adventures {randint(2022, 2030)}",
-                f"Summer Road Trip {randint(2022, 2030)} Roadtrip", f"Anniversary Trip {randint(2022, 2030)}",
+                f"Summer Road Trip {randint(2022, 2030)}", f"Anniversary Trip {randint(2022, 2030)}",
                 f"Labor Day Weekend {randint(2022, 2030)}", f"Wedding Season {randint(2022, 2030)}"]
 
-lorem_ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-
-notes = ["Reservations allowed up to 24 hours in advance", "No cell phoones allowed", "18 and older only",
-        "Check personal belongings before entering", "5 persons-max per reservation",  "Masks required"]
+notes = ["Reservations allowed up to 24 hours in advance", "Device free establishment", "BYOB permitted",
+        "No bags allowed", "No children under 12 allowed",  "COVID Requirements: Masks Still Mandatory"]
 
 place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJ-bfVTh8VkFQRDZLQnmioK9s",
              "ChIJ_VQLhrpqkFQR5sDjZ1AhuHI", "ChIJfy4MvqG3t4kRuL_QjoJGc-k", "ChIJX4k2TVVfXIYRIsTnhA-P-Rc",
@@ -59,7 +57,7 @@ place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJ
 # Create users to seed the database 
 users_db = []
 
-for n in range (15):
+for n in range (20):
     fname = fake.unique.first_name()
     lname = fake.unique.last_name()
     domain = fake.free_email_domain()
@@ -110,8 +108,8 @@ itineraries_db = []
 
 for user in users_id:
 
-    for num in range(randint(2, 4)):
-        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{choice(itinerary_names)}", overview=lorem_ipsum)
+    for num in range(randint(5, 6)):
+        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{choice(itinerary_names)}", overview="The greatest trip ever planned.")
         itineraries_db.append(new_itinerary)
 
 # Add and commit itineraries to the database
@@ -136,9 +134,9 @@ for itinerary in itineraries_id:
     start = datetime.now()
     end = datetime.utcnow()
 
-    for num in range(randint(2, 4)):
+    for num in range(randint(3, 5)):
         new_activity = model.Activity.create_activity(itinerary_id=itinerary, 
-                                            activity_name="Lorem ipsum",
+                                            activity_name="A Super Fun Activity Name",
                                             start=start,
                                             end=end,
                                             notes=choice(notes),
@@ -151,27 +149,27 @@ model.db.session.commit()
 
 
 # Create locations
-locations_db = []
+locations = []
 
 for address in addresses:
     locale = address[-3]
     territory = address[-2]
     country = address[-1]
 
-    location = model.Location.create_location(locale=locale, territory=territory, country=country)
-
-    locations_db.append(location)
-
-model.db.session.add_all(locations_db)
-model.db.session.commit()
+    location = [locale, territory, country]
+    
+    locations.append(location)
 
 
-# Create a locations for each itinerary
-all_locations = model.Location.get_locations().all()
-
+# Add locations to itineraries
 for itinerary in all_itineraries:
 
-    location  = choice(all_locations)
+    location  = choice(locations)
+
+    location = model.Location.create_location(locale=location[0], territory=location[1], country=location[2])
+    
+    model.db.session.add(location)
+    model.db.session.commit()
 
     itinerary.locations.append(location)
     model.db.session.add(itinerary)
