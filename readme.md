@@ -35,9 +35,48 @@ Detail <br />
 Detail <br /> 
 
 ## **Installation**
-1.
-2.
-3.
-4.
-5.
+To run *Wanderlust*: <br />
 
+Clone or fork the [repository](https://github.com/lunaxlam/wanderlust):
+
+```
+https://github.com/lunaxlam/wanderlust
+```
+
+In the project directory, create and activate a virtual environment:
+```
+virtualenv env
+source env/bin/activate
+```
+
+Install the project dependencies:
+```
+pip3 install -r requirements.txt
+```
+
+Create and save a Flask and [Google API](https://developers.google.com/maps/get-started) secret keys in a file called <kbd>secrets.sh</kbd> in the following format:
+```
+export FLASK_SECRET_KEY="YOUR_KEY_HERE"
+export GOOGLE_API_KEY="YOUR_KEY_HERE"
+```
+
+Source your secret keys:
+```
+source secrets.sh
+```
+
+Seed the database:
+```
+python3 seed_database.py
+```
+
+Run the application:
+```
+python3 server.py
+```
+
+In your web browser, navigate to:
+```
+localhost:5000/
+```
+You can now access *Wanderlust* !
