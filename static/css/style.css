@@ -111,9 +111,15 @@ h2 {
 	padding: 5px;
 }
 
-#about-me {
+#about-me, #follow {
 	text-align: center;
 }
+
+.hint {
+	font-size: 12px;
+}
+
+
 /* Flash Message Styling */
 
 .flash-msg {
@@ -121,8 +127,4 @@ h2 {
     color: black;
     border: 2px dashed red;
     padding: 10px;
-}
-
-.hint {
-	font-size: 12px;
 }

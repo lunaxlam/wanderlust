@@ -195,16 +195,32 @@ def itineraries_by_location():
     return jsonify(db_itineraries_location)
 
 
-@app.route("/itinerary/<itinerary_id>")
+@app.route("/itinerary/<itinerary_id>", methods =["POST", "GET"])
 def show_itinerary(itinerary_id):
     """Return page displaying itinerary and list of itinerary items"""
 
-    itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
-    destinations = itinerary.locations
-   
-    session["itinerary_id"] = itinerary_id
+    if request.method == "GET":
 
-    return render_template("itinerary.html", itinerary=itinerary, destinations=destinations)
+        itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
+        destinations = itinerary.locations
+        
+        session["itinerary_id"] = itinerary_id
+        
+        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations)
+    else:
+        itinerary_name = request.form.get("name")
+        overview = request.form.get("overview")
+
+        clone_itinerary = Itinerary.clone_itinerary(original_itinerary_id=itinerary_id, 
+                                user_id=session["user_id"], 
+                                itinerary_name=itinerary_name, 
+                                overview=overview)
+
+        Activity.clone_activities(original_itinerary_id=itinerary_id, clone_itinerary_id=clone_itinerary.itinerary_id)
+
+        flash(f"Success! {itinerary_name} created.")
+
+        return redirect(f"/itinerary/{clone_itinerary.itinerary_id}")
 
 
 @app.route("/itinerary/<itinerary_id>/add_destination")
@@ -388,8 +404,9 @@ def show_profile(username):
 
     user = User.get_user_by_username(username)
     itineraries = user.itineraries
+    countries = Country.get_countries()
 
-    return render_template("user_profile.html", display_user=user, user_itineraries=itineraries)
+    return render_template("user_profile.html", display_user=user, user_itineraries=itineraries, countries=countries)
 
 
 @app.route("/user/<username>/following")

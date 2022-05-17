@@ -1,5 +1,6 @@
 """Models for Wanderlust app"""
 
+from logging import NOTSET
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -45,7 +46,7 @@ class User(db.Model):
         territory = territory.title()
         country = country.upper()
 
-        user = User(email=email, 
+        user = cls(email=email, 
                     password=password, 
                     username=username, 
                     fname=fname, 
@@ -116,7 +117,7 @@ class Follower(db.Model):
     def create_follower(cls, follower_id, user_followed_id):
         """Create and return a follower"""
 
-        follower = Follower(follower_id=follower_id, user_followed_id=user_followed_id)
+        follower = cls(follower_id=follower_id, user_followed_id=user_followed_id)
         
         return follower
     
@@ -154,9 +155,29 @@ class Itinerary(db.Model):
     def create_itinerary(cls, user_id, itinerary_name, overview):
         """Create and return an itinerary"""
         
-        itinerary = Itinerary(user_id=user_id, itinerary_name=itinerary_name, overview=overview)
+        itinerary = cls(user_id=user_id, itinerary_name=itinerary_name, overview=overview)
         
         return itinerary
+
+    @classmethod
+    def clone_itinerary(cls, original_itinerary_id, user_id, itinerary_name, overview):
+        """Clone an itinerary"""
+
+        clone_itinerary = cls.create_itinerary(user_id, itinerary_name, overview)
+
+        db.session.add(clone_itinerary)
+        db.session.commit()
+
+        original_itinerary = cls.get_itinerary_by_itinerary_id(original_itinerary_id)
+        destinations = original_itinerary.locations
+
+        for destination in destinations:
+            clone_itinerary.locations.append(destination)
+    
+        db.session.add(clone_itinerary)
+        db.session.commit()
+
+        return clone_itinerary
 
     @classmethod
     def delete_itinerary(cls, itinerary_id):
@@ -246,7 +267,7 @@ class Activity(db.Model):
         else:
             dates = start_date
  
-        activity = Activity(itinerary_id=itinerary_id,
+        activity = cls(itinerary_id=itinerary_id,
                     activity_name=activity_name,
                     dates=dates,
                     start_time=start_time,
@@ -256,6 +277,25 @@ class Activity(db.Model):
         
         return activity
     
+    @classmethod
+    def clone_activities(cls, original_itinerary_id, clone_itinerary_id):
+        """Clone activities from database"""
+
+        activities = cls.get_activities_by_itinerary_id(original_itinerary_id)
+
+        for activity in activities:
+            clone_activity = cls(itinerary_id=clone_itinerary_id,
+                                    activity_name=activity.activity_name,
+                                    dates=activity.dates,
+                                    start_time=activity.start_time,
+                                    end_time=activity.end_time,
+                                    notes=activity.notes,
+                                    place_id=activity.place_id)
+            
+            db.session.add(clone_activity)
+        
+        db.session.commit()
+
     @classmethod
     def delete_activity(cls, activity_id):
         """Delete activity from database"""
@@ -301,7 +341,7 @@ class Location(db.Model):
         territory = territory.title()
         country = country.upper()
 
-        location = Location(locale=locale, territory=territory, country=country)
+        location = cls(locale=locale, territory=territory, country=country)
         
         return location
     
@@ -345,7 +385,7 @@ class Country(db.Model):
     def create_country(cls, country_code, country_name):
         """Create and return a country"""
 
-        country = Country(country_code=country_code, country_name=country_name)
+        country = cls(country_code=country_code, country_name=country_name)
 
         return country
 

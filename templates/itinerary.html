@@ -22,6 +22,21 @@
 
 </p><br>       
 
+
+{% if session["user_id"] != itinerary.user_id %}
+<h2>Clone This Trip</h2>
+<form action="/itinerary/{{ itinerary.itinerary_id }}", method="POST">
+    <label for="itinerary-name">Name Your Trip: </label>
+    <input type="text" name="name" id="itinerary-name" required><br>
+    <label for="itinerary-overview">Brief Description: </label>
+    <input type="text" name="overview" id="itinerary-overview" required><br>
+    <input type="submit" name="submit">
+</form>
+
+<br>
+{% endif %}
+
+
 {% if session["user_id"] == itinerary.user_id %}
 <h2>Delete Itinerary</h2>
 <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
