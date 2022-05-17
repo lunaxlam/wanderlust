@@ -12,7 +12,7 @@
 <h1>{{ itinerary.itinerary_name }}</h1>
 <h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
 <p>Overview: {{ itinerary.overview }}</p>
-<p>Locations: 
+<p>Destinations: 
 
     {% for destination in destinations %}
 
@@ -20,14 +20,28 @@
 
     {% endfor %}
 
-</p>
+</p><br>       
 
 {% if session["user_id"] == itinerary.user_id %}
-<br>             
+<h2>Delete Itinerary</h2>
 <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
-<br>
-<br>
 
+<br><br><br>
+
+<h2>Add Destination to Itinerary</h2>
+<form action="/itinerary/{{ itinerary.itinerary_id }}/add_destination">
+    <label for="destination-locale">Locale:</label>
+    <input type="text" name="locale" id="destination-locale" required><br>
+    <label for="destination-territory">Territory</label>
+    <input type="text" name="territory" id="destination-territory" required><br>
+    <label for="destination-country">Country</label>
+    <input type="text" name="country" id="destination-country" pattern="(\b\w{3}\b)" required><br>
+    <p class="hint">Country code must be entered as three-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a> code standard. Need a <a href="/countries">hint</a>?</p>
+    <input type="submit" name="submit">
+</form>
+      
+<br>
+<br>
 
 <h2>Add New Activity</h2>
 
@@ -35,13 +49,13 @@
 <h4> Search by Point of Interest</h4>
 <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
     <label for="search-keyword">Name of business or point of interest:</label>
-    <input type="text" name="keyword" id="search-keyword">
+    <input type="text" name="keyword" id="search-keyword"><br>
     <label for="search-locale">Locale:</label>
-    <input type="text" name="locale" id="search-locale">
+    <input type="text" name="locale" id="search-locale"><br>
     <label for="search-territory">Territory:</label>
-    <input type="text" name="territory" id="search-territory">
+    <input type="text" name="territory" id="search-territory"><br>
     <label for="search-country">Country:</label>
-    <input type="text" name="country" id="search-country">
+    <input type="text" name="country" id="search-country"><br>
     <input type="submit" name="submit">
 </form>
 
