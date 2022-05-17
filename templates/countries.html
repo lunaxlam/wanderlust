@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Wanderlust Travel Itineraries{% endblock %}
+
+
+{% block nav %}
+<ul><a href="/">Home</a></ul>
+<ul><a href="/users">View Wanderlust Community</a></ul>
+{% endblock %}
+
+
+{% block body %}
+<h1>Wanderlust Countries</h1><br>
+
+<h2> Country Code | Country</h2>
+
+{% for country in countries %}
+<ul>{{ country.country_code }} | {{ country.country_name }}</a></ul>
+{% endfor %}
+
+</div>
+
+
+<!-- Script to load fetch request -->
+<script src="/static/js/ajax-filter-itineraries.js"></script>
+
+{% endblock %}
