@@ -17,12 +17,12 @@
     <label for="locale">Locale:</label>
     <select name="locale" id="locale-select">
 
-        {% for location in locations %}
-        <option value="{{ location.locale }}">{{ location.locale }}</option>
+        {% for locale in locales %}
+        <option value="{{ locale }}">{{ locale }}</option>
         {% endfor %}
 
     </select>
-    <input type="submit" name="submit" id="locale-btn">
+    <input type="submit" name="locale" id="locale-btn" value="Submit">
 </form>
 
 
@@ -30,11 +30,11 @@
     <label for="territory">Territory:</label>
     <select name="territory" id="territory-select">
 
-        {% for location in locations %}
-        <option value="{{ location.territory }}">{{ location.territory }}</option>
+        {% for territory in territories %}
+        <option value="{{ territory }}">{{ territory }}</option>
         {% endfor %}
     </select>
-    <input type="submit" name="submit" id="territory-btn">
+    <input type="submit" name="territory" id="territory-btn" value="Submit">
 </form>
 
 
@@ -42,12 +42,12 @@
     <label for="country">Country:</label>
     <select name="country" id="country-select">
 
-        {% for location in locations %}
-        <option value="{{ location.country }}">{{ location.country }}</option>
+        {% for country in countries %}
+        <option value="{{ country }}">{{ country }}</option>
         {% endfor %}
 
     </select>
-    <input type="submit" name="submit" id="country-btn">
+    <input type="submit" name="country" id="country-btn" value="Submit">
 </form>
 
 
@@ -56,13 +56,13 @@
 <div id="all-itineraries">
 
 {% for itinerary in itineraries %}
-<ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
+<ul><a href="/itinerary/{{ itinerary.itinerary_id }}">Itinerary ID: {{ itinerary.itinerary_id }}, {{ itinerary.itinerary_name }}</a></ul>
 {% endfor %}
 
 </div>
 
 
 <!-- Script to load fetch request -->
-<script src="/static/js/ajax-filter-itineraries.js"></script>
+<script src="/static/js/ajax-filter-itinerary-by-location.js"></script>
 
 {% endblock %}

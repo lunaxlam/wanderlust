@@ -149,10 +149,26 @@ def create_itinerary():
 def list_all_itineraries():
     """Return page displaying all itineraries Wanderlust has to offer"""
 
+    locales = []
+    territories = []
+    countries = []
+
     itineraries = Itinerary.get_itineraries()
     locations = Location.get_locations()
 
-    return render_template("all_itineraries.html", itineraries=itineraries, locations=locations)
+    for location in locations:
+        if location.locale not in locales:
+            locales.append(location.locale)
+        if location.territory not in territories:
+            territories.append(location.territory)
+        if location.country not in countries:
+            countries.append(location.country)
+    
+    locales.sort()
+    territories.sort()
+    countries.sort()
+
+    return render_template("all_itineraries.html", itineraries=itineraries, locales=locales, territories=territories, countries=countries)
 
 
 @app.route("/api/itineraries/by_location")
@@ -189,6 +205,30 @@ def show_itinerary(itinerary_id):
     session["itinerary_id"] = itinerary_id
 
     return render_template("itinerary.html", itinerary=itinerary, destinations=destinations)
+
+
+@app.route("/itinerary/<itinerary_id>/add_destination")
+def add_destination(itinerary_id):
+    """Add a destination to a travel itinerary"""
+
+    locale = request.args.get("locale")
+    territory = request.args.get("territory")
+    country = request.args.get("country")
+        
+    itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
+
+    location = Location.create_location(locale, territory, country)
+
+    db.session.add(location)
+    db.session.commit()
+
+    itinerary.locations.append(location)
+    db.session.add(itinerary)
+    db.session.commit()
+
+    flash(f"Success! Destination added.")
+
+    return redirect(f"/itinerary/{itinerary_id}")
 
 
 @app.route("/itinerary/<itinerary_id>/delete_itinerary")
@@ -372,6 +412,15 @@ def list_followers(username):
     followers = user.followers
 
     return render_template("followers.html", followers=followers, user=user)
+
+
+@app.route("/countries")
+def show_countries():
+    """Display Wanderlust approved countries"""
+
+    countries = Country.get_countries()
+
+    return render_template("countries.html", countries=countries)
 
 
 @app.route("/logout")

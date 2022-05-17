@@ -122,3 +122,7 @@ h2 {
     border: 2px dashed red;
     padding: 10px;
 }
+
+.hint {
+	font-size: 12px;
+}
