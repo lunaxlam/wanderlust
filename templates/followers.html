@@ -3,23 +3,18 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
-<ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/">Home</a></ul>
+    <ul><a href="/users">View Wanderlust Community</a></ul>
 {% endblock %}
 
 
 {% block body %}
-<h1>{{ user.username }}'s Followers:</h1>
-
-{% if followers|length > 0 %}
-
-{% for follower in followers %}
-<ul><a href="/user/{{ follower.follower.username }}">{{ follower.follower.username }}</a></ul>
-{% endfor %}
-
-{% else %}
-<p>No current followers.</p>
-
-{% endif %}
-
+    <h1>{{ user.username }}'s Followers:</h1>
+    {% if followers|length > 0 %}
+        {% for follower in followers %}
+            <ul><a href="/user/{{ follower.follower.username }}">{{ follower.follower.username }}</a></ul>
+        {% endfor %}
+    {% else %}
+        <p>No current followers.</p>
+    {% endif %}
 {% endblock %}

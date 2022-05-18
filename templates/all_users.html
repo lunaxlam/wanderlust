@@ -3,15 +3,13 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
+    <ul><a href="/">Home</a></ul>
 {% endblock %}
 
 
 {% block body %}
-<h1>Wanderlust Community Members</h1>
-
-{% for user in users %}
-<ul><a href="/user/{{ user.username }}">{{ user.username }}</a></ul>
-{% endfor %}
-
+    <h1>Wanderlust Community Members</h1>
+    {% for user in users %}
+        <ul><a href="/user/{{ user.username }}">{{ user.username }}</a></ul>
+    {% endfor %}
 {% endblock %}

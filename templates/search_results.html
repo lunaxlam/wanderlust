@@ -3,39 +3,46 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
-<ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/">Home</a></ul>
+    <ul><a href="/users">View Wanderlust Community</a></ul>
 {% endblock %}
 
 
 {% block body %}
-<h1>Search Results</h1>
+    <h1>Search Results</h1>
+    {% for result in results %}
 
-{% for result in results %}
+        <div class="place-photo">
+            {% if "photos" in result %}
+                <img src="{{ photo_url }}{{ result['photos'][0]['photo_reference'] }}" 
+                    alt="{{ result['name'] }} image">
+            {% else %}
+                <img src="https://images.pexels.com/photos/776538/pexels-photo-776538.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                    alt="default">
+            {% endif %}
+        </div>
 
-<p>Name: <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" target="blank">{{ result["name"] }}</a></p>
+        <div class="place-body">
+            <p>Name: <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
+                        target="blank">{{ result["name"] }}</a></p>
+            {% if "formatted_address" in result %}
+                <p>Address: {{ result["formatted_address"] }}</p>
+            {% endif %}
+            <br>
+        </div>
 
-{% if "formatted_address" in result %}
-<p>Address: {{ result["formatted_address"] }}</p>
-<br>
+    {% endfor %}
 
-{% endif %}
+    {% if  "next_page_token" in data %}
+        <form method="POST">
+            <button type="submit" 
+                formaction="/itinerary/{{ itinerary_id }}/search" 
+                name="pagetoken" 
+                value="{{ data['next_page_token'] }}">View More Results</button>
+        </form>
+    {% else %}
+        <h2>End of Results</h2>
+    {% endif %}
 
-{% endfor %}
-
-{% if  "next_page_token" in data %}
-
-<form method="POST">
-    <button type="submit" formaction="/itinerary/{{ itinerary_id }}>/search" name="pagetoken" value="{{ data['next_page_token'] }}">View More Results</button>
-</form>
-
-
-{% else %}
-
-<h2>End of Results</h2>
-
-{% endif %}
-
-<br><br>
-
+    <br><br>
 {% endblock %}

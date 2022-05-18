@@ -3,62 +3,59 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
-<ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/">Home</a></ul>
+    <ul><a href="/users">View Wanderlust Community</a></ul>
 {% endblock %}
 
 
 {% block body %}
-
-<div id="map"></div>
-
-
-<div id="place-details">
-
     <h1>{{ results["name"] }}</h1>
+    <div id="map"></div>
 
-    {% if "formatted_address" in results %}
-    <p>Address: <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a></p>
-    {% endif %}
+    <br>
+    
+    <div id="place-details">
+        {% if "formatted_address" in results %}
+            <p>Address: <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a></p>
+        {% endif %}
 
-    {% if "phone" in results %}
-    <p>Phone: {{ results["phone"] }}</p>
-    {% endif %}
+        {% if "phone" in results %}
+            <p>Phone: {{ results["phone"] }}</p>
+        {% endif %}
 
-    {% if "website" in results %}
-    <p>Website:     
-        <a href="{{ results['website'] }}" target="_blank">{{ results["website"] }}</a> 
-    </p>
-    {% endif %}
+        {% if "website" in results %}
+            <p>Website:     
+                <a href="{{ results['website'] }}" target="_blank">{{ results["website"] }}</a> 
+            </p>
+        {% endif %}
 
-    {% if "rating" in results %}
-    <p>Rating: {{ results["rating"] }} out of {{ results["user_ratings_total"] }} total reviews</p>
-    {% endif %}
+        {% if "rating" in results %}
+            <p>Rating: {{ results["rating"] }} out of {{ results["user_ratings_total"] }} total reviews</p>
+        {% endif %}
 
-    {% if "hours" in results %}
-    <p>Business Hours: 
-        {% for hour in hours %}
-        <ul>{{ hour }}</ul>
-        {% endfor %}
-    </p>
-    {% endif %}
+        {% if "hours" in results %}
+            <p>Business Hours: 
+                {% for hour in hours %}
+                <ul>{{ hour }}</ul>
+                {% endfor %}
+            </p>
+        {% endif %}
 
-</div>
+    </div>
 
-<br><br>
+    <br>
 
-<button id="add-activity" name="{{ itinerary_id}}" value="{{ results['place_id'] }}">Add Location to New Activity</button>
+    <button id="add-activity" name="{{ itinerary_id}}" value="{{ results['place_id'] }}">Add Location to New Activity</button>
 
-<br><br>
+    <br><br>
 
-<div id="add-activity-form"></div>
+    <div id="add-activity-form"></div>
 
+    <!-- Script to load js -->
+    <script src="/static/js/maps.js"></script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
+    </script>
 
-<!-- Script to load js -->
-<script src="/static/js/maps.js"></script>
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
-</script>
-
-<script src="/static/js/ajax-add-activity.js"></script>
+    <script src="/static/js/ajax-add-activity.js"></script>
 {% endblock %}

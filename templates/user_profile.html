@@ -3,58 +3,59 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
-<ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/">Home</a></ul>
+    <ul><a href="/users">View Wanderlust Community</a></ul>
 {% endblock %}
 
 
 {% block body %}
-<h1>{{ display_user.username }} </h1>
+    <h1>{{ display_user.username }} </h1>
+    <div id="about-me">
+        <ul>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
+        <ul>{{ display_user.about_me }}</ul>
+    </div>
+    <br>
 
-<div id="about-me">
-    <ul>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
-    <ul>{{ display_user.about_me }}</ul>
-</div><br>
+    {% if display_user.username != session["user"] %}
+        <div id="follow">
+            <h2>2.0 Feature: Click here to Follow Me</h2>
+            <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
+            <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
+        </div><br>
+    {% else %}
+        <h2>Ready to Plan Another Trip?<br><br>
+        <form action="/create_itinerary" method="POST">
+            <label for="itinerary-name">Name Your Trip: </label>
+            <input type="text" name="name" id="itinerary-name" required>
+            <br>
+            <label for="itinerary-overview">Brief Description: </label>
+            <input type="text" name="overview" id="itinerary-overview" required>
+            <br>
+            <label for="itinerary-locale">Destination City: </label>
+            <input type="text" name="locale" id="itinerary-locale" required>
+            <br>
+            <label for="user-locale">Destination Territory: </label>
+            <input type="text" name="territory" id="itinerary-territory" required>
+            <br>
+            <label for="user-country">Destination Country: </label>
+            <select name="country" id="country">
+                {% for country in countries %}
+                    <option value="{{ country.country_code }}">{{ country.country_name }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input type="submit" name="submit">
+        </form>
+    {% endif %}
 
-{% if display_user.username != session["user"] %}
-<div id="follow">
-    <h2>2.0 Feature: Click here to Follow Me</h2>
-    <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
-    <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
-</div><br>
+    <br>
 
-{% else %}
-<h2>Ready to Plan Another Trip?<br><br>
-    <form action="/create_itinerary" method="POST">
-        <label for="itinerary-name">Name Your Trip: </label>
-        <input type="text" name="name" id="itinerary-name" required><br>
-        <label for="itinerary-overview">Brief Description: </label>
-        <input type="text" name="overview" id="itinerary-overview" required><br>
-        <label for="itinerary-locale">Destination City: </label>
-        <input type="text" name="locale" id="itinerary-locale" required><br>
-        <label for="user-locale">Destination Territory: </label>
-        <input type="text" name="territory" id="itinerary-territory" required><br>
-        <label for="user-country">Destination Country: </label>
-        <select name="country" id="country">
-            {% for country in countries %}
-            <option value="{{ country.country_code }}">{{ country.country_name }}</option>
-            {% endfor %}
-        </select><br>
-        <input type="submit" name="submit">
-    </form>
+    <h2>My Trips</h2>
+    {% for itinerary in user_itineraries %}
+        <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
+    {% endfor %}
 
-<br>
-{% endif %}
+    <div id="saved-trips">
 
-
-<h2>My Trips</h2>
-{% for itinerary in user_itineraries %}
-
-<ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
-
-{% endfor %}
-
-<div id="saved-trips">
-
-</div>
+    </div>
 {% endblock %}

@@ -3,82 +3,82 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
-<ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/">Home</a></ul>
+    <ul><a href="/users">View Wanderlust Community</a></ul>
 {% endblock %}
 
 
 {% block body %}
-<h1>{{ itinerary.itinerary_name }}</h1>
-<h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
-<p>Overview: {{ itinerary.overview }}</p>
-<p>Destinations: 
+    <h1>{{ itinerary.itinerary_name }}</h1>
+    <h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
+    <p>Overview: {{ itinerary.overview }}</p>
+    <p>Destinations: 
+        {% for destination in destinations %}
+            {{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}
+        {% endfor %}
+    </p>
+    <br>       
 
-    {% for destination in destinations %}
+    {% if session["user_id"] != itinerary.user_id %}
+        <h2>Clone This Trip</h2>
+        <form action="/itinerary/{{ itinerary.itinerary_id }}", method="POST">
+            <label for="itinerary-name">Name Your Trip: </label>
+            <input type="text" name="name" id="itinerary-name" required>
+            <br>
+            <label for="itinerary-overview">Brief Description: </label>
+            <input type="text" name="overview" id="itinerary-overview" required>
+            <br>
+            <input type="submit" name="submit">
+        </form>
+        <br>
+    {% endif %}
 
-    {{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}
+    {% if session["user_id"] == itinerary.user_id %}
+        <h4>Delete Itinerary</h4>
+        <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
 
-    {% endfor %}
+        <br><br><br>
 
-</p><br>       
+        <h2>Add Destination</h2>
+        <form action="/itinerary/{{ itinerary.itinerary_id }}/add_destination">
+            <label for="destination-locale">Locale:</label>
+            <input type="text" name="locale" id="destination-locale" required>
+            <br>
+            <label for="destination-territory">Territory</label>
+            <input type="text" name="territory" id="destination-territory" required>
+            <br>
+            <label for="destination-country">Country</label>
+            <input type="text" name="country" id="destination-country" pattern="(\b\w{3}\b)" required>
+            <br>
+            <p class="hint">Country code must be entered as three-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a> code standard. Need a <a href="/countries">hint</a>?</p>
+            <input type="submit" name="submit">
+        </form>
+            
+        <br><br>
 
+        <h2>Search Location to Add New Activity</h2>
+        <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
+            <label for="search-keyword">Name or Description:</label>
+            <input type="text" name="keyword" id="search-keyword">
+            <br>
+            <label for="search-locale">Locale:</label>
+            <input type="text" name="locale" id="search-locale">
+            <br>
+            <label for="search-territory">Territory:</label>
+            <input type="text" name="territory" id="search-territory">
+            <br>
+            <label for="search-country">Country:</label>
+            <input type="text" name="country" id="search-country">
+            <br>
+            <input type="submit" name="submit">
+        </form>
+    {% endif %}
 
-{% if session["user_id"] != itinerary.user_id %}
-<h2>Clone This Trip</h2>
-<form action="/itinerary/{{ itinerary.itinerary_id }}", method="POST">
-    <label for="itinerary-name">Name Your Trip: </label>
-    <input type="text" name="name" id="itinerary-name" required><br>
-    <label for="itinerary-overview">Brief Description: </label>
-    <input type="text" name="overview" id="itinerary-overview" required><br>
-    <input type="submit" name="submit">
-</form>
+    <br><br>
 
-<br>
-{% endif %}
+    <h2>Activities</h2>
+    <div id="saved-place"></div>
 
-
-{% if session["user_id"] == itinerary.user_id %}
-<h4>Delete Itinerary</h4>
-<a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
-
-<br><br><br>
-
-<h2>Add Destination</h2>
-<form action="/itinerary/{{ itinerary.itinerary_id }}/add_destination">
-    <label for="destination-locale">Locale:</label>
-    <input type="text" name="locale" id="destination-locale" required><br>
-    <label for="destination-territory">Territory</label>
-    <input type="text" name="territory" id="destination-territory" required><br>
-    <label for="destination-country">Country</label>
-    <input type="text" name="country" id="destination-country" pattern="(\b\w{3}\b)" required><br>
-    <p class="hint">Country code must be entered as three-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a> code standard. Need a <a href="/countries">hint</a>?</p>
-    <input type="submit" name="submit">
-</form>
-      
-<br>
-<br>
-
-<h2>Search Location to Add New Activity</h2>
-<form action="/itinerary/{{ itinerary.itinerary_id }}/search">
-    <label for="search-keyword">Name or Description:</label>
-    <input type="text" name="keyword" id="search-keyword"><br>
-    <label for="search-locale">Locale:</label>
-    <input type="text" name="locale" id="search-locale"><br>
-    <label for="search-territory">Territory:</label>
-    <input type="text" name="territory" id="search-territory"><br>
-    <label for="search-country">Country:</label>
-    <input type="text" name="country" id="search-country"><br>
-    <input type="submit" name="submit">
-</form>
-
-{% endif %}
-
-<br><br>
-
-<h2>Activities</h2>
-<div id="saved-place"></div>
-
-
-<!-- Script to load js -->
-<script src="/static/js/ajax-saved-activities.js"></script>
+    <!-- Script to load js -->
+    <script src="/static/js/ajax-saved-activities.js"></script>
 {% endblock %}

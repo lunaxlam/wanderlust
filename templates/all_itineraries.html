@@ -3,66 +3,54 @@
 
 
 {% block nav %}
-<ul><a href="/">Home</a></ul>
-<ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/">Home</a></ul>
+    <ul><a href="/users">View Wanderlust Community</a></ul>
 {% endblock %}
 
 
 {% block body %}
-<h1>Wanderlust Travel Itineraries</h1><br>
-<h3>Filter itineraries by:</h3>
+    <h1>Wanderlust Travel Itineraries</h1>
+    <br>
+    <h3>Filter itineraries by:</h3>
 
+    <form action="/api/itineraries/by_locale">
+        <label for="locale">Locale:</label>
+        <select name="locale" id="locale-select">
+            {% for locale in locales %}
+                <option value="{{ locale }}">{{ locale }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="locale" id="locale-btn" value="Submit">
+    </form>
 
-<form action="/api/itineraries/by_locale">
-    <label for="locale">Locale:</label>
-    <select name="locale" id="locale-select">
+    <form action="/api/itineraries/by_territory">
+        <label for="territory">Territory:</label>
+        <select name="territory" id="territory-select">
+            {% for territory in territories %}
+                <option value="{{ territory }}">{{ territory }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="territory" id="territory-btn" value="Submit">
+    </form>
 
-        {% for locale in locales %}
-        <option value="{{ locale }}">{{ locale }}</option>
+    <form action="/api/itineraries/by_country">
+        <label for="country">Country:</label>
+        <select name="country" id="country-select">
+            {% for country in countries %}
+                <option value="{{ country }}">{{ country }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="country" id="country-btn" value="Submit">
+    </form>
+
+    <br><br>
+
+    <div id="all-itineraries">
+        {% for itinerary in itineraries %}
+            <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">Itinerary ID: {{ itinerary.itinerary_id }}, {{ itinerary.itinerary_name }}</a></ul>
         {% endfor %}
+    </div>
 
-    </select>
-    <input type="submit" name="locale" id="locale-btn" value="Submit">
-</form>
-
-
-<form action="/api/itineraries/by_territory">
-    <label for="territory">Territory:</label>
-    <select name="territory" id="territory-select">
-
-        {% for territory in territories %}
-        <option value="{{ territory }}">{{ territory }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" name="territory" id="territory-btn" value="Submit">
-</form>
-
-
-<form action="/api/itineraries/by_country">
-    <label for="country">Country:</label>
-    <select name="country" id="country-select">
-
-        {% for country in countries %}
-        <option value="{{ country }}">{{ country }}</option>
-        {% endfor %}
-
-    </select>
-    <input type="submit" name="country" id="country-btn" value="Submit">
-</form>
-
-
-<br><br>
-
-<div id="all-itineraries">
-
-{% for itinerary in itineraries %}
-<ul><a href="/itinerary/{{ itinerary.itinerary_id }}">Itinerary ID: {{ itinerary.itinerary_id }}, {{ itinerary.itinerary_name }}</a></ul>
-{% endfor %}
-
-</div>
-
-
-<!-- Script to load fetch request -->
-<script src="/static/js/ajax-filter-itinerary-by-location.js"></script>
-
+    <!-- Script to load fetch request -->
+    <script src="/static/js/ajax-filter-itinerary-by-location.js"></script>
 {% endblock %}
