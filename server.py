@@ -1,11 +1,9 @@
 """Server for Wanderlust app."""
 
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
-from model import connect_to_db, db, User, Itinerary, Location, Activity, Country
-import os
-import requests
-
 from jinja2 import StrictUndefined
+from model import connect_to_db, db, User, Itinerary, Location, Activity, Country
+import os, requests
 
 # Create a Flask instance
 app = Flask(__name__)
@@ -13,12 +11,14 @@ app = Flask(__name__)
 # Tell Jinja to flag as error any undefined variables
 app.jinja_env.undefined = StrictUndefined
 
-# Set a secret key to enable use of Flask sessions
+# Flask API key to enable use of session
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 
 # Google API key
 API_KEY = os.environ['GOOGLE_API_KEY']
 
+
+### Standard Routes  ###
 
 @app.route("/")
 def show_welcome():
@@ -59,6 +59,19 @@ def process_login():
             
             return redirect("/create_user")
 
+
+@app.route("/logout")
+def process_logout():
+    """Delete session and log-out user"""
+
+    session.pop("user")
+
+    flash("Goodbye!")
+
+    return redirect("/")
+
+
+### User Routes  ###
 
 @app.route("/create_user", methods=["GET", "POST"])
 def create_user():
@@ -105,6 +118,50 @@ def create_user():
 
             return redirect("/")
 
+
+@app.route("/users")
+def show_users():
+    """Return page displaying all user profiles"""
+
+    users = User.get_users()
+
+    return render_template("all_users.html", users=users)
+
+
+@app.route("/user/<username>")
+def show_profile(username):
+    """Return page displaying user profile and user-curated itineraries"""
+
+    user = User.get_user_by_username(username)
+    itineraries = user.itineraries
+    countries = Country.get_countries()
+
+    return render_template("user_profile.html", display_user=user, user_itineraries=itineraries, countries=countries)
+
+
+@app.route("/user/<username>/following")
+def list_following(username):
+    """Return page displaying all users followed by the logged-in user"""
+
+    user = User.get_user_by_username(username)
+
+    following = user.following
+
+    return render_template("following.html", following=following, user=user)
+
+
+@app.route("/user/<username>/followers")
+def list_followers(username):
+    """Return page displaying all followers of the logged-in user"""
+
+    user = User.get_user_by_username(username)
+
+    followers = user.followers
+
+    return render_template("followers.html", followers=followers, user=user)
+
+
+### Itinerary Routes  ###
 
 @app.route("/create_itinerary", methods=["GET", "POST"])
 def create_itinerary():
@@ -160,30 +217,6 @@ def list_all_itineraries():
     countries.sort()
 
     return render_template("all_itineraries.html", itineraries=itineraries, locales=locales, territories=territories, countries=countries)
-
-
-@app.route("/api/itineraries/by_location")
-def itineraries_by_location():
-    """JSON information about itineraries by location"""
-
-    db_itineraries_location = {}
-
-    location_type = request.args.get("type")
-    location_name = request.args.get("name")
-
-    if location_type == "locale":
-        itineraries = Itinerary.get_itinerary_by_locale(location_name)
-    elif location_type == "territory":
-        itineraries = Itinerary.get_itinerary_by_territory(location_name)
-    elif location_type == "country":
-        itineraries = Itinerary.get_itinerary_by_country(location_name)
-    
-    for i, itinerary in enumerate(itineraries):
-        db_itineraries_location[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
-                                        "itinerary_name": itinerary.itinerary_name,
-        }
-
-    return jsonify(db_itineraries_location)
 
 
 @app.route("/itinerary/<itinerary_id>", methods =["POST", "GET"])
@@ -309,13 +342,6 @@ def view_place_details(itinerary_id, place_id):
                             results=results)
 
 
-@app.route("/api/search_place_data")
-def search_place_data():
-    """JSON information of a search place"""
-
-    return jsonify(session["place_data"])
-
-
 @app.route("/itinerary/<itinerary_id>/<place_id>/add_activity")
 def add_activity(itinerary_id, place_id):
     """Create an activity and add to itinerary"""
@@ -330,6 +356,39 @@ def add_activity(itinerary_id, place_id):
     Activity.create_activity(itinerary_id, activity_name, start, end, notes, place_id)
 
     return redirect(f"/itinerary/{itinerary_id}")
+
+
+### API Routes  ###
+
+@app.route("/api/itineraries/by_location")
+def itineraries_by_location():
+    """JSON information about itineraries by location"""
+
+    db_itineraries_location = {}
+
+    location_type = request.args.get("type")
+    location_name = request.args.get("name")
+
+    if location_type == "locale":
+        itineraries = Itinerary.get_itinerary_by_locale(location_name)
+    elif location_type == "territory":
+        itineraries = Itinerary.get_itinerary_by_territory(location_name)
+    elif location_type == "country":
+        itineraries = Itinerary.get_itinerary_by_country(location_name)
+    
+    for i, itinerary in enumerate(itineraries):
+        db_itineraries_location[f"{i}"] = {"itinerary_id": itinerary.itinerary_id,
+                                        "itinerary_name": itinerary.itinerary_name,
+        }
+
+    return jsonify(db_itineraries_location)
+
+
+@app.route("/api/search_place_data")
+def search_place_data():
+    """JSON information of a search place"""
+
+    return jsonify(session["place_data"])
 
 
 @app.route("/api/saved_activities")
@@ -377,47 +436,7 @@ def delete_activity():
             "status": f"Success! Activity deleted."}
 
 
-@app.route("/users")
-def show_users():
-    """Return page displaying all user profiles"""
-
-    users = User.get_users()
-
-    return render_template("all_users.html", users=users)
-
-
-@app.route("/user/<username>")
-def show_profile(username):
-    """Return page displaying user profile and user-curated itineraries"""
-
-    user = User.get_user_by_username(username)
-    itineraries = user.itineraries
-    countries = Country.get_countries()
-
-    return render_template("user_profile.html", display_user=user, user_itineraries=itineraries, countries=countries)
-
-
-@app.route("/user/<username>/following")
-def list_following(username):
-    """Return page displaying all users followed by the logged-in user"""
-
-    user = User.get_user_by_username(username)
-
-    following = user.following
-
-    return render_template("following.html", following=following, user=user)
-
-
-@app.route("/user/<username>/followers")
-def list_followers(username):
-    """Return page displaying all followers of the logged-in user"""
-
-    user = User.get_user_by_username(username)
-
-    followers = user.followers
-
-    return render_template("followers.html", followers=followers, user=user)
-
+### Country Routes  ###
 
 @app.route("/countries")
 def show_countries():
@@ -426,17 +445,6 @@ def show_countries():
     countries = Country.get_countries()
 
     return render_template("countries.html", countries=countries)
-
-
-@app.route("/logout")
-def process_logout():
-    """Delete session and log-out user"""
-
-    session.pop("user")
-
-    flash("Goodbye!")
-
-    return redirect("/")
 
 
 if __name__ == "__main__":
