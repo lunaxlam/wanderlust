@@ -38,12 +38,12 @@
 
 
 {% if session["user_id"] == itinerary.user_id %}
-<h2>Delete Itinerary</h2>
+<h4>Delete Itinerary</h4>
 <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
 
 <br><br><br>
 
-<h2>Add Destination to Itinerary</h2>
+<h2>Add Destination</h2>
 <form action="/itinerary/{{ itinerary.itinerary_id }}/add_destination">
     <label for="destination-locale">Locale:</label>
     <input type="text" name="locale" id="destination-locale" required><br>
@@ -58,12 +58,9 @@
 <br>
 <br>
 
-<h2>Add New Activity</h2>
-
-<h3> Find a Location</h3>
-<h4> Search by Point of Interest</h4>
+<h2>Search Location to Add New Activity</h2>
 <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
-    <label for="search-keyword">Name of business or point of interest:</label>
+    <label for="search-keyword">Name or Description:</label>
     <input type="text" name="keyword" id="search-keyword"><br>
     <label for="search-locale">Locale:</label>
     <input type="text" name="locale" id="search-locale"><br>
@@ -82,7 +79,6 @@
 <div id="saved-place"></div>
 
 
-<!-- Script to load fetch request -->
+<!-- Script to load js -->
 <script src="/static/js/ajax-saved-activities.js"></script>
-
 {% endblock %}
