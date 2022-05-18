@@ -3,18 +3,18 @@
 // A function to generate and return a queryString
 function buildQueryString(evt) {
 
-    const clicked_button = evt.target
+    const clicked_button = evt.target;
 
-    const type = clicked_button.getAttribute('name')
+    const type = clicked_button.getAttribute('name');
 
     const Inputs = {
         type: `${type}`,
         name: document.querySelector(`#${type}-select`).value
-    }
+    };
 
-    const queryString = new URLSearchParams(Inputs).toString()
+    const queryString = new URLSearchParams(Inputs).toString();
 
-    return queryString
+    return queryString;
 }
 
 
@@ -25,14 +25,14 @@ function fetchItineraryBy(queryString) {
         .then((response) => response.json())
         .then((data) => {
 
-            const mount = document.querySelector('#all-itineraries')
+            const mount = document.querySelector('#all-itineraries');
             
             mount.innerHTML = ``
 
             for (const i in data) {
 
-                const itinerary_id = data[i]['itinerary_id']
-                const itinerary_name = data[i]['itinerary_name']
+                const itinerary_id = data[i]['itinerary_id'];
+                const itinerary_name = data[i]['itinerary_name'];
 
                 mount.insertAdjacentHTML(
                     'beforeend',
@@ -45,7 +45,7 @@ function fetchItineraryBy(queryString) {
 
 
 // Display itineraries by locale
-const localeBtn = document.querySelector('#locale-btn')
+const localeBtn = document.querySelector('#locale-btn');
 
 localeBtn.addEventListener('click', (evt) => {
     evt.preventDefault();

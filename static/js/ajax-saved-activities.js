@@ -14,15 +14,15 @@ fetch('/api/saved_activities')
             document.querySelector('#saved-place').insertAdjacentHTML(
                 'beforeend',
                 `<section>
-                    <ul>Name: ${data[i]["activity_name"]} </ul>
-                    <ul>Dates: ${data[i]["dates"]}</ul> 
-                    <ul>Start: ${data[i]["start"]} </ul> 
-                    <ul>End: ${data[i]["end"]} </ul>   
-                    <ul>Location: ${data[i]["results"]["name"]} </ul>                    
-                    <ul>Address: <a href='${data[i]["results"]["url"]}' target='_blank'>${data[i]["results"]["formatted_address"]}</a></ul>
-                    <ul>Phone: ${data[i]["results"]["formatted_phone_number"]} </ul>
-                    <ul>Notes: ${data[i]["notes"]} </ul>
-                    <button id="delete" value="${data[i]["activity_id"]}">Delete Activity</button>
+                    <ul>Name: ${data[i]['activity_name']} </ul>
+                    <ul>Dates: ${data[i]['dates']}</ul> 
+                    <ul>Start: ${data[i]['start']} </ul> 
+                    <ul>End: ${data[i]['end']} </ul>   
+                    <ul>Location: ${data[i]['results']['name']} </ul>                    
+                    <ul>Address: <a href='${data[i]['results']['url']}' target='_blank'>${data[i]['results']['formatted_address']}</a></ul>
+                    <ul>Phone: ${data[i]['results']['formatted_phone_number']} </ul>
+                    <ul>Notes: ${data[i]['notes']} </ul>
+                    <button id='delete' value='${data[i]['activity_id']}'>Delete Activity</button>
 
                 </section><br>`
             )            
@@ -33,9 +33,9 @@ fetch('/api/saved_activities')
         for (const button of buttons) {
             button.addEventListener('click', (evt) => {
                 
-                const clicked_button = evt.target
+                const clicked_button = evt.target;
 
-                const activity_id = clicked_button.getAttribute("value")
+                const activity_id = clicked_button.getAttribute("value");
 
                 const queryString = new URLSearchParams({activity_id}).toString();
 
