@@ -25,7 +25,14 @@
 
 {% if  "next_page_token" in data %}
 
-<a href="/itinerary/{{ itinerary_id }}/search/{{ data['next_page_token'] }}"><button>More Results</button></a>
+<form method="POST">
+    <button type="submit" formaction="/itinerary/{{ itinerary_id }}>/search" name="pagetoken" value="{{ data['next_page_token'] }}">View More Results</button>
+</form>
+
+
+{% else %}
+
+<h2>End of Results</h2>
 
 {% endif %}
 
