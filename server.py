@@ -96,9 +96,6 @@ def create_user():
                                     territory,
                                     country,
                                     about_me)
-            
-            db.session.add(user)
-            db.session.commit()
 
             # Add user to the session via user's primary key
             session["user"] = f"{user.username}"
@@ -125,14 +122,8 @@ def create_itinerary():
         country = request.form.get("country")
             
         itinerary = Itinerary.create_itinerary(session["user_id"], itinerary_name, overview)
-            
-        db.session.add(itinerary)
-        db.session.commit()
 
         location = Location.create_location(locale, territory, country)
-
-        db.session.add(location)
-        db.session.commit()
 
         itinerary.locations.append(location)
         db.session.add(itinerary)
@@ -235,9 +226,6 @@ def add_destination(itinerary_id):
 
     location = Location.create_location(locale, territory, country)
 
-    db.session.add(location)
-    db.session.commit()
-
     itinerary.locations.append(location)
     db.session.add(itinerary)
     db.session.commit()
@@ -256,19 +244,31 @@ def delete_itinerary(itinerary_id):
     return redirect(f"/user/{session['user']}")
 
 
-@app.route("/itinerary/<itinerary_id>/search")
+@app.route("/itinerary/<itinerary_id>/search", methods=["POST", "GET"])
 def search_place(itinerary_id):
     """Search for places on Google Places"""
 
-    keyword = request.args.get("keyword", "")
-    locale = request.args.get("locale", "")
-    territory = request.args.get("territory", "")
-    country = request.args.get("country", "")
-
-    query = f"{keyword}+{locale}+{territory}+{country}"
-
     endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-    payload = {"query": query, "key": API_KEY}
+
+    if request.method == "POST":
+
+        pagetoken = request.form.get("pagetoken")
+
+        query = session["query"]
+
+        payload = {"query": query, "pagetoken": pagetoken, "key": API_KEY}
+
+    else:
+        keyword = request.args.get("keyword", "")
+        locale = request.args.get("locale", "")
+        territory = request.args.get("territory", "")
+        country = request.args.get("country", "")
+
+        query = f"{keyword}+{locale}+{territory}+{country}"
+
+        session["query"] = query
+
+        payload = {"query": query, "key": API_KEY}
 
     response = requests.get(endpoint, params=payload)
 
@@ -277,17 +277,11 @@ def search_place(itinerary_id):
     results = data["results"]
 
     if len(results) > 0:
+
         return render_template("search_results.html", itinerary_id=itinerary_id, results=results, data=data)
     else:
         flash("Search is too ambiguous. Try again.")
         return redirect(f"/itinerary/{itinerary_id}")
-
-
-@app.route("/itinerary/<itinerary_id>/search/<next_page_token>")
-def search_place_next(itinerary_id, next_page_token):
-    """Search for additional results on Google Places"""
-
-    return redirect("/")
 
 
 @app.route("/itinerary/<itinerary_id>/search/<place_id>/details")
@@ -322,26 +316,20 @@ def search_place_data():
     return jsonify(session["place_data"])
 
 
-@app.route("/itinerary/<itinerary_id>/<place_id>/add_activity", methods=["GET", "POST"])
+@app.route("/itinerary/<itinerary_id>/<place_id>/add_activity")
 def add_activity(itinerary_id, place_id):
     """Create an activity and add to itinerary"""
 
-    if request.method == "GET":
-        return render_template("add_activity.html", itinerary_id=itinerary_id, place_id=place_id)
-    else:
-        itinerary_id = itinerary_id
-        place_id = place_id
-        activity_name = request.form.get("name")
-        start = request.form.get("start")
-        end = request.form.get("end")
-        notes = request.form.get("notes")
+    itinerary_id = itinerary_id
+    place_id = place_id
+    activity_name = request.args.get("name")
+    start = request.args.get("start")
+    end = request.args.get("end")
+    notes = request.args.get("notes")
 
-        new_activity = Activity.create_activity(itinerary_id, activity_name, start, end, notes, place_id)
+    Activity.create_activity(itinerary_id, activity_name, start, end, notes, place_id)
 
-        db.session.add(new_activity)
-        db.session.commit()
-
-        return redirect(f"/itinerary/{itinerary_id}")
+    return redirect(f"/itinerary/{itinerary_id}")
 
 
 @app.route("/api/saved_activities")
