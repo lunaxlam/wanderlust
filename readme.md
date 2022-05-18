@@ -14,7 +14,7 @@ While cloud storage platforms like [Google Drive](https://drive.google.com/) or 
 
 *Wanderlust* is a community-driven travel planning application that allows users to create, share, and clone personally curated travel itineraries through a standard form template. Users are able to filter travel itineraries by locale (city), territory (state), or country destinations.
 
-The application utilizes the Google Places and Google Maps APIs to auto-populate metadata about places, including name, address, location, website, price level, ratings, and more.
+The application utilizes the Google Places and Google Maps APIs to auto-populate metadata about places, including name, address, location, website, ratings, and more.
 
 ## **Tech Stack**
 Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
