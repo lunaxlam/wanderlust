@@ -13,42 +13,52 @@
 <div id="map"></div>
 
 
-<h1>{{ results["name"] }}</h1>
+<div id="place-details">
 
-{% if "formatted_address" in results %}
-<p>Address: <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a></p>
-{% endif %}
+    <h1>{{ results["name"] }}</h1>
 
-{% if "phone" in results %}
-<p>Phone: {{ results["phone"] }}</p>
-{% endif %}
+    {% if "formatted_address" in results %}
+    <p>Address: <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a></p>
+    {% endif %}
 
-{% if "website" in results %}
-<p>Website:     
-    <a href="{{ results['website'] }}" target="_blank">{{ results["website"] }}</a> 
-</p>
-{% endif %}
+    {% if "phone" in results %}
+    <p>Phone: {{ results["phone"] }}</p>
+    {% endif %}
 
-{% if "rating" in results %}
-<p>Rating: {{ results["rating"] }} out of {{ results["user_ratings_total"] }} total reviews</p>
-{% endif %}
+    {% if "website" in results %}
+    <p>Website:     
+        <a href="{{ results['website'] }}" target="_blank">{{ results["website"] }}</a> 
+    </p>
+    {% endif %}
 
-{% if "hours" in results %}
-<p>Business Hours: 
-    {% for hour in hours %}
-    <ul>{{ hour }}</ul>
-    {% endfor %}
-</p>
-{% endif %}
+    {% if "rating" in results %}
+    <p>Rating: {{ results["rating"] }} out of {{ results["user_ratings_total"] }} total reviews</p>
+    {% endif %}
+
+    {% if "hours" in results %}
+    <p>Business Hours: 
+        {% for hour in hours %}
+        <ul>{{ hour }}</ul>
+        {% endfor %}
+    </p>
+    {% endif %}
+
+</div>
+
+<br><br>
+
+<button id="add-activity" name="{{ itinerary_id}}" value="{{ results['place_id'] }}">Add Location to New Activity</button>
+
+<br><br>
+
+<div id="add-activity-form"></div>
 
 
-<p><a href="/itinerary/{{ itinerary_id }}/{{ results['place_id'] }}/add_activity"><button>Add Location to New Activity</button></a></p>
-
-
-<!-- Script to load Google Maps -->
+<!-- Script to load js -->
 <script src="/static/js/maps.js"></script>
 <script async
     src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
 </script>
 
+<script src="/static/js/ajax-add-activity.js"></script>
 {% endblock %}
