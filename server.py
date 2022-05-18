@@ -1,4 +1,4 @@
-"""Server for Wanderlust app."""
+"""Server for Wanderlust app"""
 
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 from jinja2 import StrictUndefined
@@ -34,16 +34,13 @@ def process_login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        # Authenticate the user
         email = request.form.get("email")
-
         user = User.get_user_by_email(email)
 
         if user:
             password = request.form.get("password")
             
             if password == user.password:
-                # Add user to the session via user's username
                 session["user"] = f"{user.username}"
                 session["user_id"] = user.user_id
 
@@ -78,12 +75,10 @@ def create_user():
     """Register a new user."""
 
     if request.method == "GET":
-
         countries = Country.get_countries()
 
         return render_template("create_user.html", countries=countries)
     else:
-        # Check to see if user already exists in database
         email = request.form.get("email")
 
         if (User.get_user_by_email(email)):
@@ -110,7 +105,6 @@ def create_user():
                                     country,
                                     about_me)
 
-            # Add user to the session via user's primary key
             session["user"] = f"{user.username}"
             session["user_id"] = user.user_id
 
@@ -144,7 +138,6 @@ def list_following(username):
     """Return page displaying all users followed by the logged-in user"""
 
     user = User.get_user_by_username(username)
-
     following = user.following
 
     return render_template("following.html", following=following, user=user)
@@ -155,7 +148,6 @@ def list_followers(username):
     """Return page displaying all followers of the logged-in user"""
 
     user = User.get_user_by_username(username)
-
     followers = user.followers
 
     return render_template("followers.html", followers=followers, user=user)
@@ -168,7 +160,6 @@ def create_itinerary():
     """Display form to create a travel itinerary"""
 
     if request.method == "GET":
-
         countries = Country.get_countries()
         return render_template("create_itinerary.html", countries=countries)
     else:
@@ -179,7 +170,6 @@ def create_itinerary():
         country = request.form.get("country")
             
         itinerary = Itinerary.create_itinerary(session["user_id"], itinerary_name, overview)
-
         location = Location.create_location(locale, territory, country)
 
         itinerary.locations.append(location)
@@ -224,7 +214,6 @@ def show_itinerary(itinerary_id):
     """Return page displaying itinerary and list of itinerary items"""
 
     if request.method == "GET":
-
         itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
         destinations = itinerary.locations
         
@@ -256,7 +245,6 @@ def add_destination(itinerary_id):
     country = request.args.get("country")
         
     itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
-
     location = Location.create_location(locale, territory, country)
 
     itinerary.locations.append(location)
@@ -274,6 +262,8 @@ def delete_itinerary(itinerary_id):
 
     Itinerary.delete_itinerary(itinerary_id)
 
+    flash("Success! Itinerary deleted.")
+
     return redirect(f"/user/{session['user']}")
 
 
@@ -284,11 +274,8 @@ def search_place(itinerary_id):
     endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 
     if request.method == "POST":
-
         pagetoken = request.form.get("pagetoken")
-
         query = session["query"]
-
         payload = {"query": query, "pagetoken": pagetoken, "key": API_KEY}
 
     else:
@@ -310,7 +297,6 @@ def search_place(itinerary_id):
     results = data["results"]
 
     if len(results) > 0:
-
         return render_template("search_results.html", itinerary_id=itinerary_id, results=results, data=data)
     else:
         flash("Search is too ambiguous. Try again.")
@@ -330,7 +316,7 @@ def view_place_details(itinerary_id, place_id):
 
     results = data["result"]
 
-    # # Store in sessions object to use later
+    # Store in session object to use later
     session["place_data"] = {"name": results["name"],
                             "location": results["geometry"]["location"],
                             "address": results["formatted_address"],
