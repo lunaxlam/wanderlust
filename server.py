@@ -219,7 +219,7 @@ def show_itinerary(itinerary_id):
         
         session["itinerary_id"] = itinerary_id
         
-        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations)
+        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations, API_KEY=API_KEY)
     else:
         itinerary_name = request.form.get("name")
         overview = request.form.get("overview")
@@ -296,17 +296,28 @@ def search_place(itinerary_id):
 
     results = data["results"]
 
+    photo_url = f"https://maps.googleapis.com/maps/api/place/photo?key={API_KEY}&maxheight=400&maxwidth=400&photo_reference="
+
     if len(results) > 0:
-        return render_template("search_results.html", itinerary_id=itinerary_id, results=results, data=data)
+        return render_template("search_results.html", 
+                            itinerary_id=itinerary_id, 
+                            results=results, 
+                            data=data,
+                            photo_url=photo_url)
     else:
         flash("Search is too ambiguous. Try again.")
         return redirect(f"/itinerary/{itinerary_id}")
 
 
-@app.route("/itinerary/<itinerary_id>/search/<place_id>/details")
+@app.route("/itinerary/<itinerary_id>/search/<place_id>/details", methods=["POST", "GET"])
 def view_place_details(itinerary_id, place_id):
     """View details for a location on Google Places"""
-    
+
+    if request.method == "POST":
+
+        formData = dict(request.form)
+        place_id = formData["autocomplete"]
+
     endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
     payload = {"place_id": place_id, "key": API_KEY}
 
@@ -368,6 +379,29 @@ def itineraries_by_location():
         }
 
     return jsonify(db_itineraries_location)
+
+
+@app.route("/api/autocomplete")
+def autocomplete_data():
+    """JSON information from Google Place API Place Autocomplete"""
+
+    form_input = request.args.get('formInput')
+
+    endpoint = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+    payload = {"input": form_input, "key": API_KEY}
+
+    response = requests.get(endpoint, params=payload)
+
+    data = response.json()
+
+    predictions = data["predictions"]
+
+    results = []
+
+    for prediction in predictions:
+        results.append(prediction["description"])
+
+    return jsonify(results)
 
 
 @app.route("/api/search_place_data")

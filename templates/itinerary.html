@@ -56,9 +56,22 @@
             
         <br><br>
 
-        <h2>Search Location to Add New Activity</h2>
+        <h2>Search New Activity Location </h2>
+
+        <h3>By Name or Address</h3>
+        <form action="/itinerary/{{ itinerary.itinerary_id}}/search/'temp_place_id'/details" 
+            method="POST">
+            <div id="autocomplete-place-id">
+                <input id="autocomplete" type="text" size="50" placeholder="Enter a place" />
+            </div>
+            
+        </form>
+
+        <br><br><br>
+
+        <h3>By Point of Interest</h3>
         <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
-            <label for="search-keyword">Name or Description:</label>
+            <label for="search-keyword">Description:</label>
             <input type="text" name="keyword" id="search-keyword">
             <br>
             <label for="search-locale">Locale:</label>
@@ -72,6 +85,9 @@
             <br>
             <input type="submit" name="submit">
         </form>
+
+        <br><br>
+
     {% endif %}
 
     <br><br>
@@ -81,4 +97,8 @@
 
     <!-- Script to load js -->
     <script src="/static/js/ajax-saved-activities.js"></script>
+    <script src="/static/js/api-autocomplete.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
+    </script>
 {% endblock %}

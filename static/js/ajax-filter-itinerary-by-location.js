@@ -27,7 +27,7 @@ function fetchItineraryBy(queryString) {
 
             const mount = document.querySelector('#all-itineraries');
             
-            mount.innerHTML = ``
+            mount.innerHTML = ''
 
             for (const i in data) {
 
