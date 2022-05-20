@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 from jinja2 import StrictUndefined
-from model import connect_to_db, db, User, Itinerary, Location, Activity, Country
+from model import connect_to_db, db, User, Follower, Itinerary, Location, Activity, Country
 import os, requests
 
 # Create a Flask instance
@@ -86,14 +86,16 @@ def create_user():
 
             return redirect("/login")
         else: 
-            password = request.form.get("password")
-            username = request.form.get("username")
-            fname = request.form.get("fname")
-            lname = request.form.get("lname")
-            locale = request.form.get("locale")
-            territory = request.form.get("territory")
-            country = request.form.get("country")
-            about_me = request.form.get("about_me")
+            formData = dict(request.form)
+
+            password = formData["password"]
+            username = formData["username"]
+            fname = formData["fname"]
+            lname = formData["lname"]
+            locale = formData["locale"]
+            territory = formData["territory"]
+            country = formData["country"]
+            about_me = formData["about_me"]
 
             user = User.create_user(email, 
                                     password,
@@ -153,6 +155,22 @@ def list_followers(username):
     return render_template("followers.html", followers=followers, user=user)
 
 
+@app.route("/user/<username>/follow_me")
+def follower_user(username):
+    """Save user to logged-in user's following page"""
+
+    follower = session["user_id"]
+    user_followed = User.get_user_by_username(username)
+    user_followed_id = user_followed.user_id
+
+
+    Follower.create_follower(follower_id=follower, user_followed_id=user_followed_id)
+
+    flash(f"Success! You are now following {username}")
+
+    return redirect(f"/user/{username}")
+
+
 ### Itinerary Routes  ###
 
 @app.route("/create_itinerary", methods=["GET", "POST"])
@@ -163,11 +181,14 @@ def create_itinerary():
         countries = Country.get_countries()
         return render_template("create_itinerary.html", countries=countries)
     else:
-        itinerary_name = request.form.get("name")
-        overview = request.form.get("overview")
-        locale = request.form.get("locale")
-        territory = request.form.get("territory")
-        country = request.form.get("country")
+
+        formData = dict(request.form)
+
+        itinerary_name = formData["name"]
+        overview = formData["overview"]
+        locale = formData["locale"]
+        territory = formData["territory"]
+        country = formData["country"]
             
         itinerary = Itinerary.create_itinerary(session["user_id"], itinerary_name, overview)
         location = Location.create_location(locale, territory, country)
@@ -345,10 +366,13 @@ def add_activity(itinerary_id, place_id):
 
     itinerary_id = itinerary_id
     place_id = place_id
-    activity_name = request.args.get("name")
-    start = request.args.get("start")
-    end = request.args.get("end")
-    notes = request.args.get("notes")
+
+    formData = dict(request.args)
+
+    activity_name = formData["name"]
+    start = formData["start"]
+    end = formData["end"]
+    notes = formData["notes"]
 
     Activity.create_activity(itinerary_id, activity_name, start, end, notes, place_id)
 

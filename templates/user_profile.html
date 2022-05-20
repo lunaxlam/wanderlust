@@ -18,7 +18,7 @@
 
     {% if display_user.username != session["user"] %}
         <div id="follow">
-            <h2>2.0 Feature: Click here to Follow Me</h2>
+            <a href="/user/{{ display_user.username }}/follow_me">Follow Me</a>
             <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
             <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
         </div><br>
@@ -49,8 +49,9 @@
     {% endif %}
 
     <br>
+    
 
-    <h2>My Trips</h2>
+    <h2> My Trips</h2>
     {% for itinerary in user_itineraries %}
         <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
     {% endfor %}

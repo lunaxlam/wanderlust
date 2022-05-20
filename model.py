@@ -121,6 +121,9 @@ class Follower(db.Model):
         """Create and return a follower"""
 
         follower = cls(follower_id=follower_id, user_followed_id=user_followed_id)
+
+        db.session.add(follower)
+        db.session.commit()
         
         return follower
     

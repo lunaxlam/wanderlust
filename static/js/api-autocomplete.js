@@ -20,6 +20,7 @@ function onPlaceChanged() {
 
     // Get place information on the prediction that was selected
     const place = autocomplete.getPlace();
+    const place_id = place.place_id
 
     // Check if the selected prediction is a valid place
     if (!place.geometry) {
@@ -27,8 +28,6 @@ function onPlaceChanged() {
         document.getElementById('autocomplete').placeholder =
         'Enter a place';
     } else {
-
-        const place_id = place.place_id
 
         document.querySelector('#autocomplete-place-id').insertAdjacentHTML(
             'beforeend',
