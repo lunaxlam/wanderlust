@@ -16,6 +16,14 @@
         <link rel="stylesheet" href="/static/css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
+        <!-- Link Favicon -->
+        <link rel="icon" type="image/x-icon" href="/static/public/favicon.ico">
+
+        <!-- Link React dependencies -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" crossorigin></script>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
         <title>{% block title %}PAGE TITLE{% endblock %}</title>
 
         {% block head %}
@@ -23,12 +31,11 @@
 
     </head>
     <body>
-        
-        {% for msg in get_flashed_messages() %}
-        <p class="flash-msg">
-            {{ msg }}
-        </p>
-        {% endfor %}
+        <div>
+            {% for msg in get_flashed_messages() %}
+                <p class="flash-msg">{{ msg }}</p>
+            {% endfor %}
+        </div>
 
         <header>
             <nav>
@@ -36,10 +43,10 @@
                 {% endblock %}
 
                 {% if "user" in session %}
-                <ul><a href="/user/{{ session['user'] }}">My profile</a></ul>
-                <ul><a href="/user/{{ session['user'] }}/followers">Followers</a></ul>
-                <ul><a href="/user/{{ session['user'] }}/following">Following</a></ul>
-                <ul><a href="/logout">Log-Out</a></ul>
+                    <ul><a href="/user/{{ session['user'] }}">My profile</a></ul>
+                    <ul><a href="/user/{{ session['user'] }}/followers">Followers</a></ul>
+                    <ul><a href="/user/{{ session['user'] }}/following">Following</a></ul>
+                    <ul><a href="/logout">Log-Out</a></ul>
                 {% endif %}
 
             </nav>
@@ -54,5 +61,7 @@
         <footer>
         </footer>
 
+        {% block js %}
+	    {% endblock %}
     </body>
 </html>
