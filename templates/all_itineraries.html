@@ -45,12 +45,14 @@
 
     <br><br>
 
-    <div id="all-itineraries">
-        {% for itinerary in itineraries %}
-            <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">Itinerary ID: {{ itinerary.itinerary_id }}, {{ itinerary.itinerary_name }}</a></ul>
-        {% endfor %}
-    </div>
+    <div id="all-itineraries"></div>
 
-    <!-- Script to load fetch request -->
+  
+{% endblock %}
+
+{% block js %}
+    <!-- AJAX request -->
     <script src="/static/js/ajax-filter-itinerary-by-location.js"></script>
+    <!-- React -->
+    <script src="/static/components/AllItineraries.js" type="text/jsx"></script>
 {% endblock %}
