@@ -8,7 +8,7 @@
 
 
 {% block body %}
-    <h1>Wanderlust Community Members</h1>
+    <h1>Wanderlust Community</h1>
     {% for user in users %}
         <ul><a href="/user/{{ user.username }}">{{ user.username }}</a></ul>
     {% endfor %}

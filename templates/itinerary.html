@@ -4,7 +4,7 @@
 
 {% block nav %}
     <ul><a href="/">Home</a></ul>
-    <ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/users">Connect</a></ul>
 {% endblock %}
 
 
@@ -67,7 +67,7 @@
     <div id="saved-place"></div>
 
     <!-- React -->
-    <script src="/static/js/reactActivities.js" type="text/jsx"></script>
+    <script src="/static/js/Activities.js" type="text/jsx"></script>
 
     {% if session["user_id"] == itinerary.user_id %}
         <!-- API -->

@@ -4,7 +4,7 @@
 
 {% block nav %}
     <ul><a href="/">Home</a></ul>
-    <ul><a href="/users">View Wanderlust Community</a></ul>
+    <ul><a href="/users">Connect</a></ul>
 {% endblock %}
 
 
@@ -35,6 +35,6 @@
     {% endfor %}
 
     {% if display_user.username == session["user"] %}
-        <script src="/static/js/reactCreateItinerary.js" type="text/jsx"></script>
+        <script src="/static/js/CreateItinerary.js" type="text/jsx"></script>
     {% endif %}
 {% endblock %}
