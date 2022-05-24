@@ -315,6 +315,9 @@ def search_place(itinerary_id):
 
     data = response.json()
 
+    print("**************************")
+    print(data)
+
     results = data["results"]
 
     photo_url = f"https://maps.googleapis.com/maps/api/place/photo?key={API_KEY}&maxheight=400&maxwidth=400&photo_reference="
@@ -403,29 +406,6 @@ def itineraries_by_location():
         }
 
     return jsonify(db_itineraries_location)
-
-
-@app.route("/api/autocomplete")
-def autocomplete_data():
-    """JSON information from Google Place API Place Autocomplete"""
-
-    form_input = request.args.get('formInput')
-
-    endpoint = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
-    payload = {"input": form_input, "key": API_KEY}
-
-    response = requests.get(endpoint, params=payload)
-
-    data = response.json()
-
-    predictions = data["predictions"]
-
-    results = []
-
-    for prediction in predictions:
-        results.append(prediction["description"])
-
-    return jsonify(results)
 
 
 @app.route("/api/search_place_data")
