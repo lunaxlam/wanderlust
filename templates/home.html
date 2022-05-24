@@ -12,12 +12,16 @@
 {% block body %}
     {% if "user" in session %}
         <h1>Where will adventure take you?</h1>
-        <ul class="start"><a href="/itineraries">View Wanderlust Travel Itineraries</a></ul>
-        <ul class="start"><a href="/create_itinerary">Create a New Travel Itinerary</a></ul>
+        <div id="create-itinerary"></div>
     {% else %}
         <h1>Welcome to Wanderlust!</h1>
         <h2 class="start">Adventure awaits...</h2>
         <ul class="start"><a href="/login">Log-in</a></ul>
         <ul class="start"><a href="/create_user">Create an account</a></ul>        
+    {% endif %}
+
+
+    {% if "user" in session %}
+        <script src="/static/js/reactCreateItinerary.js" type="text/jsx"></script>
     {% endif %}
 {% endblock %}

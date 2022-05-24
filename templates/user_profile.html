@@ -23,29 +23,7 @@
             <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
         </div><br>
     {% else %}
-        <h2>Ready to Plan Another Trip?<br><br>
-        <form action="/create_itinerary" method="POST">
-            <label for="itinerary-name">Name Your Trip: </label>
-            <input type="text" name="name" id="itinerary-name" required>
-            <br>
-            <label for="itinerary-overview">Brief Description: </label>
-            <input type="text" name="overview" id="itinerary-overview" required>
-            <br>
-            <label for="itinerary-locale">Destination City: </label>
-            <input type="text" name="locale" id="itinerary-locale" required>
-            <br>
-            <label for="user-locale">Destination Territory: </label>
-            <input type="text" name="territory" id="itinerary-territory" required>
-            <br>
-            <label for="user-country">Destination Country: </label>
-            <select name="country" id="country">
-                {% for country in countries %}
-                    <option value="{{ country.country_code }}">{{ country.country_name }}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <input type="submit" name="submit">
-        </form>
+        <div id="create-itinerary"></div>
     {% endif %}
 
     <br>
@@ -56,7 +34,7 @@
         <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
     {% endfor %}
 
-    <div id="saved-trips">
-
-    </div>
+    {% if display_user.username == session["user"] %}
+        <script src="/static/js/reactCreateItinerary.js" type="text/jsx"></script>
+    {% endif %}
 {% endblock %}

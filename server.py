@@ -173,35 +173,30 @@ def follower_user(username):
 
 ### Itinerary Routes  ###
 
-@app.route("/create_itinerary", methods=["GET", "POST"])
+@app.route("/create_itinerary", methods=["POST"])
 def create_itinerary():
     """Display form to create a travel itinerary"""
 
-    if request.method == "GET":
-        countries = Country.get_countries()
-        return render_template("create_itinerary.html", countries=countries)
-    else:
+    formData = dict(request.form)
 
-        formData = dict(request.form)
+    itinerary_name = formData["name"]
+    overview = formData["overview"]
+    locale = formData["locale"]
+    territory = formData["territory"]
+    country = formData["country"]
+        
+    itinerary = Itinerary.create_itinerary(session["user_id"], itinerary_name, overview)
+    location = Location.create_location(locale, territory, country)
 
-        itinerary_name = formData["name"]
-        overview = formData["overview"]
-        locale = formData["locale"]
-        territory = formData["territory"]
-        country = formData["country"]
-            
-        itinerary = Itinerary.create_itinerary(session["user_id"], itinerary_name, overview)
-        location = Location.create_location(locale, territory, country)
+    itinerary.locations.append(location)
+    db.session.add(itinerary)
+    db.session.commit()
 
-        itinerary.locations.append(location)
-        db.session.add(itinerary)
-        db.session.commit()
+    flash(f"Success! {itinerary_name} created.")
 
-        flash(f"Success! {itinerary_name} created.")
+    itinerary_id = itinerary.itinerary_id
 
-        itinerary_id = itinerary.itinerary_id
-
-        return redirect(f"/itinerary/{itinerary_id}")
+    return redirect(f"/itinerary/{itinerary_id}")
 
 
 @app.route("/itineraries") 
@@ -456,7 +451,6 @@ def delete_activity():
 
 
 ### Country Routes  ###
-
 @app.route("/countries")
 def show_countries():
     """Display Wanderlust approved countries"""

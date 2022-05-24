@@ -43,6 +43,7 @@
                 {% endblock %}
 
                 {% if "user" in session %}
+                    <ul><a href="/itineraries">Wanderlust Itineraries</a></ul>
                     <ul><a href="/user/{{ session['user'] }}">My profile</a></ul>
                     <ul><a href="/user/{{ session['user'] }}/followers">Followers</a></ul>
                     <ul><a href="/user/{{ session['user'] }}/following">Following</a></ul>
