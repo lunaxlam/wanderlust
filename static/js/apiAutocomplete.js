@@ -28,10 +28,9 @@ function onPlaceChanged() {
         'Enter a place';
     } else {
 
-        document.querySelector('#autocomplete-place-id').insertAdjacentHTML(
+        document.querySelector('#autocomplete-mount').insertAdjacentHTML(
             'beforeend',
-            `<input type='hidden' name='autocomplete' value='${place.place_id}'><br>
-            <input type="submit" value="Submit">`
+            `<input type='hidden' name='autocomplete' value='${place.place_id}'>`
         )
 
     }

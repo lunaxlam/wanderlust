@@ -29,19 +29,25 @@ function fetchItineraryBy(queryString) {
             
             mount.innerHTML = ''
 
-            for (const i in data) {
-
-                const itinerary_id = data[i]['itinerary_id'];
-                const itinerary_name = data[i]['itinerary_name'];
-
+            if (Object.keys(data).length === 0) {
                 mount.insertAdjacentHTML(
                     'beforeend',
-                    `<ul><a href='/itinerary/${itinerary_id}' target='blank'>Itinerary ID: ${itinerary_id}, ${itinerary_name}</a></ul>`
+                    `<p>No results.</p>`
                 )
-            }    
+            }
+            else {
+                for (const i in data) {
+                    const itinerary_id = data[i]['itinerary_id'];
+                    const itinerary_name = data[i]['itinerary_name'];
+    
+                    mount.insertAdjacentHTML(
+                        'beforeend',
+                        `<ul><a href='/itinerary/${itinerary_id}' target='blank'>Itinerary ID: ${itinerary_id}, ${itinerary_name}</a></ul>`
+                    )
+                }   
+            }             
         })
 }
-
 
 
 // Display itineraries by locale
