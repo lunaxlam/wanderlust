@@ -63,6 +63,8 @@
             method="POST">
             <div id="autocomplete-place-id">
                 <input id="autocomplete" type="text" size="50" placeholder="Enter a place" />
+                <section id="autocomplete-mount"></section>
+                <input type="submit" value="Submit">
             </div>
             
         </form>
@@ -95,10 +97,15 @@
     <h2>Activities</h2>
     <div id="saved-place"></div>
 
-    <!-- Script to load js -->
-    <script src="/static/js/ajax-saved-activities.js"></script>
-    <script src="/static/js/api-autocomplete.js"></script>
+    <!-- React -->
+    <script src="/static/js/reactActivity.js" type="text/jsx"></script>
+
+    {% if session["user_id"] == itinerary.user_id %}
+    <!-- API -->
+    <script src="/static/js/apiAutocomplete.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
     </script>
+    {% endif %}
 {% endblock %}
+

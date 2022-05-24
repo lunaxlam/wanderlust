@@ -11,13 +11,13 @@
 
 {% block body %}
     {% if "user" in session %}
-        <div id="in-session"></div>
+        <h1>Where will adventure take you?</h1>
+        <ul class="start"><a href="/itineraries">View Wanderlust Travel Itineraries</a></ul>
+        <ul class="start"><a href="/create_itinerary">Create a New Travel Itinerary</a></ul>
     {% else %}
-        <div id="no-session"></div>
+        <h1>Welcome to Wanderlust!</h1>
+        <h2 class="start">Adventure awaits...</h2>
+        <ul class="start"><a href="/login">Log-in</a></ul>
+        <ul class="start"><a href="/create_user">Create an account</a></ul>        
     {% endif %}
-{% endblock %}
-
-{% block js %}
-	<script src="/static/components/HomepageInSession.js" type="text/jsx"></script>
-    <script src="/static/components/HomepageNoSession.js" type="text/jsx"></script>
 {% endblock %}
