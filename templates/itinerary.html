@@ -17,52 +17,27 @@
             {{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}
         {% endfor %}
     </p>
-    <br>       
 
     {% if session["user_id"] != itinerary.user_id %}
-        <h2>Clone This Trip</h2>
-        <form action="/itinerary/{{ itinerary.itinerary_id }}", method="POST">
-            <label for="itinerary-name">Name Your Trip: </label>
-            <input type="text" name="name" id="itinerary-name" required>
-            <br>
-            <label for="itinerary-overview">Brief Description: </label>
-            <input type="text" name="overview" id="itinerary-overview" required>
-            <br>
-            <input type="submit" name="submit">
-        </form>
-        <br>
+        <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
+        <div id="clone-trip-form"></div>
     {% endif %}
 
     {% if session["user_id"] == itinerary.user_id %}
-        <h4>Delete Itinerary</h4>
+        <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
         <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
+        <div id="add-destination-form"></div>
 
         <br><br><br>
 
-        <h2>Add Destination</h2>
-        <form action="/itinerary/{{ itinerary.itinerary_id }}/add_destination">
-            <label for="destination-locale">Locale:</label>
-            <input type="text" name="locale" id="destination-locale" required>
-            <br>
-            <label for="destination-territory">Territory</label>
-            <input type="text" name="territory" id="destination-territory" required>
-            <br>
-            <label for="destination-country">Country</label>
-            <input type="text" name="country" id="destination-country" pattern="(\b\w{3}\b)" required>
-            <br>
-            <p class="hint">Country code must be entered as three-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a> code standard. Need a <a href="/countries">hint</a>?</p>
-            <input type="submit" name="submit">
-        </form>
-            
-        <br><br>
-
-        <h2>Search New Activity Location </h2>
+        <h2>Search Location to Add Activity</h2>
 
         <h3>By Name or Address</h3>
         <form action="/itinerary/{{ itinerary.itinerary_id}}/search/'temp_place_id'/details" 
-            method="POST">
+            method="POST"
+            target="_blank">
             <div id="autocomplete-place-id">
-                <input id="autocomplete" type="text" size="50" placeholder="Enter a place" />
+                <input id="autocomplete" type="text" size="50" placeholder="Ricobene's" />
                 <section id="autocomplete-mount"></section>
                 <input type="submit" value="Submit">
             </div>
@@ -72,23 +47,17 @@
         <br><br>
 
         <h3>By Point of Interest</h3>
-        <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
+        <form action="/itinerary/{{ itinerary.itinerary_id }}/search" target="_blank">
             <label for="search-keyword">Description:</label>
-            <input type="text" name="keyword" id="search-keyword">
+            <input type="text" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
             <br>
-            <label for="search-locale">Locale:</label>
-            <input type="text" name="locale" id="search-locale">
-            <br>
-            <label for="search-territory">Territory:</label>
-            <input type="text" name="territory" id="search-territory">
-            <br>
-            <label for="search-country">Country:</label>
-            <input type="text" name="country" id="search-country">
+            <label for="search-location">Location:</label>
+            <input type="text" name="location" id="search-location" placeholder="Chicago">
             <br>
             <input type="submit" name="submit">
         </form>
 
-        <br><br>
+        <br>
 
     {% endif %}
 
@@ -101,11 +70,17 @@
     <script src="/static/js/reactActivities.js" type="text/jsx"></script>
 
     {% if session["user_id"] == itinerary.user_id %}
-    <!-- API -->
-    <script src="/static/js/apiAutocomplete.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
-    </script>
+        <!-- API -->
+        <script src="/static/js/addDestination.js"></script>
+        <script src="/static/js/apiAutocomplete.js"></script>
+        <script 
+            async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
+        </script>
+    {% endif %}
+
+    {% if session["user_id"] != itinerary.user_id %}
+        <script src="/static/js/cloneItinerary.js"></script>
     {% endif %}
 {% endblock %}
 

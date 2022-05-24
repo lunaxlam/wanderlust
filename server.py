@@ -301,11 +301,9 @@ def search_place(itinerary_id):
 
     else:
         keyword = request.args.get("keyword", "")
-        locale = request.args.get("locale", "")
-        territory = request.args.get("territory", "")
-        country = request.args.get("country", "")
+        location = request.args.get("location", "")
 
-        query = f"{keyword}+{locale}+{territory}+{country}"
+        query = f"{keyword}+{location}"
 
         session["query"] = query
 
@@ -314,9 +312,6 @@ def search_place(itinerary_id):
     response = requests.get(endpoint, params=payload)
 
     data = response.json()
-
-    print("**************************")
-    print(data)
 
     results = data["results"]
 

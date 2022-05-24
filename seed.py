@@ -47,8 +47,9 @@ itinerary_names = [f"Summer Vacation {randint(2022, 2030)}", f"Home for the Holi
                 f"Summer Road Trip {randint(2022, 2030)}", f"Anniversary Trip {randint(2022, 2030)}",
                 f"Labor Day Weekend {randint(2022, 2030)}", f"Wedding Season {randint(2022, 2030)}"]
 
-notes = ["Reservations allowed up to 24 hours in advance", "Device free establishment", "BYOB permitted",
-        "No bags allowed", "No children under 12 allowed",  "COVID Requirements: Masks Still Mandatory"]
+notes = ["Reservations up to 24 hours in advance", "No cell phones", "BYOB is ok",
+        "21+ only", "No children under 12 yrs",  "Face masks required",
+        "Dogs OK", "Limited outdoor seating", "Patio closed for the season"]
 
 place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJ-bfVTh8VkFQRDZLQnmioK9s",
              "ChIJ_VQLhrpqkFQR5sDjZ1AhuHI", "ChIJfy4MvqG3t4kRuL_QjoJGc-k", "ChIJX4k2TVVfXIYRIsTnhA-P-Rc",

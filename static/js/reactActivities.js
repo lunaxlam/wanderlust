@@ -26,7 +26,7 @@ function Activity( { name, dates, start, end, location, url, formattedAddress, p
             <ul>Start: {start} </ul> 
             <ul>End: {end} </ul>   
             <ul>Location: {location} </ul>                    
-            <ul>Address: <a href={url} target='blank'>{formattedAddress}</a></ul>
+            <ul>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></ul>
             <ul>Phone: {phone} </ul>
             <ul>Notes: {notes} </ul>
             <button onClick={onClick} 

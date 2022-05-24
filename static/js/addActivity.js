@@ -8,8 +8,8 @@ addBtn.addEventListener('click', (evt) => {
 
     const clicked_button = evt.target;
 
-    const itinerary_id = clicked_button.getAttribute("name");
-    const place_id = clicked_button.getAttribute("value")
+    const itinerary_id = clicked_button.getAttribute('name');
+    const place_id = clicked_button.getAttribute('value')
 
     document.querySelector('#add-activity-form').insertAdjacentHTML(
         'beforeend',

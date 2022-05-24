@@ -42,7 +42,7 @@ function fetchItineraryBy(queryString) {
     
                     mount.insertAdjacentHTML(
                         'beforeend',
-                        `<ul><a href='/itinerary/${itinerary_id}' target='blank'>Itinerary ID: ${itinerary_id}, ${itinerary_name}</a></ul>`
+                        `<ul><a href='/itinerary/${itinerary_id}' target='_blank'>Itinerary ID: ${itinerary_id}, ${itinerary_name}</a></ul>`
                     )
                 }   
             }             

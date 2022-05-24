@@ -23,10 +23,10 @@
         </div>
 
         <div class="place-body">
-            <p>Name: <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
+            <p><a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
                         target="blank">{{ result["name"] }}</a></p>
             {% if "formatted_address" in result %}
-                <p>Address: {{ result["formatted_address"] }}</p>
+                <p>{{ result["formatted_address"] }}</p>
             {% endif %}
             <br>
         </div>

@@ -90,6 +90,11 @@ nav {
 	margin: 10px 0 10px 0;
 }
 
+img {
+	height: 200px;
+	width: auto;
+}
+
 h1 {
 	font-size: 26px;
 	font-weight: bold;
@@ -119,6 +124,10 @@ h2 {
 	font-size: 12px;
 }
 
+.active-form {
+	background-color: lightgoldenrodyellow;
+	padding: 10px;
+}
 
 /* Flash Message Styling */
 
