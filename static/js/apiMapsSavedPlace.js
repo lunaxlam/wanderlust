@@ -14,7 +14,7 @@ function initMap() {
                     lat: activities[0]['results']['geometry']['location']['lat'],
                     lng: activities[0]['results']['geometry']['location']['lng'],
                 },
-                scrollwheel: true,
+                scrollwheel: false,
                 zoom: 14,
             });
 
@@ -53,7 +53,4 @@ function initMap() {
                 });
             }
         })
-        .catch(() => {
-            alert(`Oops! Something went wrong. Please contact the developer.`); 
-        });
 }

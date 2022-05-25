@@ -19,7 +19,7 @@ function initMap() {
                         lat: activities[0]['results']['geometry']['location']['lat'],
                         lng: activities[0]['results']['geometry']['location']['lng'],
                     },
-                    scrollwheel: true,
+                    scrollwheel: false,
                     zoom: 14,
                 });
 

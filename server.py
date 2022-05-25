@@ -200,6 +200,7 @@ def list_all_itineraries():
     countries = []
 
     locations = Location.get_locations()
+    itineraries = Itinerary.get_itineraries()
 
     for location in locations:
         if location.locale not in locales:
@@ -213,7 +214,7 @@ def list_all_itineraries():
     territories.sort()
     countries.sort()
 
-    return render_template("all_itineraries.html", locales=locales, territories=territories, countries=countries)
+    return render_template("all_itineraries.html", locales=locales, territories=territories, countries=countries, itineraries=itineraries)
 
 
 @app.route("/itinerary/<itinerary_id>", methods =["POST", "GET"])

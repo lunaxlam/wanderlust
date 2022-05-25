@@ -5,13 +5,17 @@
 {% block body %}
     <h1>{{ itinerary.itinerary_name }}</h1>
 
-    <h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
-    <p>Overview: {{ itinerary.overview }}</p>
-    <p>Destinations: 
-        {% for destination in destinations %}
-            {{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}
-        {% endfor %}
-    </p>
+    <ul>
+        <li>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></li>
+        <li>Overview: {{ itinerary.overview }}</li>
+        <li>Destinations: 
+            <ul>
+            {% for destination in destinations %}
+                <li>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</li>
+            {% endfor %}
+            <ul>
+        </li>
+    <ul>
 
     {% if session["user_id"] != itinerary.user_id %}
         <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
@@ -27,8 +31,7 @@
 
         <h3>By Name or Address</h3>
         <form action="/itinerary/{{ itinerary.itinerary_id}}/search/'temp_place_id'/details" 
-            method="POST"
-            target="_blank">
+            method="POST">
             <div id="autocomplete-place-id">
                 <input id="autocomplete" type="text" size="50" placeholder="Ricobene's" />
                 <section id="autocomplete-mount"></section>
@@ -39,7 +42,7 @@
         <br><br>
 
         <h3>By Point of Interest</h3>
-        <form action="/itinerary/{{ itinerary.itinerary_id }}/search" target="_blank">
+        <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
             <label for="search-keyword">Description:</label>
             <input type="text" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
             <br>

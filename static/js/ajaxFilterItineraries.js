@@ -25,22 +25,30 @@ function fetchItineraryBy(queryString) {
         .then((response) => response.json())
         .then((data) => {
 
-            const mount = document.querySelector('#all-itineraries');
+            const headerResults = document.querySelector('#results');
+            const mountItineraries = document.querySelector('#all-itineraries');
             
-            mount.innerHTML = ''
+            mountItineraries.innerHTML = ''
+            headerResults.innerHTML = ''
+
+            headerResults.insertAdjacentHTML(
+                'beforeend',
+                '<h2>Results:</h2>'
+            )
 
             if (Object.keys(data).length === 0) {
-                mount.insertAdjacentHTML(
+                mountItineraries.insertAdjacentHTML(
                     'beforeend',
-                    `<p>No results.</p>`
+                    `<p>None.</p>`
                 )
             }
             else {
+
                 for (const i in data) {
                     const itinerary_id = data[i]['itinerary_id'];
                     const itinerary_name = data[i]['itinerary_name'];
     
-                    mount.insertAdjacentHTML(
+                    mountItineraries.insertAdjacentHTML(
                         'beforeend',
                         `<li><a href='/itinerary/${itinerary_id}' target='_blank'>ID #: ${itinerary_id}, ${itinerary_name}</a></li>`
                     )

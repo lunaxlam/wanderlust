@@ -50,8 +50,4 @@ function initMap() {
                 });
             });
         })
-        .catch(() => {
-            alert(`Oops! Something went wrong. Please contact the developer.`); 
-        });
-
 }

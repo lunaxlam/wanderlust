@@ -294,7 +294,7 @@ class Activity(db.Model):
             clone_activity = cls(itinerary_id=clone_itinerary_id,
                                     dates=activity.dates,
                                     start=activity.start,
-                                    ende=activity.end,
+                                    end=activity.end,
                                     notes=activity.notes,
                                     place_id=activity.place_id)
             

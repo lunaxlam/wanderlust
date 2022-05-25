@@ -7,7 +7,7 @@
 
     <br>
 
-    <h3>Filter By:</h3>
+    <h2>Filter:</h2>
     <div id="filter-itineraries"></div>
 
     <form action="/api/itineraries/by_locale">
@@ -42,8 +42,13 @@
 
     <br><br>
 
-    <h2>Results</h2>
+    <div id="results">
+        <h2>View all:</h2>
+    </div>
     <ul id="all-itineraries">
+        {% for itinerary in itineraries %}
+            <li><a href="{{ itinerary.itinerary_id }}" target='_blank'>ID #: ${{ itinerary.itinerary_id }}, {{ itinerary.itinerary_name }}</a></li>
+        {% endfor  %}
     </ul>
 {% endblock %}
 
