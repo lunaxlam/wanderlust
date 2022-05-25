@@ -10,6 +10,7 @@
 
 {% block body %}
     <h1>{{ itinerary.itinerary_name }}</h1>
+
     <h4>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>
     <p>Overview: {{ itinerary.overview }}</p>
     <p>Destinations: 
@@ -41,7 +42,6 @@
                 <section id="autocomplete-mount"></section>
                 <input type="submit" value="Submit">
             </div>
-            
         </form>
 
         <br><br>
@@ -58,40 +58,27 @@
         </form>
 
         <br>
-
     {% endif %}
 
     <br><br>
 
     <h2>Activities</h2>
-    {% if session["user_id"] != itinerary.user_id %}
-        <div id="map"></div><br>
-    {% endif %}
+    <div id="map"></div><br>
     <div id="saved-place"></div>
-
-
-  
-  
-    <!-- React -->
-    <script src="/static/js/components/Activities.js" type="text/jsx"></script>
-
-    {% if session["user_id"] == itinerary.user_id %}
-        <!-- API -->
-        <script src="/static/js/addDestination.js"></script>
-        <script src="/static/js/apiAutocomplete.js"></script>
-        <script 
-            async defer
-            src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
-        </script>
-    {% endif %}
-
-    {% if session["user_id"] != itinerary.user_id %}
-        <script src="/static/js/cloneItinerary.js"></script>
-          <!-- Maps API -->
-        <script src="/static/js/apiMapsSavedPlaces.js"></script>
-        <script async
-            src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
-        </script>
-    {% endif %}
 {% endblock %}
 
+{% block js %}
+    <!-- React -->
+    <script src="/static/js/components/Activities.js" type="text/jsx"></script>
+    <!-- Maps API -->
+    <script src="/static/js/apiMapsAutocomplete.js"></script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
+    </script>
+
+    {% if session["user_id"] == itinerary.user_id %}
+        <script src="/static/js/addDestination.js"></script>
+    {% else %}
+        <script src="/static/js/cloneItinerary.js"></script>
+    {% endif %}
+{% endblock %}

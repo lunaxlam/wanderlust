@@ -14,6 +14,7 @@
         <ul>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
         <ul>{{ display_user.about_me }}</ul>
     </div>
+
     <br>
 
     {% if display_user.username != session["user"] %}
@@ -21,19 +22,22 @@
             <a href="/user/{{ display_user.username }}/follow_me">Follow Me</a>
             <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
             <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
-        </div><br>
+        </div>
+        
+        <br>
     {% else %}
         <div id="create-itinerary"></div>
     {% endif %}
 
     <br>
     
-
     <h2> My Trips</h2>
     {% for itinerary in user_itineraries %}
         <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
     {% endfor %}
+{% endblock %}
 
+{% block js %}
     {% if display_user.username == session["user"] %}
         <script src="/static/js/components/CreateItinerary.js" type="text/jsx"></script>
     {% endif %}

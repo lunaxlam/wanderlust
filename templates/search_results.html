@@ -11,7 +11,6 @@
 {% block body %}
     <h1>Search Results</h1>
     {% for result in results %}
-
         <div class="place-photo">
             {% if "photos" in result %}
                 <img src="{{ photo_url }}{{ result['photos'][0]['photo_reference'] }}" 
@@ -24,13 +23,13 @@
 
         <div class="place-body">
             <p><a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
-                        target="blank">{{ result["name"] }}</a></p>
+                        target="blank">{{ result["name"] }}</a>
+            </p>
             {% if "formatted_address" in result %}
                 <p>{{ result["formatted_address"] }}</p>
             {% endif %}
             <br>
         </div>
-
     {% endfor %}
 
     {% if  "next_page_token" in data %}
@@ -38,7 +37,8 @@
             <button type="submit" 
                 formaction="/itinerary/{{ itinerary_id }}/search" 
                 name="pagetoken" 
-                value="{{ data['next_page_token'] }}">View More Results</button>
+                value="{{ data['next_page_token'] }}">View More Results
+            </button>
         </form>
     {% else %}
         <h2>End of Results</h2>

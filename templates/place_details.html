@@ -13,7 +13,7 @@
     <div id="map"></div>
 
     <br>
-    
+
     <div id="place-details">
         {% if "formatted_address" in results %}
             <p>Address: <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a></p>
@@ -35,27 +35,27 @@
 
         {% if "hours" in results %}
             <p>Business Hours: 
-                {% for hour in hours %}
+            {% for hour in hours %}
                 <ul>{{ hour }}</ul>
-                {% endfor %}
+            {% endfor %}
             </p>
         {% endif %}
-
     </div>
 
     <br>
 
     <button id="add-activity" name="{{ itinerary_id}}" value="{{ results['place_id'] }}">Add Location to New Activity</button>
-
+    
     <br><br>
-
+    
     <div id="add-activity-form"></div>
+{% endblock %}
 
-    <!-- Script to load js -->
+{% block js %}
+    <script src="/static/js/addActivity.js"></script>
+    <!-- Maps API -->
     <script src="/static/js/apiMapsPlaceSearch.js"></script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
     </script>
-
-    <script src="/static/js/addActivity.js"></script>
 {% endblock %}

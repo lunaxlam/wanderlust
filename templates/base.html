@@ -31,9 +31,9 @@
 
     </head>
     <body>
-        <div>
+        <div id="flash-msg">
             {% for msg in get_flashed_messages() %}
-                <p class="flash-msg">{{ msg }}</p>
+                <p>{{ msg }}</p>
             {% endfor %}
         </div>
 
@@ -55,12 +55,8 @@
 
         {% block body %}
         {% endblock %}
-
-        {% block after_body %}
-        {% endblock %}
         
-        <footer>
-        </footer>
+        <footer></footer>
 
         {% block js %}
 	    {% endblock %}
