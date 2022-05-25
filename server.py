@@ -425,8 +425,8 @@ def saved_place_data():
                                 "itinerary_id": activity.itinerary_id,
                                 "activity_name": activity.activity_name,
                                 "dates": activity.dates,
-                                "start": activity.start_time,
-                                "end": activity.end_time,
+                                "start": activity.start,
+                                "end": activity.end,
                                 "notes": activity.notes,
                                 "place_id": activity.place_id,
                                 "results": results

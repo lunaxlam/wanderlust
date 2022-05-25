@@ -14,7 +14,7 @@ function initMap() {
                     lng: activities[0]['results']['geometry']['location']['lng'],
                 },
                 scrollwheel: true,
-                zoom: 4,
+                zoom: 12,
             });
 
             for (const activity in activities) {

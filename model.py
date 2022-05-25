@@ -236,8 +236,8 @@ class Activity(db.Model):
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
     activity_name = db.Column(db.String(50), nullable=False)
     dates = db.Column(db.String, nullable=True)
-    start_time = db.Column(db.String, nullable=True)
-    end_time = db.Column (db.String, nullable=True)
+    start = db.Column(db.String, nullable=True)
+    end = db.Column (db.String, nullable=True)
     notes = db.Column(db.Text, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
@@ -278,8 +278,8 @@ class Activity(db.Model):
         activity = cls(itinerary_id=itinerary_id,
                     activity_name=activity_name,
                     dates=dates,
-                    start_time=start_time,
-                    end_time=end_time,
+                    start=start_time,
+                    end=end_time,
                     notes=notes,
                     place_id=place_id)
         
@@ -298,8 +298,8 @@ class Activity(db.Model):
             clone_activity = cls(itinerary_id=clone_itinerary_id,
                                     activity_name=activity.activity_name,
                                     dates=activity.dates,
-                                    start_time=activity.start_time,
-                                    end_time=activity.end_time,
+                                    start=activity.start,
+                                    ende=activity.end,
                                     notes=activity.notes,
                                     place_id=activity.place_id)
             
