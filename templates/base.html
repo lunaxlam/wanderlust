@@ -31,9 +31,9 @@
 
     </head>
     <body>
-        <div id="flash-msg">
+        <div>
             {% for msg in get_flashed_messages() %}
-                <p>{{ msg }}</p>
+                <p class="flash-msg">{{ msg }}</p>
             {% endfor %}
         </div>
 
