@@ -16,12 +16,18 @@
     {% else %}
         <h1>Welcome to Wanderlust!</h1>
         <h2 class="start">Adventure awaits...</h2>
-        <ul class="start"><a href="/login">Log-in</a></ul>
-        <ul class="start"><a href="/create_user">Create an account</a></ul>        
+        <div id="log-in"></div>
+        <br><br>
+        <div id="create-user"></div>      
     {% endif %}
+
+
 
 
     {% if "user" in session %}
         <script src="/static/js/CreateItinerary.js" type="text/jsx"></script>
+    {% else %}
+        <script src="/static/js/LogIn.js" type="text/jsx"></script>
+        <script src="/static/js/CreateUser.js" type="text/jsx"></script>
     {% endif %}
 {% endblock %}

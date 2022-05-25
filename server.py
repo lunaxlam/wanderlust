@@ -27,34 +27,31 @@ def show_welcome():
     return render_template("home.html")
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def process_login():
     """Log user into site"""
 
-    if request.method == "GET":
-        return render_template("login.html")
-    else:
-        email = request.form.get("email")
-        user = User.get_user_by_email(email)
+    email = request.form.get("email")
+    user = User.get_user_by_email(email)
 
-        if user:
-            password = request.form.get("password")
+    if user:
+        password = request.form.get("password")
+        
+        if password == user.password:
+            session["user"] = f"{user.username}"
+            session["user_id"] = user.user_id
+
+            flash(f"Success! Welcome back to Wanderlust, {user.username}")
             
-            if password == user.password:
-                session["user"] = f"{user.username}"
-                session["user_id"] = user.user_id
-
-                flash(f"Success! Welcome back to Wanderlust, {user.username}")
-                
-                return redirect("/")
-            else:
-                flash("Incorrect password.")
-                
-                return redirect("/login")
+            return redirect("/")
         else:
-            flash("Username does not exist!")
+            flash("Incorrect password.")
             
-            return redirect("/create_user")
+            return redirect("/login")
+    else:
+        flash("Username does not exist!")
+        
+        return redirect("/create_user")
 
 
 @app.route("/logout")
