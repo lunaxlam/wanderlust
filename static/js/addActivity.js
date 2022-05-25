@@ -8,12 +8,14 @@ addBtn.addEventListener('click', (evt) => {
 
     const clicked_button = evt.target;
 
-    const itinerary_id = clicked_button.getAttribute('name');
-    const place_id = clicked_button.getAttribute('value')
+    const itineraryID = clicked_button.getAttribute('name');
+    const placeID = clicked_button.getAttribute('value');
+    const lat = clicked_button.getAttribute('data-value1');
+    const long = clicked_button.getAttribute('data-value2');
 
     document.querySelector('#add-activity-form').insertAdjacentHTML(
         'beforeend',
-        `<form action='/itinerary/${itinerary_id}/${place_id}/add_activity'>
+        `<form action='/itinerary/${itineraryID}/${placeID}/add_activity'>
             <label for='activity-name'>Name of Activity:</label>
             <input type='text' name='name' id='activity-name' required><br>
             <label for='activity-start'>Start:</label>

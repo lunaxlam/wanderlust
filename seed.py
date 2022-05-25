@@ -51,9 +51,7 @@ notes = ["Reservations up to 24 hours in advance", "No cell phones", "BYOB is ok
         "21+ only", "No children under 12 yrs",  "Face masks required",
         "Dogs OK", "Limited outdoor seating", "Patio closed for the season"]
 
-place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJ-bfVTh8VkFQRDZLQnmioK9s",
-             "ChIJ_VQLhrpqkFQR5sDjZ1AhuHI", "ChIJfy4MvqG3t4kRuL_QjoJGc-k", "ChIJX4k2TVVfXIYRIsTnhA-P-Rc",
-             "ChIJywjU6WG_woAR3NrWwrEH_3M", "ChIJb8Jg9pZYwokR-qHGtvSkLzs", "ChIJM0FkBix__YcRupUSQ2SfW04"]
+place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE"]
 
 # Create users to seed the database 
 users_db = []
@@ -141,7 +139,8 @@ for itinerary in itineraries_id:
                                             start=start,
                                             end=end,
                                             notes=choice(notes),
-                                            place_id=choice(place_ids))
+                                            place_id=choice(place_ids)
+                                            )
         activities_db.append(new_activity)
 
 # Add and commit activities to the database

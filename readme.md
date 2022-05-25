@@ -2,10 +2,11 @@
 A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)
 
 ## **Table of Contents**
-* [Background](https://github.com/lunaxlam/wanderlust-travel-planner#background)
-* [Tech Stack](https://github.com/lunaxlam/wanderlust-travel-planner#tech-stack) 
-* [Features](https://github.com/lunaxlam/wanderlust-travel-planner#features)
-* [Installation](https://github.com/lunaxlam/wanderlust-travel-planner#installation)
+* [Background](https://github.com/lunaxlam/wanderlust#background)
+* [Tech Stack](https://github.com/lunaxlam/wanderlust#tech-stack) 
+* [Features](https://github.com/lunaxlam/wanderlust#features)
+* [Installation](https://github.com/lunaxlam/wanderlust#installation)
+
 
 ## **Background**
 As avid travelers, my friends and I strive to make the most out of our adventures by developing day-by-day travel itineraries that detail lodging and dining accommodations, as well as places to see and explore. After our trips, we often pass along these thoughtfully-curated and personally-vetted itineraries to other friends and family as a guiding resource to enrich their own travels. 
