@@ -35,23 +35,75 @@ bio = ["I teach Brazilian Jiu-Jitsu \U0001F94B, play guitar \U0001F3B8, and like
 
 addresses = [["Chicago", "Illinois", "USA"], ["New York", "New York", "USA"], 
                 ["Seattle", "Washington", "USA"], ["Boston", "Massachusetts", "USA"], 
-                ["Hong Kong Island", "Hong Kong", "HK"], ["Venice", "Veneto", "ITA"],
-                ["London", "England", "UK"], ["Liverpool", "England", "UK"],
-                ["Lagos", "Nigeria", "NE"], ["Taipei", "Northern Taiwan", "TAI"],
+                ["Hong Kong Island", "Hong Kong", "HKG"], ["Venice", "Veneto", "ITA"],
+                ["London", "England", "GBR"], ["Liverpool", "England", "GBR"],
+                ["Lagos", "Nigeria", "NGA"], ["Taipei", "Northern Taiwan", "TAI"],
                 ["Toronto", "Ontario", "CAN"], ["Calgary", "Alberta", "CAN"],
-                ["Vancouver", "British Columbia", "CAN"], ["Sveta Nedelja", "Zagreb", "CI"],
+                ["Vancouver", "British Columbia", "CAN"], ["Sveta Nedelja", "Zagreb", "HRV"],
                 ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
-itinerary_names = [f"Summer Vacation {randint(2022, 2030)}", f"Home for the Holidays {randint(2022, 2030)}", 
-                f"A Screaming Halloween Weekend", f"May Adventures {randint(2022, 2030)}",
-                f"Summer Road Trip {randint(2022, 2030)}", f"Anniversary Trip {randint(2022, 2030)}",
-                f"Labor Day Weekend {randint(2022, 2030)}", f"Wedding Season {randint(2022, 2030)}"]
+itinerary_choices = [
+    {"name": "A Screaming Halloween Weekend in Salem",
+    "overview": "Three-day weekend exploring historic sights and famous haunts.",
+    "locale": "Salem", 
+    "territory": "Massachusetts", 
+    "country": "USA", 
+    "places": ["ChIJId0s1WQU44kRHgLHTfrQHc4", "ChIJ9_27aW8U44kRA2HY1Vk_xxQ", "ChIJ7XbB2HoU44kRl7_QkmUYukc", "ChIJr6C08etv5IkRAyk-rB7uevo"]
+    },
+    {"name": "Sleepless in Seattle Tour", 
+    "overview": "A 5-day trip filled with delish eats, fun hikes, and lots of coffee.",
+    "locale": "Seattle", 
+    "territory": "Washington", 
+    "country": "USA", 
+    "places": ["ChIJ7ZC5oTcVkFQR4tJqYR-hWbU", "ChIJPQG7WLJqkFQRUXVHLnb3Lro", "ChIJk63I_rNqkFQR3EtxoHQwzBM", "ChIJb6RGGMJrkFQRrLOGJZumVwM"]
+    },
+    {"name": "Sweet Home Chicago for the Holidays", 
+    "overview": "Enjoying the holidays with family and friends in back home in Chicago.",
+    "locale": "Chicago", 
+    "territory": "Illinois", 
+    "country": "USA", 
+    "places": ["ChIJoToyIa4sDogROtxPMF-6QN8-hWbU", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJici8qWgsDogRuoxl5U7xq7g", "ChIJFR3zFUHTD4gRiSGHi3J4B7Y"]
+    },
+    {"name": "Taking 5 in the 5 Boroughs", 
+    "overview": "A 5-day trip in the concrete jungle.",
+    "locale": "New York", 
+    "territory": "New York", 
+    "country": "USA", 
+    "places": ["ChIJg5jn8FNYwokRwH-6QN8-hWbU", "ChIJbz1TL6ZZwokRv_VvWdOElb0", "ChIJ5bQPhMdZwokRkTwKhVxhP1g", "ChIJLWBE3YNZwokRh2EBs1QXfzM"]
+    },
+    {"name": "A Hong Kong Summer", 
+    "overview": "14 days in the 852",
+    "locale": "Hong Kong", 
+    "territory": "Hong Kong", 
+    "country": "HKG", 
+    "places": ["ChIJn-mOoECqBjQRJssZ2P6yqKA", "ChIJnz5FoVAABDQR6OQrQ1dEduk", "ChIJwzeIKmUABDQR8VxjuNzFq3Q", "ChIJM5NtTLwFBDQR"]
+    },
+    {"name": "A Spring Get-Away to London", 
+    "overview": "Care for more tea? 5 days and 4 nights enjoying adventures across the pond.",
+    "locale": "London", 
+    "territory": "England", 
+    "country": "GBR", 
+    "places": ["ChIJx5m01ssEdkgRU", "ChIJH4s0zCshe0gRf2E8UP9JbVY", "ChIJtwn55ikFdkgRAvOuPIWeLM0", "ChIJuXRc9xcxY0gRwGQcQqfm5j4"]
+    },
+    {"name": "Anniversary Trip in the City of Lights", 
+    "overview": "Two romantic weeks celebrating our seventh wedding anniversary.",
+    "locale": "Paris", 
+    "territory": "France", 
+    "country": "FRA", 
+    "places": ["ChIJA_6oQP5x5kcRNYQqafp0VQ4", "ChIJLU7jZClu5kcR4PcOOO6p3I0", "ChIJBxU8T_1t5kcRerSFrur9xN0", "ChIJryei4kRu5kcRgmdcbzUwGWQ"]
+    },
+    {"name": "Two-Days in Door County", 
+    "overview": "A great weekend get away to Door County, Wisconsin",
+    "locale": "Door County", 
+    "territory": "Michigan", 
+    "country": "USA", 
+    "places": ["ChIJM_bkgNNMTU0RtV8SwtzQppM", "ChIJdwCTU6QcTU0RxX7hCpB_7Cw", "ChIJdaQyeQhQHYgRwtTTevJKh0w", "ChIJ9UqquOlHTU0RPXCugSNZmwo"]
+    }
+]
 
 notes = ["Reservations up to 24 hours in advance", "No cell phones", "BYOB is ok",
         "21+ only", "No children under 12 yrs",  "Face masks required",
         "Dogs OK", "Limited outdoor seating", "Patio closed for the season"]
-
-place_ids = ["ChIJaXQRs6lZwokRY6EFpJnhNNE"]
 
 # Create users to seed the database 
 users_db = []
@@ -105,76 +157,46 @@ model.db.session.commit()
 # Create a few travel itineraries for each user
 itineraries_db = []
 
+start = datetime.now()
+end = datetime.utcnow()
+
 for user in users_id:
 
-    for num in range(randint(5, 6)):
-        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=f"{choice(itinerary_names)}", overview="The greatest trip ever planned.")
-        itineraries_db.append(new_itinerary)
+    for num in range(randint(2, 4)):
 
-# Add and commit itineraries to the database
-model.db.session.add_all(itineraries_db)
-model.db.session.commit()
+        itinerary = choice(itinerary_choices)
 
+        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=itinerary["name"], overview=itinerary["overview"])
+        model.db.session.add(new_itinerary)
+        model.db.session.commit()
 
-# To create activities for each itinerary, we will need the itinerary_id
-itineraries_id = []
+        activities_db = []
 
-# To access the itinerary_id and also to create locations for each itinerary, get all itineraries
-all_itineraries = model.Itinerary.get_itineraries()
-
-for itinerary in all_itineraries:
-    itineraries_id.append(itinerary.itinerary_id)
-
-# Create a few activity items for each itinerary:
-activities_db = []
-
-for itinerary in itineraries_id:
-
-    start = datetime.now()
-    end = datetime.utcnow()
-
-    for num in range(randint(3, 5)):
-        new_activity = model.Activity.create_activity(itinerary_id=itinerary, 
-                                            activity_name="A Super Fun Activity Name",
+        for num in range(randint(2, 4)):
+            new_activity = model.Activity.create_activity(itinerary_id=new_itinerary.itinerary_id, 
+                                            activity_name="A Super Fun Activity",
                                             start=start,
                                             end=end,
                                             notes=choice(notes),
-                                            place_id=choice(place_ids)
+                                            place_id=choice(itinerary["places"])
                                             )
-        activities_db.append(new_activity)
+            activities_db.append(new_activity)
 
-# Add and commit activities to the database
-model.db.session.add_all(activities_db)
-model.db.session.commit()
+        model.db.session.add_all(activities_db)
+        model.db.session.commit()
 
+        locale = itinerary["locale"]
+        territory = itinerary["territory"]
+        country = itinerary["country"]
 
-# Create locations
-locations = []
-
-for address in addresses:
-    locale = address[-3]
-    territory = address[-2]
-    country = address[-1]
-
-    location = [locale, territory, country]
+        location = model.Location.create_location(locale=locale, territory=territory, country=country)
     
-    locations.append(location)
+        model.db.session.add(location)
+        model.db.session.commit()
 
-
-# Add locations to itineraries
-for itinerary in all_itineraries:
-
-    location  = choice(locations)
-
-    location = model.Location.create_location(locale=location[0], territory=location[1], country=location[2])
-    
-    model.db.session.add(location)
-    model.db.session.commit()
-
-    itinerary.locations.append(location)
-    model.db.session.add(itinerary)
-
-model.db.session.commit()
+        new_itinerary.locations.append(location)
+        model.db.session.add(new_itinerary)
+        model.db.session.commit()
 
 
 # Create Wanderlust approved countries
