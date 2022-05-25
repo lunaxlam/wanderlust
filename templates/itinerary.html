@@ -2,12 +2,6 @@
 {% block title %}{{ itinerary.itinerary_name}}{% endblock %}
 
 
-{% block nav %}
-    <ul><a href="/">Home</a></ul>
-    <ul><a href="/users">Connect</a></ul>
-{% endblock %}
-
-
 {% block body %}
     <h1>{{ itinerary.itinerary_name }}</h1>
 
@@ -22,9 +16,7 @@
     {% if session["user_id"] != itinerary.user_id %}
         <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
         <div id="clone-trip-form"></div>
-    {% endif %}
-
-    {% if session["user_id"] == itinerary.user_id %}
+    {% else %}
         <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
         <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
         <div id="add-destination-form"></div>
@@ -64,21 +56,26 @@
 
     <h2>Activities</h2>
     <div id="map"></div><br>
-    <div id="saved-place"></div>
+    <div id="saved-activities"></div>
 {% endblock %}
 
 {% block js %}
     <!-- React -->
     <script src="/static/js/components/Activities.js" type="text/jsx"></script>
-    <!-- Maps API -->
-    <script src="/static/js/apiMapsAutocomplete.js"></script>
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
-    </script>
 
     {% if session["user_id"] == itinerary.user_id %}
         <script src="/static/js/addDestination.js"></script>
+         <!-- Maps API -->
+        <script src="/static/js/apiMapsAutocomplete.js"></script>
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
+        </script>
     {% else %}
         <script src="/static/js/cloneItinerary.js"></script>
+         <!-- Maps API -->
+        <script src="/static/js/apiMapsSavedPlace.js"></script>
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
+        </script>
     {% endif %}
 {% endblock %}

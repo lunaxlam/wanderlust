@@ -48,62 +48,30 @@ itinerary_choices = [
     "locale": "Salem", 
     "territory": "Massachusetts", 
     "country": "USA", 
-    "places": ["ChIJId0s1WQU44kRHgLHTfrQHc4", "ChIJ9_27aW8U44kRA2HY1Vk_xxQ", "ChIJ7XbB2HoU44kRl7_QkmUYukc", "ChIJr6C08etv5IkRAyk-rB7uevo"]
+    "places": [["ChIJo15HrGUU44kREi4broJXhBE", "Flowers welcome."], ["ChIJ9_27aW8U44kRA2HY1Vk_xxQ", "Walk-in tours OK. No more than 4 people per group."], ["ChIJI_iVlmQU44kRdKHvNkSVJd0", "Dogs OK on patio."], ["ChIJYza_FmgU44kRoW-cra6Ow0Y", "Reservations required."], ["ChIJaxSbrXsU44kRlkuQDQIsixM", "Costumes welcome."]]
     },
     {"name": "Sleepless in Seattle Tour", 
     "overview": "A 5-day trip filled with delish eats, fun hikes, and lots of coffee.",
     "locale": "Seattle", 
     "territory": "Washington", 
     "country": "USA", 
-    "places": ["ChIJ7ZC5oTcVkFQR4tJqYR-hWbU", "ChIJPQG7WLJqkFQRUXVHLnb3Lro", "ChIJk63I_rNqkFQR3EtxoHQwzBM", "ChIJb6RGGMJrkFQRrLOGJZumVwM"]
+    "places": [["ChIJSxh5JbJqkFQRxI1KoO7oZHs", "No photos allowed."], ["ChIJk63I_rNqkFQR3EtxoHQwzBM", "Masks required if dining indoors."], ["ChIJUX-M-a1qkFQRxtrx3nOQIKU", "Best view in Seattle."], ["ChIJ6x3yk7pqkFQRW2zXQJUlScA", "Check out the mini model of Seattle."], ["ChIJPQG7WLJqkFQRUXVHLnb3Lro", "Bring back a mug as a souvenir."]]
     },
     {"name": "Sweet Home Chicago for the Holidays", 
     "overview": "Enjoying the holidays with family and friends in back home in Chicago.",
     "locale": "Chicago", 
     "territory": "Illinois", 
     "country": "USA", 
-    "places": ["ChIJoToyIa4sDogROtxPMF-6QN8-hWbU", "ChIJNbKQElTTD4gRREaOJN5ZUdw", "ChIJici8qWgsDogRuoxl5U7xq7g", "ChIJFR3zFUHTD4gRiSGHi3J4B7Y"]
-    },
-    {"name": "Taking 5 in the 5 Boroughs", 
-    "overview": "A 5-day trip in the concrete jungle.",
-    "locale": "New York", 
-    "territory": "New York", 
-    "country": "USA", 
-    "places": ["ChIJg5jn8FNYwokRwH-6QN8-hWbU", "ChIJbz1TL6ZZwokRv_VvWdOElb0", "ChIJ5bQPhMdZwokRkTwKhVxhP1g", "ChIJLWBE3YNZwokRh2EBs1QXfzM"]
-    },
-    {"name": "A Hong Kong Summer", 
-    "overview": "14 days in the 852",
-    "locale": "Hong Kong", 
-    "territory": "Hong Kong", 
-    "country": "HKG", 
-    "places": ["ChIJn-mOoECqBjQRJssZ2P6yqKA", "ChIJnz5FoVAABDQR6OQrQ1dEduk", "ChIJwzeIKmUABDQR8VxjuNzFq3Q", "ChIJM5NtTLwFBDQR"]
-    },
-    {"name": "A Spring Get-Away to London", 
-    "overview": "Care for more tea? 5 days and 4 nights enjoying adventures across the pond.",
-    "locale": "London", 
-    "territory": "England", 
-    "country": "GBR", 
-    "places": ["ChIJx5m01ssEdkgRU", "ChIJH4s0zCshe0gRf2E8UP9JbVY", "ChIJtwn55ikFdkgRAvOuPIWeLM0", "ChIJuXRc9xcxY0gRwGQcQqfm5j4"]
+    "places": [["ChIJh479BaAsDogRWa7hmywCQCQ", "Great spot for photos, view of the Sears Tower, and close to Lake Michigan."], ["ChIJA5xPiqYsDogRBBCptdwsGEQ", "Mandatory trip to The Bean. Also a quick walk to the Art Institute."], ["ChIJX-RTBqksDogRRh_Q4ynbf_8", "Gorgeous views and lots of places to eat or grab a drink."], ["ChIJMViM4dssDogRdmIJH2z_Q10", "Fresh pasta."], ["ChIJk6QQWKUsDogR1vrLD_bdAEc", "Wicked! Arrive 30 min before show starts."], ["ChIJKXA7AlXTD4gRsvBFJ8wG9x4", "Check out Nick Cave's Forothermore exhibit."]]
     },
     {"name": "Anniversary Trip in the City of Lights", 
     "overview": "Two romantic weeks celebrating our seventh wedding anniversary.",
     "locale": "Paris", 
     "territory": "France", 
     "country": "FRA", 
-    "places": ["ChIJA_6oQP5x5kcRNYQqafp0VQ4", "ChIJLU7jZClu5kcR4PcOOO6p3I0", "ChIJBxU8T_1t5kcRerSFrur9xN0", "ChIJryei4kRu5kcRgmdcbzUwGWQ"]
-    },
-    {"name": "Two-Days in Door County", 
-    "overview": "A great weekend get away to Door County, Wisconsin",
-    "locale": "Door County", 
-    "territory": "Michigan", 
-    "country": "USA", 
-    "places": ["ChIJM_bkgNNMTU0RtV8SwtzQppM", "ChIJdwCTU6QcTU0RxX7hCpB_7Cw", "ChIJdaQyeQhQHYgRwtTTevJKh0w", "ChIJ9UqquOlHTU0RPXCugSNZmwo"]
+    "places": [["ChIJBxU8T_1t5kcRerSFrur9xN0", "Try the almond croissant."], ["ChIJA_6oQP5x5kcRNYQqafp0VQ4", "No children allowed."], ["ChIJe2jeNttx5kcRi_mJsGHdkQc", "Bring a hat."], ["ChIJATr1n-Fx5kcRjQb6q6cdQDY", "Walk-In Tours available."], ["ChIJD3uTd9hx5kcR1IQvGfr8dbk", "Reviews recommend at least 4 hours minimum visit to enjoy the museum. Break-up into multiple days, if possible."]]
     }
 ]
-
-notes = ["Reservations up to 24 hours in advance", "No cell phones", "BYOB is ok",
-        "21+ only", "No children under 12 yrs",  "Face masks required",
-        "Dogs OK", "Limited outdoor seating", "Patio closed for the season"]
 
 # Create users to seed the database 
 users_db = []
@@ -162,9 +130,7 @@ end = datetime.utcnow()
 
 for user in users_id:
 
-    for num in range(randint(2, 4)):
-
-        itinerary = choice(itinerary_choices)
+    for itinerary in itinerary_choices:
 
         new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=itinerary["name"], overview=itinerary["overview"])
         model.db.session.add(new_itinerary)
@@ -172,13 +138,14 @@ for user in users_id:
 
         activities_db = []
 
-        for num in range(randint(2, 4)):
+        activities = itinerary["places"]
+
+        for activity in activities:
             new_activity = model.Activity.create_activity(itinerary_id=new_itinerary.itinerary_id, 
-                                            activity_name="A Super Fun Activity",
                                             start=start,
                                             end=end,
-                                            notes=choice(notes),
-                                            place_id=choice(itinerary["places"])
+                                            notes=activity[1],
+                                            place_id=activity[0]
                                             )
             activities_db.append(new_activity)
 

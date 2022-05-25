@@ -2,13 +2,6 @@
 {% block title %}Wanderlust Home{% endblock %}
 
 
-{% block nav %}
-    {% if "user" in session %}
-        <ul><a href="/users">Connect</a></ul>
-    {% endif %}
-{% endblock %}
-
-
 {% block body %}
     {% if "user" in session %}
         <h1>Where will adventure take you?</h1>

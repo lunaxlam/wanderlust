@@ -39,17 +39,17 @@
 
         <header>
             <nav>
-                {% block nav%}
-                {% endblock %}
-
                 {% if "user" in session %}
-                    <ul><a href="/itineraries">Explore</a></ul>
-                    <ul><a href="/user/{{ session['user'] }}">My Profile</a></ul>
-                    <ul><a href="/user/{{ session['user'] }}/followers">Followers</a></ul>
-                    <ul><a href="/user/{{ session['user'] }}/following">Following</a></ul>
-                    <ul><a href="/logout">Log-Out</a></ul>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/itineraries">Explore</a></li>
+                        <li><a href="/users">Connect</a></li>
+                        <li><a href="/user/{{ session['user'] }}">My Profile</a></li>
+                        <li><a href="/user/{{ session['user'] }}/followers">Followers</a></li>
+                        <li><a href="/user/{{ session['user'] }}/following">Following</a></li>
+                        <li><a href="/logout">Log-Out</a></ul>
+                    </ul>
                 {% endif %}
-
             </nav>
         </header>
 

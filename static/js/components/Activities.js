@@ -21,11 +21,10 @@ function Activity( { name, dates, start, end, location, url, formattedAddress, p
     }
     return (
         <section>
-            <ul>{name} </ul>
-            <ul>Dates: {dates} </ul> 
+            <ul className='activity-header'>{location} </ul>    
+            <ul className='activity-header'>{dates} </ul> 
             <ul>Start: {start} </ul> 
-            <ul>End: {end} </ul>   
-            <ul>Location: {location} </ul>                    
+            <ul>End: {end} </ul>       
             <ul>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></ul>
             <ul>Phone: {phone} </ul>
             <ul>Notes: {notes} </ul>
@@ -64,11 +63,10 @@ function ActivitiesContainer() {
         allActivities.push(
             <Activity 
                 key={i}
-                name={activities[i]['activity_name']}
+                location={activities[i]['results']['name']}
                 dates={activities[i]['dates']}
                 start={activities[i]['start']}
                 end={activities[i]['end']}
-                location={activities[i]['results']['name']}
                 url={activities[i]['results']['url']}
                 formattedAddress={activities[i]['results']['formatted_address']}
                 phone={phone}
@@ -84,4 +82,4 @@ function ActivitiesContainer() {
     );
 }
 
-ReactDOM.render(<ActivitiesContainer />, document.querySelector('#saved-place'));
+ReactDOM.render(<ActivitiesContainer />, document.querySelector('#saved-activities'));

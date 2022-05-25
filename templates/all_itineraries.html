@@ -2,18 +2,12 @@
 {% block title %}Wanderlust Travel Itineraries{% endblock %}
 
 
-{% block nav %}
-    <ul><a href="/">Home</a></ul>
-    <ul><a href="/users">Connect</a></ul>
-{% endblock %}
-
-
 {% block body %}
     <h1>Wanderlust Itineraries</h1>
 
     <br>
 
-    <h3>Filter itineraries by:</h3>
+    <h3>Filter By:</h3>
     <div id="filter-itineraries"></div>
 
     <form action="/api/itineraries/by_locale">
@@ -49,7 +43,10 @@
     <br><br>
 
     <h2>Results</h2>
-    <div id="all-itineraries"></div>
+    <div>
+        <ul id="all-itineraries">
+        </ul>
+    </div>
 {% endblock %}
 
 {% block js %}

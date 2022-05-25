@@ -11,11 +11,11 @@ function CreateItinerary() {
         document.querySelector('#create-itinerary').insertAdjacentHTML(
             'beforeend',
             `<h2>Plan A New Adventure</h2>
-            <form action='/create_itinerary' method='POST'>
+            <form action='/create_itinerary' method='POST' class='active-form'>
                 <label for='itinerary-name'>Name Your Trip: </label>
                 <input type='text' name='name' id='itinerary-name' required>
                 <br>
-                <label for='itinerary-overview'>Brief Description: </label>
+                <label for='itinerary-overview'>Overview: </label>
                 <input type='text' name='overview' id='itinerary-overview' required>
                 <br>
                 <label for='destination-locale'>Locale: </label>

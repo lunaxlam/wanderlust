@@ -2,12 +2,6 @@
 {% block title %}Followers{% endblock %}
 
 
-{% block nav %}
-    <ul><a href="/">Home</a></ul>
-    <ul><a href="/users">Connect</a></ul>
-{% endblock %}
-
-
 {% block body %}
     <h1>{{ user.username }}'s Followers:</h1>
     {% if followers|length > 0 %}

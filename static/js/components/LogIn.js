@@ -11,7 +11,7 @@ function LogIn() {
         document.querySelector('#log-in').insertAdjacentHTML(
             'beforeend',
             `<h2>Log-In</h2>
-            <form action='/login' method="POST">
+            <form action='/login' method="POST" class='active-form'>
                 <label for='user-email'>Email: </label>
                 <input type='email' name='email' id='user-email'>
                 <br>

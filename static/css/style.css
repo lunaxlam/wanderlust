@@ -87,7 +87,8 @@ body {
 }
 
 nav {
-	margin: 10px 0 10px 0;
+	margin: 10px 0 40px 0;
+	display: inline;
 }
 
 img {
@@ -125,15 +126,18 @@ h2 {
 }
 
 .active-form {
-	background-color: lightgoldenrodyellow;
+	background-color: rgb(237, 255, 255);
 	padding: 10px;
+}
+
+.activity-header {
+	font-weight: bold;
 }
 
 /* Flash Message Styling */
 
 .flash-msg {
-    background-color: lightgoldenrodyellow;
+    background-color: rgb(237, 255, 255);
     color: black;
-    border: 2px dashed red;
     padding: 10px;
 }

@@ -41,7 +41,7 @@ def process_login():
             session["user"] = f"{user.username}"
             session["user_id"] = user.user_id
 
-            flash(f"Success! Welcome back to Wanderlust, {user.username}")
+            flash(f"Success! Welcome back to Wanderlust, {user.fname}.")
             
             return redirect("/")
         else:
@@ -60,7 +60,7 @@ def process_logout():
 
     session.pop("user")
 
-    flash("Goodbye!")
+    flash("Goodbye.")
 
     return redirect("/")
 
@@ -204,7 +204,6 @@ def list_all_itineraries():
     territories = []
     countries = []
 
-    itineraries = Itinerary.get_itineraries()
     locations = Location.get_locations()
 
     for location in locations:
@@ -219,7 +218,7 @@ def list_all_itineraries():
     territories.sort()
     countries.sort()
 
-    return render_template("all_itineraries.html", itineraries=itineraries, locales=locales, territories=territories, countries=countries)
+    return render_template("all_itineraries.html", locales=locales, territories=territories, countries=countries)
 
 
 @app.route("/itinerary/<itinerary_id>", methods =["POST", "GET"])
@@ -317,6 +316,7 @@ def search_place(itinerary_id):
                             photo_url=photo_url)
     else:
         flash("Search is too ambiguous. Try again.")
+        
         return redirect(f"/itinerary/{itinerary_id}")
 
 
@@ -359,12 +359,11 @@ def add_activity(itinerary_id, place_id):
 
     formData = dict(request.args)
 
-    activity_name = formData["name"]
     start = formData["start"]
     end = formData["end"]
     notes = formData["notes"]
 
-    Activity.create_activity(itinerary_id, activity_name, start, end, notes, place_id)
+    Activity.create_activity(itinerary_id, start, end, notes, place_id)
 
     return redirect(f"/itinerary/{itinerary_id}")
 
@@ -423,7 +422,6 @@ def saved_place_data():
 
         db_activities[f"{i}"] = {"activity_id": activity.activity_id,
                                 "itinerary_id": activity.itinerary_id,
-                                "activity_name": activity.activity_name,
                                 "dates": activity.dates,
                                 "start": activity.start,
                                 "end": activity.end,

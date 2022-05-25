@@ -234,7 +234,6 @@ class Activity(db.Model):
 
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itineraries.itinerary_id"))
-    activity_name = db.Column(db.String(50), nullable=False)
     dates = db.Column(db.String, nullable=True)
     start = db.Column(db.String, nullable=True)
     end = db.Column (db.String, nullable=True)
@@ -247,13 +246,11 @@ class Activity(db.Model):
     def __repr__(self):
         "A string representation of an itineary activity item"
 
-        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} activity_name={self.activity_name} start={self.start} end_time={self.end}>"
+        return f"<Activity activity_id={self.activity_id} itinerary_id={self.itinerary_id} start={self.start} end_time={self.end}>"
 
     @classmethod
-    def create_activity(cls, itinerary_id, activity_name, start, end, notes, place_id):
+    def create_activity(cls, itinerary_id, start, end, notes, place_id):
         """Create and return an itinerary activity item"""
-        
-        activity_name = activity_name.title()
 
         # Convert string-datetime into datetime object
         if isinstance(start, str) and isinstance(end, str):
@@ -276,7 +273,6 @@ class Activity(db.Model):
             dates = start_date
  
         activity = cls(itinerary_id=itinerary_id,
-                    activity_name=activity_name,
                     dates=dates,
                     start=start_time,
                     end=end_time,
@@ -296,7 +292,6 @@ class Activity(db.Model):
 
         for activity in activities:
             clone_activity = cls(itinerary_id=clone_itinerary_id,
-                                    activity_name=activity.activity_name,
                                     dates=activity.dates,
                                     start=activity.start,
                                     ende=activity.end,
