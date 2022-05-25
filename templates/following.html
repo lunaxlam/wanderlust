@@ -5,9 +5,11 @@
 {% block body %}
     <h1>{{ user.username }} is Following:</h1>
     {% if following|length > 0 %}
-        {% for follower in following %}
-            <ul><a href="/user/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></ul>
-        {% endfor %}
+        <ul>
+            {% for follower in following %}
+                <li><a href="/user/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></li>
+            {% endfor %}
+        </ul>
     {% else %}
         <p>Not currently following anyone.</p>
     {% endif %}

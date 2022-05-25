@@ -43,15 +43,15 @@ def process_login():
 
             flash(f"Success! Welcome back to Wanderlust, {user.fname}.")
             
-            return redirect("/")
+            return redirect(f"/user/{session['user']}")
         else:
             flash("Incorrect password.")
             
-            return redirect("/login")
+            return redirect("/")
     else:
         flash("Username does not exist!")
         
-        return redirect("/create_user")
+        return redirect("/")
 
 
 @app.route("/logout")
@@ -67,49 +67,44 @@ def process_logout():
 
 ### User Routes  ###
 
-@app.route("/create_user", methods=["GET", "POST"])
+@app.route("/create_user", methods=["POST"])
 def create_user():
     """Register a new user."""
 
-    if request.method == "GET":
-        countries = Country.get_countries()
+    email = request.form.get("email")
 
-        return render_template("create_user.html", countries=countries)
-    else:
-        email = request.form.get("email")
+    if (User.get_user_by_email(email)):
+        flash("Your account already exists! Please log-in instead.")
 
-        if (User.get_user_by_email(email)):
-            flash("Your account already exists! Please log-in instead.")
+        return redirect("/login")
+    else: 
+        formData = dict(request.form)
 
-            return redirect("/login")
-        else: 
-            formData = dict(request.form)
+        password = formData["password"]
+        username = formData["username"]
+        fname = formData["fname"]
+        lname = formData["lname"]
+        locale = formData["locale"]
+        territory = formData["territory"]
+        country = formData["country"]
+        about_me = formData["about_me"]
 
-            password = formData["password"]
-            username = formData["username"]
-            fname = formData["fname"]
-            lname = formData["lname"]
-            locale = formData["locale"]
-            territory = formData["territory"]
-            country = formData["country"]
-            about_me = formData["about_me"]
+        user = User.create_user(email, 
+                                password,
+                                username,
+                                fname,
+                                lname,
+                                locale,
+                                territory,
+                                country,
+                                about_me)
 
-            user = User.create_user(email, 
-                                    password,
-                                    username,
-                                    fname,
-                                    lname,
-                                    locale,
-                                    territory,
-                                    country,
-                                    about_me)
+        session["user"] = f"{user.username}"
+        session["user_id"] = user.user_id
 
-            session["user"] = f"{user.username}"
-            session["user_id"] = user.user_id
+        flash("Success! Account created. Welcome to Wanderlust.")
 
-            flash("Success! Account created. Welcome to Wanderlust.")
-
-            return redirect("/")
+        return redirect(f"/user/{session['user']}")
 
 
 @app.route("/users")
@@ -316,7 +311,7 @@ def search_place(itinerary_id):
                             photo_url=photo_url)
     else:
         flash("Search is too ambiguous. Try again.")
-        
+
         return redirect(f"/itinerary/{itinerary_id}")
 
 
@@ -409,28 +404,33 @@ def saved_place_data():
 
     activities = Activity.get_activities_by_itinerary_id(session["itinerary_id"])
 
-    for i, activity in enumerate(activities):
+    if activities == []:
+        return {"success": True,
+                "status": f"New itinerary. No activities added yet."}
+    else:
 
-        endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
-        payload = {"place_id": activity.place_id, 
-                    "key": API_KEY}
+        for i, activity in enumerate(activities):
 
-        response = requests.get(endpoint, params=payload)
-        data = response.json()
-        
-        results = data["result"] 
+            endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
+            payload = {"place_id": activity.place_id, 
+                        "key": API_KEY}
 
-        db_activities[f"{i}"] = {"activity_id": activity.activity_id,
-                                "itinerary_id": activity.itinerary_id,
-                                "dates": activity.dates,
-                                "start": activity.start,
-                                "end": activity.end,
-                                "notes": activity.notes,
-                                "place_id": activity.place_id,
-                                "results": results
-        }
-        
-    return jsonify(db_activities)
+            response = requests.get(endpoint, params=payload)
+            data = response.json()
+            
+            results = data["result"] 
+
+            db_activities[f"{i}"] = {"activity_id": activity.activity_id,
+                                    "itinerary_id": activity.itinerary_id,
+                                    "dates": activity.dates,
+                                    "start": activity.start,
+                                    "end": activity.end,
+                                    "notes": activity.notes,
+                                    "place_id": activity.place_id,
+                                    "results": results
+            }
+            
+        return jsonify(db_activities)
 
 
 @app.route("/api/delete_activity")

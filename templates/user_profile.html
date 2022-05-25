@@ -4,19 +4,19 @@
 
 {% block body %}
     <h1>{{ display_user.username }} </h1>
-    <div id="about-me">
-        <ul>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</ul>
-        <ul>{{ display_user.about_me }}</ul>
-    </div>
+    <ul id="about-me">
+        <li>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</li>
+        <li>{{ display_user.about_me }}</li>
+    </ul>
 
     <br>
 
     {% if display_user.username != session["user"] %}
-        <div id="follow">
-            <a href="/user/{{ display_user.username }}/follow_me">Follow Me</a>
-            <ul><a href="/user/{{ display_user.username }}/followers">Followers</a></ul>
-            <ul><a href="/user/{{ display_user.username }}/following">Following</a></ul>
-        </div>
+        <ul id="follow">
+            <li><a href="/user/{{ display_user.username }}/follow_me">Follow Me</a></li>
+            <li><a href="/user/{{ display_user.username }}/followers">Followers</a></li>
+            <li><a href="/user/{{ display_user.username }}/following">Following</a></li>
+        </ul>
         
         <br>
     {% else %}
@@ -26,9 +26,11 @@
     <br>
     
     <h2> My Trips</h2>
+    <ul>
     {% for itinerary in user_itineraries %}
-        <ul><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></ul>
+        <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
     {% endfor %}
+    <ul>
 {% endblock %}
 
 {% block js %}

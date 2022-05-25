@@ -7,6 +7,7 @@ function initMap() {
     fetch('/api/search_place_data')
         .then((response) => response.json())
         .then((data) => {
+
             const place_lat = data["location"]["lat"];
             const place_lng = data["location"]["lng"];
             const place_name = data["name"];

@@ -1,6 +1,6 @@
 'use strict';
 
-function Activity( { name, dates, start, end, location, url, formattedAddress, phone, notes, activityID }) {
+function Activity( { dates, start, end, location, url, formattedAddress, phone, notes, activityID }) {
 
     const onClick = (evt) => {
         const clicked_button = evt.target;
@@ -20,20 +20,20 @@ function Activity( { name, dates, start, end, location, url, formattedAddress, p
         })
     }
     return (
-        <section>
-            <ul className='activity-header'>{location} </ul>    
-            <ul className='activity-header'>{dates} </ul> 
-            <ul>Start: {start} </ul> 
-            <ul>End: {end} </ul>       
-            <ul>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></ul>
-            <ul>Phone: {phone} </ul>
-            <ul>Notes: {notes} </ul>
+        <ul>
+            <li className='activity-header'>{location} </li>    
+            <li className='activity-header'>{dates} </li> 
+            <li>Start: {start} </li> 
+            <li>End: {end} </li>       
+            <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
+            <li>Phone: {phone} </li>
+            <li>Notes: {notes} </li>
             <button onClick={onClick} 
                 id='delete' 
                 value={activityID}>Delete Activity
             </button>
             <br /><br />
-        </section>
+        </ul>
     );
 }
 
@@ -47,7 +47,13 @@ function ActivitiesContainer() {
         .catch(() => {
             alert('Something wrong with the route!')
         })
-        .then(data => setActivities(data))
+        .then((data) => {
+
+            if ('0' in data) {
+                setActivities(data)
+            }
+    
+        })
     }, [])
 
     const allActivities = []

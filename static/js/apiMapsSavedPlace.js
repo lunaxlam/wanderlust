@@ -6,6 +6,9 @@ function initMap() {
         .then((response) => response.json())
         .then((activities) => {
 
+            const mount = document.querySelector('#map');
+            mount.hidden = false;
+
             const map = new google.maps.Map(document.querySelector('#map'),{
                 center: {
                     lat: activities[0]['results']['geometry']['location']['lat'],

@@ -5,8 +5,10 @@
 {% block body %}
     <h1>Wanderlust Countries</h1><br>
     <h2> Country Code | Country</h2>
-    {% for country in countries %}
-        <ul>{{ country.country_code }} | {{ country.country_name }}</a></ul>
-    {% endfor %}
+    <ul>
+        {% for country in countries %}
+            <li>{{ country.country_code }} | {{ country.country_name }}</a></li>
+        {% endfor %}
+    <ul>
     </div>
 {% endblock %}
