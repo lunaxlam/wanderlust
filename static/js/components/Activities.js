@@ -21,7 +21,7 @@ function Activity( { name, dates, start, end, location, url, formattedAddress, p
     }
     return (
         <section>
-            <ul>Name: {name} </ul>
+            <ul>{name} </ul>
             <ul>Dates: {dates} </ul> 
             <ul>Start: {start} </ul> 
             <ul>End: {end} </ul>   
@@ -55,6 +55,12 @@ function ActivitiesContainer() {
 
     for (const i in activities) {
 
+        let phone = activities[i]['results']['formatted_phone_number']
+
+        if (typeof phone === 'undefined') {
+            phone = 'N/A'
+        }
+
         allActivities.push(
             <Activity 
                 key={i}
@@ -65,7 +71,7 @@ function ActivitiesContainer() {
                 location={activities[i]['results']['name']}
                 url={activities[i]['results']['url']}
                 formattedAddress={activities[i]['results']['formatted_address']}
-                phone={activities[i]['results']['formatted_phone_number']}
+                phone={phone}
                 notes={activities[i]['notes']}
                 activityID={activities[i]['activity_id']}
             />
