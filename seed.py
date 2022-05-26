@@ -127,13 +127,28 @@ for user in all_users:
 # Create followers
 followers_db = []
 
-for n in range(50):
-    follower_id = choice(users_id)
-    user_followed_id = choice(users_id)
+for user in users_id:
 
-    if follower_id != user_followed_id:
-        new_follower = model.Follower.create_follower(follower_id, user_followed_id)
-        followers_db.append(new_follower)
+    for n in range(10):
+
+        following = choice(users_id)
+
+        if user != following:
+         
+            user_followed = model.User.get_user_by_user_id(following)
+            followers = user_followed.followers
+
+            already_following = False
+
+            for follower in followers:
+                if follower.follower_id == user:
+                    already_following = True
+
+            if not already_following:        
+                new_follower = model.Follower.create_follower(follower_id=user, user_followed_id=following)
+                followers_db.append(new_follower)
+                
+            
 
 # Add and commit followers to the database
 model.db.session.add_all(followers_db)
