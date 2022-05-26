@@ -43,14 +43,14 @@ addresses = [["Chicago", "Illinois", "USA"], ["New York", "New York", "USA"],
                 ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
 itinerary_choices = [
-    {"name": "A Screaming Halloween Weekend in Salem",
+    {"name": "A Wicked Halloween Weekend in Salem",
     "overview": "Three-day weekend exploring historic sights and famous haunts.",
     "locale": "Salem", 
     "territory": "Massachusetts", 
     "country": "USA", 
-    "places": [["ChIJo15HrGUU44kREi4broJXhBE", "Flowers welcome."], ["ChIJ9_27aW8U44kRA2HY1Vk_xxQ", "Walk-in tours OK. No more than 4 people per group."], ["ChIJI_iVlmQU44kRdKHvNkSVJd0", "Dogs OK on patio."], ["ChIJYza_FmgU44kRoW-cra6Ow0Y", "Reservations required."], ["ChIJaxSbrXsU44kRlkuQDQIsixM", "Costumes welcome."]]
+    "places": [["ChIJo15HrGUU44kREi4broJXhBE", "Group tours available."], ["ChIJ9_27aW8U44kRA2HY1Vk_xxQ", "No more than 4 people per group."], ["ChIJI_iVlmQU44kRdKHvNkSVJd0", "Dogs OK on patio."], ["ChIJYza_FmgU44kRoW-cra6Ow0Y", "Reservations required."], ["ChIJaxSbrXsU44kRlkuQDQIsixM", "Costumes welcome."]]
     },
-    {"name": "Sleepless in Seattle Tour", 
+    {"name": "Sleepless in Seattle", 
     "overview": "A 5-day trip filled with delish eats, fun hikes, and lots of coffee.",
     "locale": "Seattle", 
     "territory": "Washington", 
@@ -62,14 +62,35 @@ itinerary_choices = [
     "locale": "Chicago", 
     "territory": "Illinois", 
     "country": "USA", 
-    "places": [["ChIJh479BaAsDogRWa7hmywCQCQ", "Great spot for photos, view of the Sears Tower, and close to Lake Michigan."], ["ChIJA5xPiqYsDogRBBCptdwsGEQ", "Mandatory trip to The Bean. Also a quick walk to the Art Institute."], ["ChIJX-RTBqksDogRRh_Q4ynbf_8", "Gorgeous views and lots of places to eat or grab a drink."], ["ChIJMViM4dssDogRdmIJH2z_Q10", "Fresh pasta."], ["ChIJk6QQWKUsDogR1vrLD_bdAEc", "Wicked! Arrive 30 min before show starts."], ["ChIJKXA7AlXTD4gRsvBFJ8wG9x4", "Check out Nick Cave's Forothermore exhibit."]]
+    "places": [["ChIJh479BaAsDogRWa7hmywCQCQ", "Great spot for photos, view of the Sears Tower, and close to Lake Michigan."], ["ChIJA5xPiqYsDogRBBCptdwsGEQ", "Mandatory trip to The Bean. Also a quick walk to the Art Institute."], ["ChIJX-RTBqksDogRRh_Q4ynbf_8", "Gorgeous views and lots of places to eat or grab a drink."], ["ChIJMViM4dssDogRdmIJH2z_Q10", "Fresh pasta."], ["ChIJk6QQWKUsDogR1vrLD_bdAEc", "Wicked! The Musical. Arrive 30 min before show starts."], ["ChIJKXA7AlXTD4gRsvBFJ8wG9x4", "Check out Nick Cave's Forothermore exhibit."]]
     },
     {"name": "Anniversary Trip in the City of Lights", 
     "overview": "Two romantic weeks celebrating our seventh wedding anniversary.",
     "locale": "Paris", 
     "territory": "France", 
     "country": "FRA", 
-    "places": [["ChIJBxU8T_1t5kcRerSFrur9xN0", "Try the almond croissant."], ["ChIJA_6oQP5x5kcRNYQqafp0VQ4", "No children allowed."], ["ChIJe2jeNttx5kcRi_mJsGHdkQc", "Bring a hat."], ["ChIJATr1n-Fx5kcRjQb6q6cdQDY", "Walk-In Tours available."], ["ChIJD3uTd9hx5kcR1IQvGfr8dbk", "Reviews recommend at least 4 hours minimum visit to enjoy the museum. Break-up into multiple days, if possible."]]
+    "places": [["ChIJBxU8T_1t5kcRerSFrur9xN0", "Try the almond croissant."], ["ChIJA_6oQP5x5kcRNYQqafp0VQ4", "No children allowed."], ["ChIJe2jeNttx5kcRi_mJsGHdkQc", "Bring sunglasses."], ["ChIJATr1n-Fx5kcRjQb6q6cdQDY", "Free admission but tickets required to enter tower and the crypt."], ["ChIJD3uTd9hx5kcR1IQvGfr8dbk", "Reviews recommend at least 4 hours minimum visit to enjoy the museum. Break-up into multiple days, if possible."]]
+    },
+    {"name": "Five Days in the Five Boroughs", 
+    "overview": "Five days exploring The Big Apple.",
+    "locale": "New York", 
+    "territory": "New York", 
+    "country": "USA", 
+    "places": [["ChIJLWBE3YNZwokRh2EBs1QXfzM", "Order the Lemon Poppy Sweet Chick Waffle."], ["ChIJ5bQPhMdZwokRkTwKhVxhP1g", "Gardens, architecture, and sweeping views of the city."], ["ChIJgzfayTBawokR9jTsF6hLf40", "Best thin-crust in the world."], ["ChIJKxDbe_lYwokRVf__s8CPn", "Matisse: The Red Studio exhibit thru Sept 10."], ["ChIJqwvF8CZawokRwi6ijQhRGD0", "Get there before 10am or be prepared to wait a very long time."]]
+    },
+    {"name": "Two-Weeks Across the Pond", 
+    "overview": "Care for a cup of tea? Two weeks exploring the past, present, and future history of England'.",
+    "locale": "London", 
+    "territory": "England", 
+    "country": "GBR", 
+    "places": [["ChIJTUlS0S4FdkgRNcarX5NN", "Try the Masala Negroni."], ["ChIJdwNmlWYFdkgRyuSyHQqIZ7o", "Bring comfortable walking shoes."], ["ChIJdUNN3sgFdkgR3p9_Fe5Ap38", "Spring/Summer 2022 Theme: The Couture Cakewalk."], ["ChIJ68vBCFUbdkgR5CUqlcHifUA", "Free admission."], ["ChIJX7eIgrYcdkgRJtmJIysIZVc", "Famous spot for fish & chips."]]
+    },
+    {"name": "San Diego Weekend Get-Away", 
+    "overview": "Two days spent riding waves and soaking in a lot of sun.",
+    "locale": "San Diego", 
+    "territory": "California", 
+    "country": "USA", 
+    "places": [["ChIJd4ENW7JU2YARRg66LgvFYU8", "Copious plant-based options."], ["ChIJE-zr8z2q3oARY16lzCPo3Gk", "Pack a frisbee."], ["ChIJ_yXB3VlT2YARHJN8S2jhxso", "."], ["ChIJ68vBCFUbdkgR5CUqlcHifUA", "Rated San Diego's Best Authentic Mexican & Vegan Cuisine."], ["ChIJ0SGGW1dT2YAROOUV5ZU8Mc0", "Coffee and cats. Need I say meow-r?"]]
     }
 ]
 
