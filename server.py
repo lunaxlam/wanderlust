@@ -332,8 +332,12 @@ def view_place_details(itinerary_id, place_id):
 
     if request.method == "POST":
 
-        formData = dict(request.form)
-        place_id = formData["autocomplete"]
+        try:
+            formData = dict(request.form)
+            place_id = formData["autocomplete"]
+        except KeyError:
+            flash("Place does not exist! Be sure to select an option from the available populated results.")
+            return redirect(f"/itinerary/{itinerary_id}")
 
     endpoint = "https://maps.googleapis.com/maps/api/place/details/json"
     payload = {"place_id": place_id, "key": API_KEY}
