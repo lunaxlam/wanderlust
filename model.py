@@ -70,6 +70,12 @@ class User(db.Model):
         """Return a user object by username"""
 
         return cls.query.filter(cls.username == username).first()
+
+    @classmethod
+    def get_user_by_user_id(cls, user_id):
+        """Return a user object by user_id"""
+
+        return cls.query.filter(cls.user_id == user_id).first()
     
     @classmethod
     def get_user_by_email(cls, email):
