@@ -146,9 +146,7 @@ for user in users_id:
 
             if not already_following:        
                 new_follower = model.Follower.create_follower(follower_id=user, user_followed_id=following)
-                followers_db.append(new_follower)
-                
-            
+                followers_db.append(new_follower)    
 
 # Add and commit followers to the database
 model.db.session.add_all(followers_db)
