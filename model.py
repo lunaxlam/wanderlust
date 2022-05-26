@@ -1,13 +1,11 @@
 """Models for Wanderlust app"""
 
-from logging import NOTSET
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 # Constructor function to create an instance of SQLAlchemy; a db object that represents our database
 # The db object can use SQLAlchemy class methods like db.create_all(), .add(), .commit()
 db = SQLAlchemy()
-
 
 class User(db.Model):
     """A user"""
