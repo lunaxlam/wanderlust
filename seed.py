@@ -1,13 +1,10 @@
 """Script to seed database"""
 
-import os
-from random import choice, randint
+import os, model, server
+from random import choice
 from faker import Faker
-
-import model
-import server
-
 from datetime import datetime
+from flask_bcrypt import Bcrypt
 
 
 # Drop existing database by running dropdb command using os.system
@@ -43,50 +40,50 @@ addresses = [["Chicago", "Illinois", "USA"], ["New York", "New York", "USA"],
                 ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
 itinerary_choices = [
-    {"name": "A Wicked Halloween Weekend in Salem",
-    "overview": "Three-day weekend exploring historic sights and famous haunts.",
+    {"name": ["A Wicked Halloween Weekend in Salem, Massachusetts", "Enjoying a Bit (8 Days) of Hocus Pocus in Salem, MA", "Birthday Weekend in Salem, Mass", "Springtime in Salem", "Salem Sights & Sounds", "A Salem Summer Vacation", "Salem Retreat 2023", "Three-Day Get-Away to Salem, MA", "Exploring Salem, MA - October 2022", "Christmas in Salem"],
+    "overview": "Exploring Salem, MA's historic sights and famous haunts.",
     "locale": "Salem", 
     "territory": "Massachusetts", 
     "country": "USA", 
     "places": [["ChIJo15HrGUU44kREi4broJXhBE", "Group tours available."], ["ChIJ9_27aW8U44kRA2HY1Vk_xxQ", "No more than 4 people per group."], ["ChIJI_iVlmQU44kRdKHvNkSVJd0", "Dogs OK on patio."], ["ChIJYza_FmgU44kRoW-cra6Ow0Y", "Reservations required."], ["ChIJaxSbrXsU44kRlkuQDQIsixM", "Costumes welcome."]]
     },
-    {"name": "Sleepless in Seattle", 
-    "overview": "A 5-day trip filled with delish eats, fun hikes, and lots of coffee.",
+    {"name": ["Sleepless in Seattle", "5 Days in Seattle - May 2024", "Bachelorette Trip to Seattle, WA", "Seattle Summer Vacation", "Seattle Trip for Two", "John & Jane's Wedding in Seattle, WA", "Seattle Food Tour", "Seattle for the Winter Holidays", "Three-Days in Seattle, Washington", "Seattle, Washington - June 2022"], 
+    "overview": "A trip to Seattle filled with delish eats, fun hikes, and lots of coffee.",
     "locale": "Seattle", 
     "territory": "Washington", 
     "country": "USA", 
     "places": [["ChIJSxh5JbJqkFQRxI1KoO7oZHs", "No photos allowed."], ["ChIJk63I_rNqkFQR3EtxoHQwzBM", "Masks required if dining indoors."], ["ChIJUX-M-a1qkFQRxtrx3nOQIKU", "Best view in Seattle."], ["ChIJ6x3yk7pqkFQRW2zXQJUlScA", "Check out the mini model of Seattle."], ["ChIJPQG7WLJqkFQRUXVHLnb3Lro", "Bring back a mug as a souvenir."]]
     },
-    {"name": "Sweet Home Chicago for the Holidays", 
-    "overview": "Enjoying the holidays with family and friends in back home in Chicago.",
+    {"name": ["Sweet Home Chicago for the Holidays", "Adventures in Chitown", "Dharani & Amar's July Wedding in Chicago", "December 2022 Trip to Chicago for Swetha's and Amol's Wedding", "An L-evated Trip to downtown Chicago", "Whatchu talkin' about Willis Tower? June 2023 Trip to Chicago", "Chicago Stole a Pizza My Heart - Summer Trip to Chicago", "Relish the Good Times in Chicago November Trip", "CHICAGO! One Week in the Windy City", "Windy City Adventure"],
+    "overview": "Three days and two nights.",
     "locale": "Chicago", 
     "territory": "Illinois", 
     "country": "USA", 
     "places": [["ChIJh479BaAsDogRWa7hmywCQCQ", "Great spot for photos, view of the Sears Tower, and close to Lake Michigan."], ["ChIJA5xPiqYsDogRBBCptdwsGEQ", "Mandatory trip to The Bean. Also a quick walk to the Art Institute."], ["ChIJX-RTBqksDogRRh_Q4ynbf_8", "Gorgeous views and lots of places to eat or grab a drink."], ["ChIJMViM4dssDogRdmIJH2z_Q10", "Fresh pasta."], ["ChIJk6QQWKUsDogR1vrLD_bdAEc", "Wicked! The Musical. Arrive 30 min before show starts."], ["ChIJKXA7AlXTD4gRsvBFJ8wG9x4", "Check out Nick Cave's Forothermore exhibit."]]
     },
-    {"name": "Anniversary Trip in the City of Lights", 
-    "overview": "Two romantic weeks celebrating our seventh wedding anniversary.",
+    {"name": ["We'll Always Have Paris 2025", "2022 Anniversary in the City of Lights", "Christmas 2026 in Paris", "Family Reunion in Paris, France", "Paris Holds the Key to My Heart - September 2023 Vacation", "Eiffel in love with Paris Trip - March 2024", "Summer Vacation in Paris, France", "October in Paris", "Three Weeks in Paris - April 2023", "Paris Get-Away 2023"], 
+    "overview": "Two romantic weeks enjoying Paris, France.",
     "locale": "Paris", 
     "territory": "France", 
     "country": "FRA", 
     "places": [["ChIJBxU8T_1t5kcRerSFrur9xN0", "Try the almond croissant."], ["ChIJA_6oQP5x5kcRNYQqafp0VQ4", "No children allowed."], ["ChIJe2jeNttx5kcRi_mJsGHdkQc", "Bring sunglasses."], ["ChIJATr1n-Fx5kcRjQb6q6cdQDY", "Free admission but tickets required to enter tower and the crypt."], ["ChIJD3uTd9hx5kcR1IQvGfr8dbk", "Reviews recommend at least 4 hours minimum visit to enjoy the museum. Break-up into multiple days, if possible."]]
     },
-    {"name": "Five Days in the Five Boroughs", 
-    "overview": "Five days exploring The Big Apple.",
+    {"name": ["Five Days in the Five Boroughs", "I Heart NYC 2023", "A Family Reunion Trip in New York 2024", "One Week in the Big Apple", "East Coast Tour - New York Leg", "Christmas & New Year Trip to New York", "Three-Day Weekend in NYC", "New York Birthday Trip", "New York for the Holidays", "Christmas at Rockefeller NYC"], 
+    "overview": "New York sights and sounds.",
     "locale": "New York", 
     "territory": "New York", 
     "country": "USA", 
     "places": [["ChIJLWBE3YNZwokRh2EBs1QXfzM", "Order the Lemon Poppy Sweet Chick Waffle."], ["ChIJ5bQPhMdZwokRkTwKhVxhP1g", "Gardens, architecture, and sweeping views of the city."], ["ChIJgzfayTBawokR9jTsF6hLf40", "Best thin-crust in the world."], ["ChIJKxDbe_lYwokRVf__s8CPn", "Matisse: The Red Studio exhibit thru Sept 10."], ["ChIJqwvF8CZawokRwi6ijQhRGD0", "Get there before 10am or be prepared to wait a very long time."]]
     },
-    {"name": "Two-Weeks Across the Pond", 
-    "overview": "Care for a cup of tea? Two weeks exploring the past, present, and future history of England'.",
+    {"name": ["Care for a Spot of Tea? England 2023", " A Summer Vacation Across the Pond", "Backpacking through England", "April Trip to London, England", "Exploring England - August Trip", "Birthday Trip to England", "Spring Holiday in England", "Anniversary Trip in England", "England Trip - October 2022", "Visiting the Lams in England 2024"], 
+    "overview": "Two weeks exploring the past, present, and future history of England.",
     "locale": "London", 
     "territory": "England", 
     "country": "GBR", 
     "places": [["ChIJTUlS0S4FdkgRNcarX5NN", "Try the Masala Negroni."], ["ChIJdwNmlWYFdkgRyuSyHQqIZ7o", "Bring comfortable walking shoes."], ["ChIJdUNN3sgFdkgR3p9_Fe5Ap38", "Spring/Summer 2022 Theme: The Couture Cakewalk."], ["ChIJ68vBCFUbdkgR5CUqlcHifUA", "Free admission."], ["ChIJX7eIgrYcdkgRJtmJIysIZVc", "Famous spot for fish & chips."]]
     },
-    {"name": "San Diego Weekend Get-Away", 
-    "overview": "Two days spent riding waves and soaking in a lot of sun.",
+    {"name": ["San Diego Weekend Get Away", "San Diego Trip - June 2022", "Holidaying in San Diego", "San Diego Visit 2023", "Coranodo & San Diego - September 2023", "Susan's Birthday in San Diego", "Summer Vacation in San Diego", "San Diego Surfs & Eats", "A San Diego Wedding", "San Diego Wedding Shower"], 
+    "overview": "Riding waves and soaking in a lot of sun.",
     "locale": "San Diego", 
     "territory": "California", 
     "country": "USA", 
@@ -97,12 +94,12 @@ itinerary_choices = [
 # Create users to seed the database 
 users_db = []
 
-for n in range (20):
+for n in range (10):
     fname = fake.unique.first_name()
     lname = fake.unique.last_name()
     domain = fake.free_email_domain()
     email = f'{fname}.{lname}@{domain}'
-    password = "password123"
+    password = Bcrypt().generate_password_hash('wanderlust').decode('utf-8')
     username = f'{fname}{lname}'
     address = choice(addresses)
     locale = address[-3]
@@ -149,11 +146,13 @@ itineraries_db = []
 start = datetime.now()
 end = datetime.utcnow()
 
+i = 0
+
 for user in users_id:
 
     for itinerary in itinerary_choices:
 
-        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=itinerary["name"], overview=itinerary["overview"])
+        new_itinerary = model.Itinerary.create_itinerary(user_id=user, itinerary_name=itinerary["name"][i], overview=itinerary["overview"])
         model.db.session.add(new_itinerary)
         model.db.session.commit()
 
@@ -185,6 +184,8 @@ for user in users_id:
         new_itinerary.locations.append(location)
         model.db.session.add(new_itinerary)
         model.db.session.commit()
+    
+    i += 1
 
 
 # Create Wanderlust approved countries
