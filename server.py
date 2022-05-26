@@ -1,6 +1,7 @@
 """Server for Wanderlust app"""
 
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
+from flask_bcrypt import Bcrypt
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, User, Follower, Itinerary, Location, Activity, Country
 import os, requests
@@ -35,9 +36,9 @@ def process_login():
     user = User.get_user_by_email(email)
 
     if user:
-        password = request.form.get("password")
-        
-        if password == user.password:
+        password_candidate = request.form.get("password")
+
+        if Bcrypt().check_password_hash(user.password, password_candidate):
             session["user"] = f"{user.username}"
             session["user_id"] = user.user_id
 
@@ -89,8 +90,11 @@ def create_user():
         country = formData["country"]
         about_me = formData["about_me"]
 
+        # Hash and add salt to the password
+        password_hash = Bcrypt().generate_password_hash(password).decode('utf-8')
+
         user = User.create_user(email, 
-                                password,
+                                password_hash,
                                 username,
                                 fname,
                                 lname,
