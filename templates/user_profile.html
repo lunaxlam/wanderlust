@@ -13,7 +13,7 @@
 
     {% if display_user.username != session["user"] %}
         <ul id="follow">
-            <li><a href="/user/{{ display_user.username }}/follow_me">Follow Me</a></li>
+            <li><button><a href="/user/{{ display_user.username }}/follow_me">Follow Me</a></button></li>
             <li><a href="/user/{{ display_user.username }}/followers">Followers</a></li>
             <li><a href="/user/{{ display_user.username }}/following">Following</a></li>
         </ul>

@@ -151,10 +151,16 @@ def list_followers(username):
 def follower_user(username):
     """Save user to logged-in user's following page"""
 
-    follower = session["user_id"]
+    user_follower = session["user_id"]
     user_followed = User.get_user_by_username(username)
     user_followed_id = user_followed.user_id
 
+    followers = user_followed.followers
+
+    for follower in followers:
+        if follower.follower_id == user_follower:
+            flash(f"You are already following {username}.")
+            return redirect(f"/user/{username}")
 
     Follower.create_follower(follower_id=follower, user_followed_id=user_followed_id)
 
