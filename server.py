@@ -259,7 +259,7 @@ def add_destination(itinerary_id):
     db.session.add(itinerary)
     db.session.commit()
 
-    flash(f"Success! Destination added.")
+    flash("Success! Destination added.")
 
     return redirect(f"/itinerary/{itinerary_id}")
 
@@ -407,7 +407,7 @@ def saved_place_data():
 
     if activities == []:
         return {"success": True,
-                "status": f"New itinerary. No activities added yet."}
+                "status": "New itinerary. No activities added yet."}
     else:
 
         for i, activity in enumerate(activities):
@@ -443,7 +443,7 @@ def delete_activity():
     Activity.delete_activity(activity_id)
 
     return {"success": True,
-            "status": f"Success! Activity deleted."}
+            "status": "Success! Activity deleted."}
 
 
 ### Country Routes  ###

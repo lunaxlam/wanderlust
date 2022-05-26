@@ -14,7 +14,7 @@ addBtn.addEventListener('click', (evt) => {
         'beforeend',
         `<br />
         <form action='/itinerary/${itinerary_id}', method='POST'>
-            <label for='itinerary-name'>Itinerary Name: </label>
+            <label for='itinerary-name'>Name Your Trip: </label>
             <input type='text' name='name' id='itinerary-name' required>
             <br>
             <label for='itinerary-overview'>Overview: </label>
