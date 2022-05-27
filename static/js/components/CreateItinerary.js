@@ -32,7 +32,8 @@ function CreateItinerary() {
                         target='_blank'>ISO-3166</a> code standard. Need a 
                     <a href='/countries' target='_blank'>hint</a>?</p>
                 <input type="submit" name="submit">
-            </form>`
+            </form>
+            <br />`
         )
     }
     return (

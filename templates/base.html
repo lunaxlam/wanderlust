@@ -40,13 +40,11 @@
         <header>
             {% if "user" in session %}
                 <nav>
-                        <ul id="horizontal-list">
-                            <li><a href="/user/{{ session['user'] }}">Home</a></li>
-                            <li><a href="/itineraries">Explore</a></li>
-                            <li><a href="/users">Connect</a></li>
-                            <li><a href="/user/{{ session['user'] }}/followers">Followers</a></li>
-                            <li><a href="/user/{{ session['user'] }}/following">Following</a></li>
-                            <li><a href="/logout">Log-Out</a></ul>
+                        <ul class="horizontal-list">
+                            <li><a href="/user/{{ session['user'] }}">home</a></li>
+                            <li><a href="/itineraries">explore</a></li>
+                            <li><a href="/users">connect</a></li>
+                            <li><a href="/logout">logout</a></ul>
                         </ul>
                 </nav>
             {% endif %}

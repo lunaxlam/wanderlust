@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Wanderlust Community</h1>
     {% for user in users %}
+        {% if user.user_id != session["user_id"]  %}
         <ul><a href="/user/{{ user.username }}">{{ user.username }}</a></ul>
+        {% endif %}
     {% endfor %}
 {% endblock %}

@@ -30,7 +30,7 @@
         <h2>Search Location to Add Activity</h2>
 
         <h3>By Name or Address</h3>
-        <form action="/itinerary/{{ itinerary.itinerary_id}}/search/'temp_place_id'/details" 
+        <form action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" 
             method="POST">
             <div id="autocomplete-place-id">
                 <input id="autocomplete" type="text" size="50" placeholder="Ricobene's" />

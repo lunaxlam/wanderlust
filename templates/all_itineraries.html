@@ -47,7 +47,7 @@
     </div>
     <ul id="all-itineraries">
         {% for itinerary in itineraries %}
-            <li><a href="/itinerary/{{ itinerary.itinerary_id }}" target='_blank'>ID #: ${{ itinerary.itinerary_id }}, {{ itinerary.itinerary_name }}</a></li>
+            <li><a href="/itinerary/{{ itinerary.itinerary_id }}" target='_blank'>{{ itinerary.itinerary_name }}</a></li>
         {% endfor  %}
     </ul>
 {% endblock %}

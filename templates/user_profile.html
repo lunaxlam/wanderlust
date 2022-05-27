@@ -1,40 +1,74 @@
 {% extends 'base.html' %}
-{% block title %}{{ display_user.username }}'s page{% endblock %}
+{% block title %}{{ user.username }}'s page{% endblock %}
 
 
 {% block body %}
-    <h1>{{ display_user.username }} </h1>
+    <h1>{{ user.username }} </h1>
     <ul id="about-me">
-        <li>{{ display_user.locale }}, {{ display_user.territory }}, {{ display_user.country }}</li>
-        <li>{{ display_user.about_me }}</li>
+        <li>{{ user.locale }}, {{ user.territory }}, {{ user.country }}</li>
+        <li>{{ user.about_me }}</li>
     </ul>
 
     <br>
 
-    {% if display_user.username != session["user"] %}
-        <ul id="follow">
-            <li><button><a href="/user/{{ display_user.username }}/follow_me">Follow Me</a></button></li>
-            <li><a href="/user/{{ display_user.username }}/followers">Followers</a></li>
-            <li><a href="/user/{{ display_user.username }}/following">Following</a></li>
-        </ul>
-        
-        <br>
-    {% else %}
-        <div id="create-itinerary"></div>
-    {% endif %}
 
+    <ul id="follow" class="horizontal-list">
+        {% if user.username != session["user"] %}
+        <li><button><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button></li>
+        {% endif %}
+        <li><button id="my-followers-btn">Followers</button></li>
+        <li><button id="following-btn">Following</button></li>
+    </ul>
+        
     <br>
+
+    <div id="my-followers" hidden>
+        <h2>Followers</h2>
+        {% if followers|length > 0 %}
+            <ul>
+                {% for follower in followers %}
+                    <li><a href="/user/{{ follower.follower.username }}">{{ follower.follower.username }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No current followers.</p>
+        {% endif %}
+        <br>
+    </div>
     
-    <h2> My Trips</h2>
-    <ul>
-    {% for itinerary in user_itineraries %}
-        <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
-    {% endfor %}
-    <ul>
+    <div id="following" hidden>
+        <h2>Following</h2>
+        {% if following|length > 0 %}
+            <ul>
+                {% for follower in following %}
+                    <li><a href="/user/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You are not currently following anyone.</p>
+        {% endif %}
+        <br>
+    </div>
+
+
+    <div id="my-trips">
+        <br>
+        <h2> My Trips</h2>
+        {% if user.username == session["user"] %}
+            <div id="create-itinerary"></div>
+            <br>
+        {% endif %}
+        <ul>
+        {% for itinerary in user_itineraries %}
+            <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
+        {% endfor %}
+        <ul>
+    </div>
 {% endblock %}
 
 {% block js %}
-    {% if display_user.username == session["user"] %}
+    <script src="/static/js/ajaxViewFollowers"></script>
+    {% if user.username == session["user"] %}
         <script src="/static/js/components/CreateItinerary.js" type="text/jsx"></script>
     {% endif %}
 {% endblock %}

@@ -108,10 +108,13 @@ nav {
 	text-align: center;
 }
 
-#horizontal-list li {
-	display: inline;
-	margin: 20px;
+nav li {
+	margin: 40px;
 }
+
+.horizontal-list li {
+	display: inline;
+} 
 
 img {
 	height: 200px;
@@ -163,3 +166,4 @@ h2 {
     color: black;
     padding: 10px;
 }
+

@@ -126,29 +126,11 @@ def show_profile(username):
 
     user = User.get_user_by_username(username)
     itineraries = user.itineraries
+    following = user.following
+    followers = user.followers
     countries = Country.get_countries()
 
-    return render_template("user_profile.html", display_user=user, user_itineraries=itineraries, countries=countries)
-
-
-@app.route("/user/<username>/following")
-def list_following(username):
-    """Return page displaying all users followed by the logged-in user"""
-
-    user = User.get_user_by_username(username)
-    following = user.following
-
-    return render_template("following.html", following=following, user=user)
-
-
-@app.route("/user/<username>/followers")
-def list_followers(username):
-    """Return page displaying all followers of the logged-in user"""
-
-    user = User.get_user_by_username(username)
-    followers = user.followers
-
-    return render_template("followers.html", followers=followers, user=user)
+    return render_template("user_profile.html", user=user, user_itineraries=itineraries, following=following, followers=followers, countries=countries)
 
 
 @app.route("/user/<username>/follow_me")

@@ -19,7 +19,7 @@ function initMap() {
                     lat: place_lat,
                     lng: place_lng,
                 },
-                scrollwheel: true,
+                scrollwheel: false,
                 zoom: 14,
             });
 
