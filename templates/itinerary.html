@@ -28,7 +28,7 @@
         {% endif %}
     </div>
     
-    {% if session["user_id"] != itinerary.user_id %}
+    {% if session["user_id"] == itinerary.user_id %}
         <div>
             <h2>Search Location to Add Activity</h2>
 
