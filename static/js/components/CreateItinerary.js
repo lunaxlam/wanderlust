@@ -4,13 +4,17 @@ function CreateItinerary() {
 
     const onClick = (evt) => {
 
+        const hideBtn = document.querySelector('#hide-create');
+
         const Btn = evt.target;
 
         Btn.hidden = true;
 
-        document.querySelector('#create-itinerary').insertAdjacentHTML(
+        hideBtn.hidden = false;
+
+        document.querySelector('#mount-itinerary').insertAdjacentHTML(
             'beforeend',
-            `<h2>Plan A New Adventure</h2>
+            `<br />
             <form action='/create_itinerary' method='POST' class='active-form'>
                 <label for='itinerary-name'>Name Your Trip: </label>
                 <input type='text' name='name' id='itinerary-name' required>
@@ -31,9 +35,8 @@ function CreateItinerary() {
                     <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3' 
                         target='_blank'>ISO-3166</a> code standard. Need a 
                     <a href='/countries' target='_blank'>hint</a>?</p>
-                <input type="submit" name="submit">
-            </form>
-            <br />`
+                <input type='submit' name='submit'>
+            </form>`
         )
     }
     return (

@@ -11,7 +11,6 @@
 
     <br>
 
-
     <ul id="follow" class="horizontal-list">
         {% if user.username != session["user"] %}
         <li><button><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button></li>
@@ -50,24 +49,24 @@
         <br>
     </div>
 
-
-    <div id="my-trips">
+    <br>
+    <h2> My Trips</h2>
+    {% if user.username == session["user"] %}
+        <button id="hide-create" hidden>Plan A New Adventure</button>
+        <div id="create-itinerary"></div>
+            <section id="mount-itinerary"></section>
         <br>
-        <h2> My Trips</h2>
-        {% if user.username == session["user"] %}
-            <div id="create-itinerary"></div>
-            <br>
-        {% endif %}
-        <ul>
-        {% for itinerary in user_itineraries %}
-            <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
-        {% endfor %}
-        <ul>
-    </div>
+    {% endif %}
+    <ul>
+    {% for itinerary in user_itineraries %}
+        <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
+    {% endfor %}
+    <ul>
+
 {% endblock %}
 
 {% block js %}
-    <script src="/static/js/ajaxViewFollowers"></script>
+    <script src="/static/js/profileEventListeners"></script>
     {% if user.username == session["user"] %}
         <script src="/static/js/components/CreateItinerary.js" type="text/jsx"></script>
     {% endif %}
