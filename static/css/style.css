@@ -112,6 +112,10 @@ nav li {
 	margin: 40px;
 }
 
+div, form {
+	margin-bottom: 10px;
+}
+
 .horizontal-list li {
 	display: inline;
 } 
