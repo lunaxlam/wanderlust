@@ -73,16 +73,16 @@ itinerary_choices = [
     "locale": "New York", 
     "territory": "New York", 
     "country": "USA", 
-    "places": [["ChIJLWBE3YNZwokRh2EBs1QXfzM", "Order the Lemon Poppy Sweet Chick Waffle."], ["ChIJ5bQPhMdZwokRkTwKhVxhP1g", "Gardens, architecture, and sweeping views of the city."], ["ChIJgzfayTBawokR9jTsF6hLf40", "Best thin-crust in the world."], ["ChIJKxDbe_lYwokRVf__s8CPn", "Matisse: The Red Studio exhibit thru Sept 10."], ["ChIJqwvF8CZawokRwi6ijQhRGD0", "Get there before 10am or be prepared to wait a very long time."]]
+    "places": [["ChIJhWjFglZYwokR755nbhxKDlo", "Order the maitake wings."], ["ChIJ5bQPhMdZwokRkTwKhVxhP1g", "Gardens, architecture, and sweeping views of the city."], ["ChIJv-QVW6NZwokRFtWrN4mnkWM", "Best thin-crust in the world."], ["ChIJKxDbe_lYwokRVf__s8CPn-o", "Matisse: The Red Studio exhibit thru Sept 10."], ["ChIJqwvF8CZawokRwi6ijQhRGD0", "Get there before 10am or be prepared to wait a very long time."]]
     },
     {"name": ["Care for a Spot of Tea? England 2023", " A Summer Vacation Across the Pond", "Backpacking through England", "April Trip to London, England", "Exploring England - August Trip", "Birthday Trip to England", "Spring Holiday in England", "Anniversary Trip in England", "England Trip - October 2022", "Visiting the Lams in England 2024"], 
     "overview": "Two weeks exploring the past, present, and future history of England.",
     "locale": "London", 
     "territory": "England", 
     "country": "GBR", 
-    "places": [["ChIJTUlS0S4FdkgRNcarX5NN", "Try the Masala Negroni."], ["ChIJdwNmlWYFdkgRyuSyHQqIZ7o", "Bring comfortable walking shoes."], ["ChIJdUNN3sgFdkgR3p9_Fe5Ap38", "Spring/Summer 2022 Theme: The Couture Cakewalk."], ["ChIJ68vBCFUbdkgR5CUqlcHifUA", "Free admission."], ["ChIJX7eIgrYcdkgRJtmJIysIZVc", "Famous spot for fish & chips."]]
+    "places": [["ChIJ40_ZncwEdkgRKYHPtm7wi28", "Try the Masala Negroni."], ["ChIJs4GOh8sEdkgRRiBFZKMP8ZE", "Bring comfortable walking shoes."], ["ChIJRXCcCSsbdkgR6VwJaM39_3I", "Local favorite for a spot of tea."], ["ChIJ68vBCFUbdkgR5CUqlcHifUA", "Free admission."], ["ChIJRUfpVQaRj4ARtHDUaCoX3j0", "Famous spot for fish & chips."]]
     },
-    {"name": ["San Diego Weekend Get Away", "San Diego Trip - June 2022", "Holidaying in San Diego", "San Diego Visit 2023", "Coranodo & San Diego - September 2023", "Susan's Birthday in San Diego", "Summer Vacation in San Diego", "San Diego Surfs & Eats", "A San Diego Wedding", "San Diego Wedding Shower"], 
+    {"name": ["San Diego Weekend Get Away", "San Diego Trip - June 2022", "Holidaying in San Diego", "San Diego Visit 2023", "Coronado & San Diego - September 2023", "Susan's Birthday in San Diego", "Summer Vacation in San Diego", "San Diego Surfs & Eats", "A San Diego Wedding", "San Diego Wedding Shower"], 
     "overview": "Riding waves and soaking in a lot of sun.",
     "locale": "San Diego", 
     "territory": "California", 
