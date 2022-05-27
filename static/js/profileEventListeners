@@ -1,0 +1,47 @@
+'use strict';
+
+// Event Listeners to View Followers & Following
+
+const followersBtn = document.querySelector('#my-followers-btn');
+const myFollowers = document.querySelector('#my-followers');
+
+const followingBtn = document.querySelector('#following-btn');
+const following = document.querySelector('#following');
+
+
+followersBtn.addEventListener('click', () => {
+ 
+    if (myFollowers.style.display === "none") {
+        myFollowers.style.display = "block";
+        following.style.display = "none";
+    } else {
+        myFollowers.style.display = "none";
+    }
+
+})
+
+
+followingBtn.addEventListener('click', () => {
+
+    if (following.style.display === "none") {
+        following.style.display = "block";
+        myFollowers.style.display = "none";
+    } else {
+        following.style.display = "none";
+    }
+
+})
+
+const hideBtn = document.querySelector('#hide-create');
+const trips = document.querySelector('#mount-itinerary');
+
+hideBtn.addEventListener('click', () => {
+
+    if (trips.style.display === "none") {
+        trips.style.display = "block";
+    } else {
+        trips.style.display = "none";
+    }
+
+})
+
