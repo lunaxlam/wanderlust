@@ -1,6 +1,6 @@
 'use strict';
 
-// Event Listeners to View Followers & Following
+// Event Listeners to toggle Followers & Following
 
 const followersBtn = document.querySelector('#my-followers-btn');
 const myFollowers = document.querySelector('#my-followers');
@@ -10,12 +10,11 @@ const following = document.querySelector('#following');
 
 
 followersBtn.addEventListener('click', () => {
- 
-    if (myFollowers.style.display === "none") {
+    if (myFollowers.style.display === "") {
         myFollowers.style.display = "block";
-        following.style.display = "none";
+        following.style.display = "";
     } else {
-        myFollowers.style.display = "none";
+        myFollowers.style.display = "";
     }
 
 })
@@ -23,13 +22,12 @@ followersBtn.addEventListener('click', () => {
 
 followingBtn.addEventListener('click', () => {
 
-    if (following.style.display === "none") {
+    if (following.style.display === "") {
         following.style.display = "block";
-        myFollowers.style.display = "none";
+        myFollowers.style.display = "";
     } else {
-        following.style.display = "none";
+        following.style.display = "";
     }
 
 })
-
 
