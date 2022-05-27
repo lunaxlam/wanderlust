@@ -6,8 +6,6 @@
     <h1>{{ results["name"] }}</h1>
     <div id="map"></div>
 
-    <br>
-
     <div id="place-details">
         {% if "formatted_address" in results %}
             <p>Address: <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a></p>
@@ -36,11 +34,7 @@
         {% endif %}
     </div>
 
-    <br>
-
     <button id="add-activity" name="{{ itinerary_id}}" value="{{ results['place_id'] }}">Add Location to New Activity</button>
-    
-    <br><br>
     
     <div id="add-activity-form"></div>
 {% endblock %}

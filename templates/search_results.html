@@ -22,7 +22,6 @@
             {% if "formatted_address" in result %}
                 <p>{{ result["formatted_address"] }}</p>
             {% endif %}
-            <br>
         </div>
     {% endfor %}
 
@@ -37,6 +36,4 @@
     {% else %}
         <h2>End of Results</h2>
     {% endif %}
-
-    <br><br>
 {% endblock %}

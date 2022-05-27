@@ -3,23 +3,22 @@
 
 
 {% block body %}
-    <h1>{{ user.username }} </h1>
-    <ul id="about-me">
-        <li>{{ user.locale }}, {{ user.territory }}, {{ user.country }}</li>
-        <li>{{ user.about_me }}</li>
-    </ul>
+    <div>
+        <h1>{{ user.username }} </h1>
+        <ul id="about-me">
+            <li>{{ user.locale }}, {{ user.territory }}, {{ user.country }}</li>
+            <li>{{ user.about_me }}</li>
+        </ul>
 
-    <br>
-
-    <ul id="follow" class="horizontal-list">
-        {% if user.username != session["user"] %}
-        <li><button><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button></li>
-        {% endif %}
-        <li><button id="my-followers-btn">Followers</button></li>
-        <li><button id="following-btn">Following</button></li>
-    </ul>
+        <ul id="follow" class="horizontal-list">
+            {% if user.username != session["user"] %}
+                <li><button><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button></li>
+            {% endif %}
+            <li><button id="my-followers-btn">Followers</button></li>
+            <li><button id="following-btn">Following</button></li>
+        </ul>
+    <div>
         
-    <br>
 
     <div id="my-followers" hidden>
         <h2>Followers</h2>
@@ -32,7 +31,6 @@
         {% else %}
             <p>No current followers.</p>
         {% endif %}
-        <br>
     </div>
     
     <div id="following" hidden>
@@ -46,22 +44,21 @@
         {% else %}
             <p>You are not currently following anyone.</p>
         {% endif %}
-        <br>
     </div>
 
-    <br>
-    <h2> My Trips</h2>
-    {% if user.username == session["user"] %}
-        <button id="hide-create" hidden>Plan A New Adventure</button>
-        <div id="create-itinerary"></div>
-            <section id="mount-itinerary"></section>
-        <br>
-    {% endif %}
-    <ul>
-    {% for itinerary in user_itineraries %}
-        <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
-    {% endfor %}
-    <ul>
+    <div>
+        <h2> My Trips</h2>
+        {% if user.username == session["user"] %}
+            <button id="hide-create" hidden>Plan A New Adventure</button>
+            <div id="create-itinerary"></div>
+                <section id="mount-itinerary"></section>
+        {% endif %}
+        <ul>
+        {% for itinerary in user_itineraries %}
+            <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
+        {% endfor %}
+        <ul>
+    </div>
 
 {% endblock %}
 

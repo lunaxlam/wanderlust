@@ -5,57 +5,55 @@
 {% block body %}
     <h1>{{ itinerary.itinerary_name }}</h1>
 
-    <ul>
-        <li>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></li>
-        <li>Overview: {{ itinerary.overview }}</li>
-        <li>Destinations: 
-            <ul>
-            {% for destination in destinations %}
-                <li>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</li>
-            {% endfor %}
-            <ul>
-        </li>
-    <ul>
+    <div>
+        <ul>
+            <li>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></li>
+            <li>Overview: {{ itinerary.overview }}</li>
+            <li>Destinations: 
+                <ul>
+                {% for destination in destinations %}
+                    <li>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</li>
+                {% endfor %}
+                <ul>
+            </li>
+        <ul>
 
+        {% if session["user_id"] != itinerary.user_id %}
+            <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
+            <div id="clone-trip-form"></div>
+        {% else %}
+            <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
+            <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
+            <div id="add-destination-form"></div>
+        {% endif %}
+    </div>
+    
     {% if session["user_id"] != itinerary.user_id %}
-        <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
-        <div id="clone-trip-form"></div>
-    {% else %}
-        <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
-        <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
-        <div id="add-destination-form"></div>
+        <div>
+            <h2>Search Location to Add Activity</h2>
 
-        <br><br><br>
+            <h3>By Name or Address</h3>
+            <form action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" 
+                method="POST">
+                <div id="autocomplete-place-id">
+                    <input id="autocomplete" type="text" size="50" placeholder="Ricobene's" />
+                    <section id="autocomplete-mount"></section>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
 
-        <h2>Search Location to Add Activity</h2>
-
-        <h3>By Name or Address</h3>
-        <form action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" 
-            method="POST">
-            <div id="autocomplete-place-id">
-                <input id="autocomplete" type="text" size="50" placeholder="Ricobene's" />
-                <section id="autocomplete-mount"></section>
-                <input type="submit" value="Submit">
-            </div>
-        </form>
-
-        <br><br>
-
-        <h3>By Point of Interest</h3>
-        <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
-            <label for="search-keyword">Description:</label>
-            <input type="text" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
-            <br>
-            <label for="search-location">Location:</label>
-            <input type="text" name="location" id="search-location" placeholder="Chicago">
-            <br>
-            <input type="submit" name="submit">
-        </form>
-
-        <br>
+            <h3>By Point of Interest</h3>
+            <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
+                <label for="search-keyword">Description:</label>
+                <input type="text" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
+                <br>
+                <label for="search-location">Location:</label>
+                <input type="text" name="location" id="search-location" placeholder="Chicago">
+                <br>
+                <input type="submit" name="submit">
+            </form>
+        </div>
     {% endif %}
-
-    <br><br>
 
     <h2>Activities</h2>
     <div id="map" hidden></div><br>
