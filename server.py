@@ -148,7 +148,7 @@ def follower_user(username):
             flash(f"You are already following {username}.")
             return redirect(f"/user/{username}")
 
-    Follower.create_follower(follower_id=follower, user_followed_id=user_followed_id)
+    Follower.create_follower(follower_id=user_follower, user_followed_id=user_followed_id)
 
     flash(f"Success! You are now following {username}")
 
