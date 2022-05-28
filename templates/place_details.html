@@ -34,13 +34,13 @@
         {% endif %}
     </div>
 
-    <button id="add-activity" name="{{ itinerary_id}}" value="{{ results['place_id'] }}">Add Location to New Activity</button>
-    
+    <div id="add-activity-btn"></div>
     <div id="add-activity-form"></div>
 {% endblock %}
 
 {% block js %}
-    <script src="/static/js/addActivity.js"></script>
+     <!-- React -->
+     <script src="/static/js/components/AddActivity.js" type="text/jsx"></script>
     <!-- Maps API -->
     <script src="/static/js/apiMapsPlaceSearch.js"></script>
     <script async

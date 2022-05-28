@@ -49,7 +49,6 @@
     <div>
         <h2> My Trips</h2>
         {% if user.username == session["user"] %}
-            <button id="hide-create" hidden>Plan A New Adventure</button>
             <div id="create-itinerary"></div>
                 <section id="mount-itinerary"></section>
         {% endif %}
@@ -63,9 +62,8 @@
 {% endblock %}
 
 {% block js %}
-    <script src="/static/js/profileEventListeners"></script>
+    <script src="/static/js/toggleFollowers.js"></script>
     {% if user.username == session["user"] %}
         <script src="/static/js/components/CreateItinerary.js" type="text/jsx"></script>
-        <script src="/static/js/profileHideCreateItinerary.js"></script>
     {% endif %}
 {% endblock %}
