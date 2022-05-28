@@ -5,8 +5,7 @@ function LogIn() {
     const onClick = () => {
 
         document.querySelector('#display-form').innerHTML =
-            `<h2>Log-In</h2>
-            <form action='/login' method="POST" class='active-form'>
+            `<form action='/login' method="POST" class='active-form'>
                 <label for='user-email'>Email: </label>
                 <input type='email' name='email' id='user-email'>
                 <br>

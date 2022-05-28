@@ -5,8 +5,7 @@ function CreateUser() {
     const onClick = () => {
 
         document.querySelector('#display-form').innerHTML =
-            `<h2>Create Account</h2>
-            <form action='/create_user' method='POST' class='active-form'> 
+            `<form action='/create_user' method='POST' class='active-form'> 
                 <label for='user-username'>Username: </label>
                 <input type='text' name='username' id='user-username' required> 
                 <br>
