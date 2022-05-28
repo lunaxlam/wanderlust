@@ -2,14 +2,9 @@
 
 function LogIn() {
 
-    const onClick = (evt) => {
+    const onClick = () => {
 
-        const Btn = evt.target;
-
-        Btn.hidden = true;
-
-        document.querySelector('#log-in').insertAdjacentHTML(
-            'beforeend',
+        document.querySelector('#display-form').innerHTML =
             `<h2>Log-In</h2>
             <form action='/login' method="POST" class='active-form'>
                 <label for='user-email'>Email: </label>
@@ -20,7 +15,6 @@ function LogIn() {
                 <br>
                 <input type='submit'>
             </form>`
-        )
     }
     return (
         <button onClick={onClick}>Log-In</button>

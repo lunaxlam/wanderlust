@@ -17,10 +17,13 @@ While cloud storage platforms like [Google Drive](https://drive.google.com/) or 
 
 The application utilizes the Google Maps JavaScript and Places APIs to auto-populate metadata about places, including name, address, location, website, ratings, and more. 
 
+User passwords are hashed and salted with bcrypt.
+
 ## **Tech Stack**
-Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM, Flask-Bcrypt<br />
+Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
 Frontend: CSS 3, HTML5, JavaScript, Jinja, ReactJS<br/> 
-APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/) and [Places API](https://developers.google.com/maps/documentation/places/web-service)
+APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/) and [Places API](https://developers.google.com/maps/documentation/places/web-service), 
+Libraries: [Faker](https://faker.readthedocs.io/en/master/)
 
 ## **Features**
 ### [Section]

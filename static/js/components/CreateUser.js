@@ -2,18 +2,13 @@
 
 function CreateUser() {
 
-    const onClick = (evt) => {
+    const onClick = () => {
 
-        const Btn = evt.target;
-
-        Btn.hidden = true;
-
-        document.querySelector('#create-user').insertAdjacentHTML(
-            'beforeend',
+        document.querySelector('#display-form').innerHTML =
             `<h2>Create Account</h2>
-            <form action='/create_user' method='POST' class='active-form'>
+            <form action='/create_user' method='POST' class='active-form'> 
                 <label for='user-username'>Username: </label>
-                <input type='text' name='username' id='user-username' required>
+                <input type='text' name='username' id='user-username' required> 
                 <br>
                 <label for='user-password'>Password: </label>
                 <input type='password' name='password' id='user-password' required>
@@ -45,7 +40,6 @@ function CreateUser() {
                 <br>
                 <input type='submit' name='submit' required>
             </form>`
-        )
     }
     return (
         <button onClick={onClick}>Create Account</button>
