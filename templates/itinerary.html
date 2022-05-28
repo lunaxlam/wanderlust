@@ -19,20 +19,20 @@
         <ul>
 
         {% if session["user_id"] != itinerary.user_id %}
-            <div id="clone-trip-btn"></div>
+            <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
             <div id="clone-trip-form"></div>
         {% else %}
-            <div id="add-destination-btn"></div>
-            <div id="add-destination-form"></div>
-
+            <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
             <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
+            <div id="add-destination-form"></div>
         {% endif %}
     </div>
     
     {% if session["user_id"] == itinerary.user_id %}
-        <h2>Search Location to Add Activity</h2>
-        <button id="autocomplete-btn">By Name or Address</button>
-        <div id="display-autocomplete-form" hidden>
+        <div>
+            <h2>Search Location to Add Activity</h2>
+
+            <h3>By Name or Address</h3>
             <form action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" 
                 method="POST">
                 <div id="autocomplete-place-id">
@@ -41,10 +41,18 @@
                     <input type="submit" value="Submit">
                 </div>
             </form>
+
+            <h3>By Point of Interest</h3>
+            <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
+                <label for="search-keyword">Description:</label>
+                <input type="text" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
+                <br>
+                <label for="search-location">Location:</label>
+                <input type="text" name="location" id="search-location" placeholder="Chicago">
+                <br>
+                <input type="submit" name="submit">
+            </form>
         </div>
-        <div id="search-poi"></div>
-        <div id="display-search-form"></div>
-        
     {% endif %}
 
     <h2>Activities</h2>
@@ -55,19 +63,16 @@
 {% block js %}
     <!-- React -->
     <script src="/static/js/components/Activities.js" type="text/jsx"></script>
-    <script src="/static/js/toggleAutocomplete.js"></script>
+
     {% if session["user_id"] == itinerary.user_id %}
-         <!-- React -->
-        <script src="/static/js/components/AddDestination.js" type="text/jsx"></script>
-        <script src="/static/js/components/SearchLocationPOI.js" type="text/jsx"></script>
+        <script src="/static/js/addDestination.js"></script>
          <!-- Maps API -->
         <script src="/static/js/apiMapsAutocomplete.js"></script>
         <script async
             src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
         </script>
     {% else %}
-        <!-- React -->
-        <script src="/static/js/components/CloneItinerary.js" type="text/jsx"></script>
+        <script src="/static/js/cloneItinerary.js"></script>
          <!-- Maps API -->
         <script src="/static/js/apiMapsSavedPlace.js"></script>
         <script async
