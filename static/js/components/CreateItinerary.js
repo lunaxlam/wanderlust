@@ -4,18 +4,10 @@ function CreateItinerary() {
 
     const onClick = (evt) => {
 
-        const hideBtn = document.querySelector('#hide-create');
+        if (document.querySelector('#mount-itinerary').innerHTML === '') {
 
-        const Btn = evt.target;
-
-        Btn.hidden = true;
-
-        hideBtn.hidden = false;
-
-        document.querySelector('#mount-itinerary').insertAdjacentHTML(
-            'beforeend',
-            `<br />
-            <form action='/create_itinerary' method='POST' class='active-form'>
+            document.querySelector('#mount-itinerary').innerHTML =
+            `<form action='/create_itinerary' method='POST' class='active-form'>
                 <label for='itinerary-name'>Name Your Trip: </label>
                 <input type='text' name='name' id='itinerary-name' required>
                 <br>
@@ -37,7 +29,11 @@ function CreateItinerary() {
                     <a href='/countries' target='_blank'>hint</a>?</p>
                 <input type='submit' name='submit'>
             </form>`
-        )
+
+        } else {
+            document.querySelector('#mount-itinerary').innerHTML = '';
+        }
+
     }
     return (
         <button onClick={onClick}>Plan A New Adventure</button>
