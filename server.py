@@ -217,8 +217,6 @@ def show_itinerary(itinerary_id):
         itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
         destinations = itinerary.locations
         
-        session["itinerary_id"] = itinerary_id
-        
         return render_template("itinerary.html", itinerary=itinerary, destinations=destinations, API_KEY=API_KEY)
     else:
         itinerary_name = request.form.get("name")
@@ -330,11 +328,17 @@ def view_place_details(itinerary_id, place_id):
 
     results = data["result"]
 
+    session["itinerary_id"] = itinerary_id
+
     # Store in session object to use later
     session["place_data"] = {"name": results["name"],
                             "location": results["geometry"]["location"],
                             "address": results["formatted_address"],
-                            "place_url": results["url"]}
+                            "place_url": results["url"],
+                            "place_id": place_id,
+                            "itinerary_id": session["itinerary_id"]}
+
+    session["place_id"] = place_id
 
     return render_template("place_details.html",
                             API_KEY=API_KEY,
@@ -361,6 +365,12 @@ def add_activity(itinerary_id, place_id):
 
 
 ### API Routes  ###
+
+@app.route("/api/session_itinerary")
+def session_itinerary_data():
+    """JSON information about the itinerary_id stored in the session object"""
+
+    return jsonify(session["itinerary_id"])
 
 @app.route("/api/itineraries/by_location")
 def itineraries_by_location():
