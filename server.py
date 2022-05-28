@@ -213,6 +213,8 @@ def list_all_itineraries():
 def show_itinerary(itinerary_id):
     """Return page displaying itinerary and list of itinerary items"""
 
+    session["itinerary_id"] = itinerary_id
+
     if request.method == "GET":
         itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
         destinations = itinerary.locations
@@ -365,12 +367,6 @@ def add_activity(itinerary_id, place_id):
 
 
 ### API Routes  ###
-
-@app.route("/api/session_itinerary")
-def session_itinerary_data():
-    """JSON information about the itinerary_id stored in the session object"""
-
-    return jsonify(session["itinerary_id"])
 
 @app.route("/api/itineraries/by_location")
 def itineraries_by_location():
