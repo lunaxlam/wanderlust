@@ -19,22 +19,45 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
             alert('Something went wrong! Unable to delete activity.')
         })
     }
-    return (
-        <ul>
-            <li className='activity-header'>{location} </li>    
-            <li className='activity-header'>{dates} </li> 
-            <li>Start: {start} </li> 
-            <li>End: {end} </li>       
-            <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
-            <li>Phone: {phone} </li>
-            <li>Notes: {notes} </li>
-            <button onClick={onClick} 
-                id='delete' 
-                value={activityID}>Delete Activity
-            </button>
-            <br /><br />
-        </ul>
-    );
+
+    if (notes === '') {
+
+        return (
+            <ul>
+                <li className='activity-header'>{location} </li>    
+                <li className='activity-header'>{dates} </li> 
+                <li>Start: {start} </li> 
+                <li>End: {end} </li>       
+                <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
+                <li>Phone: {phone} </li>
+                <button onClick={onClick} 
+                    id='delete' 
+                    value={activityID}>Delete Activity
+                </button>
+                <br /><br />
+            </ul>
+        );
+
+    } else {
+
+        return (
+            <ul>
+                <li className='activity-header'>{location} </li>    
+                <li className='activity-header'>{dates} </li> 
+                <li>Start: {start} </li> 
+                <li>End: {end} </li>       
+                <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
+                <li>Phone: {phone} </li>
+                <li>Notes: {notes} </li>
+                <button onClick={onClick} 
+                    id='delete' 
+                    value={activityID}>Delete Activity
+                </button>
+                <br /><br />
+            </ul>
+        );
+
+    } 
 }
 
 function ActivitiesContainer() {
@@ -60,10 +83,10 @@ function ActivitiesContainer() {
 
     for (const i in activities) {
 
-        let phone = activities[i]['results']['formatted_phone_number']
+        let phone = activities[i]['results']['formatted_phone_number'];
 
         if (typeof phone === 'undefined') {
-            phone = 'N/A'
+            phone = 'Not listed.'
         }
 
         allActivities.push(
