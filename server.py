@@ -402,14 +402,14 @@ def itinerary_destinations():
     user = User.get_user_by_username(session["viewed_user"])
     itineraries = user.itineraries
 
-    itinerary_destinations = []
+    itinerary_destinations = set()
 
     for itinerary in itineraries:
         for location in itinerary.locations:
 
             destination = f"{location.locale} {location.territory} {location.country}"
 
-            itinerary_destinations.append(destination)
+            itinerary_destinations.add(destination)
 
     endpoint = "https://maps.googleapis.com/maps/api/geocode/json"
 
