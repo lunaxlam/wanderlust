@@ -124,13 +124,14 @@ def show_users():
 def show_profile(username):
     """Return page displaying user profile and user-curated itineraries"""
 
+    session["viewed_user"] = username
+
     user = User.get_user_by_username(username)
     itineraries = user.itineraries
     following = user.following
     followers = user.followers
-    countries = Country.get_countries()
 
-    return render_template("user_profile.html", user=user, user_itineraries=itineraries, following=following, followers=followers, countries=countries)
+    return render_template("user_profile.html", user=user, user_itineraries=itineraries, following=following, followers=followers, API_KEY=API_KEY)
 
 
 @app.route("/user/<username>/follow_me")
@@ -390,6 +391,39 @@ def itineraries_by_location():
         }
 
     return jsonify(db_itineraries_location)
+
+
+@app.route("/api/itinerary_destinations")
+def itinerary_destinations():
+    """JSON information about all itinerary destinations for a user"""
+
+    db_destinations = {}
+
+    user = User.get_user_by_username(session["viewed_user"])
+    itineraries = user.itineraries
+
+    itinerary_destinations = []
+
+    for itinerary in itineraries:
+        for location in itinerary.locations:
+
+            destination = f"{location.locale} {location.territory} {location.country}"
+
+            itinerary_destinations.append(destination)
+
+    endpoint = "https://maps.googleapis.com/maps/api/geocode/json"
+
+    for i, destination in enumerate(itinerary_destinations):
+
+        payload = {"address": destination, "key": API_KEY}
+
+        response = requests.get(endpoint, params=payload)
+
+        data = response.json()
+
+        db_destinations[i] = data
+    
+    return jsonify(db_destinations)
 
 
 @app.route("/api/search_place_data")
