@@ -22,8 +22,8 @@ User passwords are hashed and salted with bcrypt.
 ## **Tech Stack**
 Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
 Frontend: CSS 3, HTML5, JavaScript, Jinja, ReactJS<br/> 
-APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/) and [Places API](https://developers.google.com/maps/documentation/places/web-service)<br />
-Libraries: [Faker](https://faker.readthedocs.io/en/master/)
+APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/), [Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview), [Places API](https://developers.google.com/maps/documentation/places/web-service)<br />
+Libraries: [Faker](https://faker.readthedocs.io/en/master/), [Flask-Bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/)
 
 ## **Features**
 ### [Section]

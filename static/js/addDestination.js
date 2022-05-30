@@ -15,7 +15,7 @@ addBtn.addEventListener('click', (evt) => {
             'beforeend',
             `<br />
             <h2>Add Destination</h2>
-            <form action='/itinerary/${itinerary_id}/add_destination' class='active-form'>
+            <form action='/itinerary/${itinerary_id}/add_destination' method='POST' class='active-form'>
                 <label for='destination-locale'>Locale:</label>
                 <input type='text' name='locale' id='destination-locale' required>
                 <br>

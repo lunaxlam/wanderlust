@@ -77,7 +77,7 @@ def create_user():
     if (User.get_user_by_email(email)):
         flash("Your account already exists! Please log-in instead.")
 
-        return redirect("/login")
+        return redirect("/")
     else: 
         formData = dict(request.form)
 
@@ -237,13 +237,13 @@ def show_itinerary(itinerary_id):
         return redirect(f"/itinerary/{clone_itinerary.itinerary_id}")
 
 
-@app.route("/itinerary/<itinerary_id>/add_destination")
+@app.route("/itinerary/<itinerary_id>/add_destination", methods=["POST"])
 def add_destination(itinerary_id):
     """Add a destination to a travel itinerary"""
 
-    locale = request.args.get("locale")
-    territory = request.args.get("territory")
-    country = request.args.get("country")
+    locale = request.form.get("locale")
+    territory = request.form.get("territory")
+    country = request.form.get("country")
         
     itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
     location = Location.create_location(locale, territory, country)

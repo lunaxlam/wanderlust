@@ -70,16 +70,24 @@ Custom Styling
 	font-weight: bold;
 }
 
-#map {
+#map, #my-map {
+	margin: auto;
     width: 100%;
     height: 500px;
     background-color: grey;
 }
 
+#my-map {
+	width: 75%;
+	border-style: solid;;
+	border-width: 5px;
+	border-color: #e6d0ab;
+}
+
 /* Link Styling */
 a {
 	text-decoration: none;
-	color: lightslategray;
+	color: #4c4c48;
 }
 
 a:hover {
@@ -87,23 +95,29 @@ a:hover {
 }
 
 nav a {
-	color: #595C59;
+	color: #7b827f;
 	font-weight: bold;
 	font-size: 18px;
+}
+
+nav a:hover {
+	color: whitesmoke;
+	text-decoration: none;
 }
 
 /* Body Styling */
 
 body {
-    background-color: #F8F4F0;
+    background-color: #f3ede7;
     font-family: 'Open Sans', sans-serif;
+	color: #4c4c48;
     margin: 5px;
     padding: 10px;
 }
 
 nav {
 	margin: 40px 0 40px 0;
-	background-color: #BFD1D2;
+	background-color: #bfd1d2;
 	padding: 30px;
 	text-align: center;
 }

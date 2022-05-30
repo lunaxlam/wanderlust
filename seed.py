@@ -40,7 +40,7 @@ addresses = [["Chicago", "Illinois", "USA"], ["New York", "New York", "USA"],
                 ["Odessa", "Odessa", "UKR"], ["Phnom Penh", "Phnom Penh", "CAM"]]
 
 itinerary_choices = [
-    {"name": ["A Wicked Halloween Weekend in Salem, Massachusetts", "A Bit of Hocus Pocus in Salem, MA", "Birthday Weekend in Salem, Mass", "Springtime in Salem", "Salem Sights & Sounds", "A Salem Summer Vacation", "Salem Retreat 2023", "Three-Day Get-Away to Salem, MA", "Exploring Salem, MA - October 2022", "Christmas in Salem"],
+    {"name": ["A Wicked Halloween Weekend in Salem, Massachusetts", "Enjoying a Bit (8 Days) of Hocus Pocus in Salem, MA", "Birthday Weekend in Salem, Mass", "Springtime in Salem", "Salem Sights & Sounds", "A Salem Summer Vacation", "Salem Retreat 2023", "Three-Day Get-Away to Salem, MA", "Exploring Salem, MA - October 2022", "Christmas in Salem"],
     "overview": "Exploring Salem, MA's historic sights and famous haunts.",
     "locale": "Salem", 
     "territory": "Massachusetts", 

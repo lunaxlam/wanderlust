@@ -46,10 +46,12 @@
         {% endif %}
     </div>
 
-    <div>
-        <h2>My Adventure Map</h2>
-        <section id="my-map"></section>
-    </div>
+    {% if user_itineraries|length > 0 %}
+        <div>
+            <h2>My Adventure Map</h2>
+            <section id="my-map"></section>
+        </div>
+    {% endif %}
 
     <div>
         <h2>My Itineraries</h2>
