@@ -2,7 +2,6 @@
 
 import unittest
 import server
-from model import User
 import test_data
 
 
