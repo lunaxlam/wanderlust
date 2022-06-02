@@ -8,7 +8,7 @@ function initMap() {
 
             initAutocomplete()
 
-            const mount = document.querySelector('#map');
+            const mount = document.querySelector('#saved-map');
 
             if ('0' in activities) {
 
@@ -34,7 +34,7 @@ function initMap() {
                     const place_url = activities[activity]['results']['url']
 
                     const contentString = 
-                    `<h1 id="firstHeading" class="infoWindow">${place_name}</h1>` +
+                    `<h1 id="main-heading" class="infoWindow">${place_name}</h1>` +
                     `<div id="bodyContent" class="infoWindow">` +
                     `<p>${place_address}</p>` +
                     `<p><a href="${place_url}" target="_blank">View on Google Maps</a></p>` +

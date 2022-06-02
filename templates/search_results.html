@@ -3,37 +3,44 @@
 
 
 {% block body %}
-    <h1>Search Results</h1>
-    {% for result in results %}
-        <div class="place-photo">
-            {% if "photos" in result %}
-                <img src="{{ photo_url }}{{ result['photos'][0]['photo_reference'] }}" 
-                    alt="{{ result['name'] }} image">
+    <div class="container">
+        <h1>Search Results</h1>
+
+        <div class="row row-cols-auto d-flex justify-content-center">
+            {% for result in results %}
+                <div class="col text-center place-card">
+                    {% if "photos" in result %}
+                        <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
+                                    target="blank">
+                            <img src="{{ photo_url }}{{ result['photos'][0]['photo_reference'] }}" 
+                                alt="{{ result['name'] }} image">
+                        </a>
+                    {% else %}
+                        <img src="https://images.pexels.com/photos/776538/pexels-photo-776538.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                            alt="default">
+                    {% endif %}
+                    <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
+                                target="blank"
+                                class="main-heading">{{ result["name"] }}</a>
+                    {% if "formatted_address" in result %}
+                        <p>{{ result["formatted_address"] }}</p>
+                    {% endif %}
+                    </div>
+            {% endfor %}
+        </div>
+
+        <div class="container d-flex justify-content-center">
+            {% if  "next_page_token" in data %}
+                <form method="POST">
+                    <button type="submit" 
+                        formaction="/itinerary/{{ itinerary_id }}/search" 
+                        name="pagetoken" 
+                        value="{{ data['next_page_token'] }}">View More Results
+                    </button>
+                </form>
             {% else %}
-                <img src="https://images.pexels.com/photos/776538/pexels-photo-776538.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                    alt="default">
+                <h2>End of Results</h2>
             {% endif %}
         </div>
-
-        <div class="place-body">
-            <p><a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
-                        target="blank">{{ result["name"] }}</a>
-            </p>
-            {% if "formatted_address" in result %}
-                <p>{{ result["formatted_address"] }}</p>
-            {% endif %}
-        </div>
-    {% endfor %}
-
-    {% if  "next_page_token" in data %}
-        <form method="POST">
-            <button type="submit" 
-                formaction="/itinerary/{{ itinerary_id }}/search" 
-                name="pagetoken" 
-                value="{{ data['next_page_token'] }}">View More Results
-            </button>
-        </form>
-    {% else %}
-        <h2>End of Results</h2>
-    {% endif %}
+    </div> 
 {% endblock %}

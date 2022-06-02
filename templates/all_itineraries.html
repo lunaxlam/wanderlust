@@ -3,13 +3,14 @@
 
 
 {% block body %}
-    <h1>Wanderlust Itineraries</h1>
+    <div class="container">
+        <h1 class="center-text">Wanderlust Itineraries</h1>
 
-    <h2>Filter:</h2>
+        <h2>Filter:</h2>
 
-    <div id="filter-itineraries"></div>
+        <div id="filter-itineraries"></div>
 
-    <div>
+
         <form action="/api/itineraries/by_locale">
             <label for="locale">Locale:</label>
             <select name="locale" id="locale-select">
@@ -39,17 +40,17 @@
             </select>
             <input type="submit" name="country" id="country-btn" value="Submit">
         </form>
-    </div>
 
-    <div id="results">
-        <h2>View all:</h2>
-    </div>
-    <div>
-        <ul id="all-itineraries">
-            {% for itinerary in itineraries %}
-                <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
-            {% endfor  %}
-        </ul>
+        <div id="results">
+            <h2>View all:</h2>
+        </div>
+        <div>
+            <ul id="all-itineraries">
+                {% for itinerary in itineraries %}
+                    <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
+                {% endfor  %}
+            </ul>
+        </div>
     </div>
 {% endblock %}
 

@@ -5,14 +5,18 @@ function LogIn() {
     const onClick = () => {
 
         document.querySelector('#display-form').innerHTML =
-            `<form action='/login' method="POST" class='active-form'>
-                <label for='user-email'>Email: </label>
-                <input type='email' name='email' id='user-email'>
-                <br>
-                <label for='user-password'>Password: </label>
-                <input type='password' name='password' id='user-password'>
-                <br>
-                <input type='submit'>
+            `<form class='row g-3' action='/login' method='POST'>
+                <div class='col-md-6'>
+                    <label for='user-email' class='form-label'>Email</label>
+                    <input type='email' class='form-control' name='email' id='user-email'>
+                </div>
+                <div class='col-md-6'>
+                    <label for='user-password' class='form-label'>Password</label>
+                    <input type='password' class='form-control' name='password' id='user-password'>
+                </div>
+                <div class='col-12'>
+                    <button type='submit' class='btn btn-primary'>Sign in</button>
+                </div>
             </form>`
     }
     return (
@@ -21,3 +25,4 @@ function LogIn() {
 }
 
 ReactDOM.render(<LogIn />, document.querySelector('#log-in'));
+

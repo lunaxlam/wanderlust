@@ -13,17 +13,19 @@ addBtn.addEventListener('click', (evt) => {
     if (document.querySelector('#clone-trip-form').innerHTML === '') {
 
         document.querySelector('#clone-trip-form').innerHTML =
-        `<br />
-        <form action='/itinerary/${itinerary_id}', method='POST'>
-            <label for='itinerary-name'>Name Your Trip: </label>
-            <input type='text' name='name' id='itinerary-name' required>
-            <br>
-            <label for='itinerary-overview'>Overview: </label>
-            <input type='text' name='overview' id='itinerary-overview' required>
-            <br>
-            <input type='submit' name='submit'>
-        </form>
-        <br />`
+        `<form class='row g-3' action='/itinerary/${itinerary_id}' method='POST'>
+                <div class='col-md-12'>
+                    <label for='itinerary-name' class='form-label'>Name Your Trip</label>
+                    <input type='text' class='form-control' name='name' id='itinerary-name' required>
+                </div>
+                <div class='col-md-12'>
+                    <label for='itinerary-overview' class='form-label'>Overview</label>
+                    <input type='text' class='form-control' name='overview' id='itinerary-overview' required>
+                </div>
+                <div class='col-12'>
+                    <button type='submit' class='btn btn-primary'>Submit</button>
+                </div>
+            </form>`
 
     } else {
 

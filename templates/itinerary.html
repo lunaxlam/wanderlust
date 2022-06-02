@@ -3,61 +3,69 @@
 
 
 {% block body %}
-    <h1>{{ itinerary.itinerary_name }}</h1>
+    <div class="container">
+        {% if session["user_id"] == itinerary.user_id %}
+            <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
+        {% endif %}
 
-    <div>
-        <ul>
-            <li>Creator: <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></li>
-            <li>Overview: {{ itinerary.overview }}</li>
-            <li>Destinations: 
-                <ul>
+        <div class="text-center">
+            <h1>{{ itinerary.itinerary_name }}</h1>
+            <h2>{{ itinerary.overview }}</h2>
                 {% for destination in destinations %}
-                    <li>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</li>
+                    <ul><h3>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</h3></ul>
                 {% endfor %}
-                <ul>
-            </li>
-        <ul>
+        </div>
+
+        {% if session["user_id"] != itinerary.user_id %}
+            <h4>Created by <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>            
+        {% else %}
+            <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
+            <section id="add-destination-form"></section>
+        {% endif %}
 
         {% if session["user_id"] != itinerary.user_id %}
             <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}">Clone Itinerary</button>
-            <div id="clone-trip-form"></div>
+            <section id="clone-trip-form"></section>
         {% else %}
-            <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}">Add Destination</button>
-            <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button>Delete Itinerary</button></a>
-            <div id="add-destination-form"></div>
-        {% endif %}
-    </div>
-    
-    {% if session["user_id"] == itinerary.user_id %}
-        <div>
+      
+
             <h2>Search Location to Add Activity</h2>
+            
 
-            <h3>By Name or Address</h3>
-            <form action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" 
-                method="POST">
-                <div id="autocomplete-place-id">
-                    <input id="autocomplete" type="text" size="50" placeholder="Ricobene's" />
-                    <section id="autocomplete-mount"></section>
-                    <input type="submit" value="Submit">
-                </div>
-            </form>
+                <h3>By Name or Address</h3>
+                <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" method="POST">
+                    <div class="col-md-6">
+                        <input id="autocomplete" type="text" class="form-control" size="50" placeholder="Ricobene's" />
+                        <section id="autocomplete-mount"></section>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
 
-            <h3>By Point of Interest</h3>
-            <form action="/itinerary/{{ itinerary.itinerary_id }}/search">
-                <label for="search-keyword">Description:</label>
-                <input type="text" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
-                <br>
-                <label for="search-location">Location:</label>
-                <input type="text" name="location" id="search-location" placeholder="Chicago">
-                <br>
-                <input type="submit" name="submit">
-            </form>
-        </div>
-    {% endif %}
+                <h3>By Point of Interest</h3>
+                <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id }}/search">
+                    <div class="col-md-6">
+                        <label for="search-keyword" class="form-label">Description</label>
+                        <input type="text" class="form-control" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="search-location" class="form-label">Location</label>
+                        <input type="text" class="form-control" name="location" id="search-location" placeholder="Chicago" required>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+        {% endif %}
 
-    <h2>Activities</h2>
-    <div id="map" hidden></div><br>
-    <div id="saved-activities"></div>
+        <h2>Map</h2>
+        <div id="saved-map" class="all-maps" hidden></div><br>
+        <h2>Activities</h2>
+        <div id="saved-activities"></div>
+
+    </div>
+
 {% endblock %}
 
 {% block js %}
@@ -79,4 +87,7 @@
             src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
         </script>
     {% endif %}
+
+    </div>
 {% endblock %}
+

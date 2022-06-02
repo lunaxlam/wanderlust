@@ -3,10 +3,18 @@
 
 
 {% block body %}
-    <h1>Wanderlust Community</h1>
-    {% for user in users %}
-        {% if user.user_id != session["user_id"]  %}
-            <ul><a href="/user/{{ user.username }}">{{ user.username }}</a></ul>
-        {% endif %}
-    {% endfor %}
+    <div class="container text-center">
+        <h1>Wanderlust Community</h1>
+
+        <div class="row row-cols-auto d-flex justify-content-center">
+            {% for user in users %}
+                {% if user.user_id != session["user_id"]  %}
+                <div class="col user">
+                    <a href="/user/{{ user.username }}"><img src='{{ user_photos[loop.index0] }}' class="circle"></a>
+                    <a href="/user/{{ user.username }}" class="main-heading">{{ user.username }}</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

@@ -19,6 +19,8 @@ model.db.create_all()
 # Create an instance of a faker generator to generate data
 fake = Faker()
 
+first_names = ["Taylor", "Alex", "Kennedy", "Jordan", "Brooklyn", "Parker", "Charlie", "Rowan", "Harley", "Blake"]
+
 bio = ["I teach Brazilian Jiu-Jitsu \U0001F94B, play guitar \U0001F3B8, and like dogs \U0001F436",
             "Traveler \U0001F30E Trekkie \U0001F596 Teacher \U0001F34E",
             "Culinary Genius \U0001F9C1 Coffee Fiend \U00002615 doggo parent \U0001F429",
@@ -94,8 +96,8 @@ itinerary_choices = [
 # Create users to seed the database 
 users_db = []
 
-for n in range (10):
-    fname = fake.unique.first_name()
+for first_name in first_names:
+    fname = first_name
     lname = fake.unique.last_name()
     domain = fake.free_email_domain()
     email = f'{fname}.{lname}@{domain}'

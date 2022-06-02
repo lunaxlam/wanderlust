@@ -3,12 +3,14 @@
 
 
 {% block body %}
-    <h1>Wanderlust Countries</h1>
-    <h2> Country Code | Country</h2>
-    <ul>
-        {% for country in countries %}
-            <li>{{ country.country_code }} | {{ country.country_name }}</a></li>
-        {% endfor %}
-    <ul>
+    <div class="container">
+        <h1>Wanderlust Countries</h1>
+        <h2> Country Code | Country</h2>
+        <ul>
+            {% for country in countries %}
+                <li>{{ country.country_code }} | {{ country.country_name }}</a></li>
+            {% endfor %}
+        <ul>
     </div>
+
 {% endblock %}

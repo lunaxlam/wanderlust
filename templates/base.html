@@ -11,13 +11,18 @@
         
         <!-- Set viewport -->
         <meta name="viewport" content="width=device-width">
+
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+            rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+            crossorigin="anonymous">
         
         <!-- Link stylesheets -->
         <link rel="stylesheet" href="/static/css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
         <!-- Link Favicon -->
-        <link rel="icon" type="image/x-icon" href="/static/images/favicon_io/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 
         <!-- Link React dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" crossorigin></script>
@@ -30,32 +35,47 @@
         {% endblock %}
 
     </head>
-    <body>
-        <div>
+    <body class="container">
             {% for msg in get_flashed_messages() %}
                 <p class="flash-msg">{{ msg }}</p>
             {% endfor %}
-        </div>
 
-        <header>
             {% if "user" in session %}
-                <nav>
-                        <ul class="horizontal-list">
-                            <li><a href="/user/{{ session['user'] }}">home</a></li>
-                            <li><a href="/itineraries">explore</a></li>
-                            <li><a href="/users">connect</a></li>
-                            <li><a href="/logout">logout</a></ul>
+                <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #DBF0FE;">
+                    <div class="container-fluid">
+                      <a class="navbar-brand">Wanderlust</a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                          <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/user/{{ session['user'] }}">home</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/itineraries">explore</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/users">connect</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/logout">logout</a>
+                          </li>                          
                         </ul>
-                </nav>
+                      </div>
+                    </div>
+                  </nav>
             {% endif %}
-        </header>
 
         {% block body %}
         {% endblock %}
-        
-        <footer></footer>
 
         {% block js %}
 	    {% endblock %}
+
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" 
+            crossorigin="anonymous"></script>
     </body>
 </html>

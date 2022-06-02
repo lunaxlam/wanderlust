@@ -117,7 +117,18 @@ def show_users():
 
     users = User.get_users()
 
-    return render_template("all_users.html", users=users)
+    user_photos = []
+
+    for user in users:
+
+        endpoint = "https://randomuser.me/api/"
+
+        response = requests.get(endpoint)
+        data = response.json()
+
+        user_photos.append(data["results"][0]["picture"]["large"])
+
+    return render_template("all_users.html", users=users, user_photos=user_photos)
 
 
 @app.route("/user/<username>")
@@ -346,6 +357,7 @@ def view_place_details(itinerary_id, place_id):
     return render_template("place_details.html",
                             API_KEY=API_KEY,
                             itinerary_id=itinerary_id,
+                            place_id=place_id,
                             results=results)
 
 

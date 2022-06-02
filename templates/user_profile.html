@@ -1,75 +1,71 @@
 {% extends 'base.html' %}
-{% block title %}{{ user.username }}'s page{% endblock %}
+{% block title %}{{ user.username }}{% endblock %}
 
 
 {% block body %}
-    <div>
+    <div class="text-center">
         <h1>{{ user.username }} </h1>
-        <ul id="about-me">
-            <li>{{ user.locale }}, {{ user.territory }}, {{ user.country }}</li>
-            <li>{{ user.about_me }}</li>
-        </ul>
+        <h4>{{ user.locale }}, {{ user.territory }}, {{ user.country }}</h4>
+        <h4>{{ user.about_me }}</h4>
 
-        <ul id="follow" class="horizontal-list">
-            {% if user.username != session["user"] %}
-                <li><button><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button></li>
+        {% if user.username != session["user"] %}
+            <button><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button>
+        {% endif %}
+        <button data-bs-target="#my-followers" data-bs-toggle="collapse">Followers</button>
+        <button data-bs-target="#following" data-bs-toggle="collapse">Following</button>
+
+        <div id="my-followers" class="collapse in">
+            {% if followers|length > 0 %}
+                <ul>
+                    {% for follower in followers %}
+                        <li><a href="/user/{{ follower.follower.username }}">{{ follower.follower.username }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No current followers.</p>
             {% endif %}
-            <li><button id="my-followers-btn">Followers</button></li>
-            <li><button id="following-btn">Following</button></li>
-        </ul>
-    <div>
+        </div>
         
-
-    <div id="my-followers" hidden>
-        <h2>Followers</h2>
-        {% if followers|length > 0 %}
-            <ul>
-                {% for follower in followers %}
-                    <li><a href="/user/{{ follower.follower.username }}">{{ follower.follower.username }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No current followers.</p>
-        {% endif %}
-    </div>
-    
-    <div id="following" hidden>
-        <h2>Following</h2>
-        {% if following|length > 0 %}
-            <ul>
-                {% for follower in following %}
-                    <li><a href="/user/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>You are not currently following anyone.</p>
-        {% endif %}
+        <div id="following" class="collapse">
+            {% if following|length > 0 %}
+                <ul>
+                    {% for follower in following %}
+                        <li><a href="/user/{{ follower.user_followed.username }}">{{ follower.user_followed.username }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You are not currently following anyone.</p>
+            {% endif %}
+        </div>
     </div>
 
-    {% if user_itineraries|length > 0 %}
-        <div>
-            <h2>My Adventure Map</h2>
-            <section id="my-map"></section>
+    {% if user.username == session["user"] %}
+        <div class="container">
+            <h2>Ready for Another Adventure?</h2>
+            <div id="create-itinerary" class="container"></div>
+            <div id="mount-itinerary" class="container"></div>
         </div>
     {% endif %}
 
-    <div>
-        <h2>My Itineraries</h2>
-        {% if user.username == session["user"] %}
-            <div id="create-itinerary"></div>
-                <section id="mount-itinerary"></section>
-        {% endif %}
+    {% if user_itineraries|length > 0 %}
+        <div class="container">
+            <h2>My Travel Map</h2>
+            <section id="my-map" class="all-maps"></section>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <h2>My Travel Itineraries</h2>
         <ul>
         {% for itinerary in user_itineraries %}
             <li><a href="/itinerary/{{ itinerary.itinerary_id }}">{{ itinerary.itinerary_name }}</a></li>
         {% endfor %}
-        <ul>
+        </ul>
     </div>
 
 {% endblock %}
 
 {% block js %}
-    <script src="/static/js/toggleFollowers.js"></script>
     <!-- Maps API -->
     <script src="/static/js/apiMapsUserDestinations.js"></script>
     <script async

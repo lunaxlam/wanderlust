@@ -1,187 +1,136 @@
-/* Add CSS reset to reduce browser inconsistencies
+/*	Google Fonts Import	*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto:wght@300;400&display=swap');
 
-   http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
+/* Body Styling */
 body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    font-family: 'Open Sans', sans-serif;
+	color: #0b3c5d;
 }
 
-/*
-
-
-Custom Styling
-
-
-*/
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
-
-/* Map Styling */
-.infoWindow {
-	color: #333;
-	font-family: Roboto, Arial;
-	font-size: 13px;
+/* Flash Message Styling */
+.flash-msg {
+    background-color: lightgoldenrodyellow;
+    color: black; 
+    padding: .5rem;
 }
 
-#firstHeading {
-	font-weight: bold;
-}
-
-#map, #my-map {
+/*	Maps Styling */
+.all-maps {
 	margin: auto;
-    width: 100%;
-    height: 500px;
-    background-color: grey;
+	margin-top: 10px;
+	padding: 40px;
+	height: 500px;
+	width: 100%;
 }
 
 #my-map {
-	width: 75%;
-	border-style: solid;;
-	border-width: 5px;
-	border-color: #e6d0ab;
+	border: 5px solid #0b3c5d;
+}
+
+#place-map {
+	border: 5px solid gold;
+}
+
+.infoWindow {
+	font-family: Roboto, Arial;
+	font-size: 13px;
+	color: #000000;
+}
+
+/* Navbar Styling */
+
+nav {
+	margin-bottom: 40px;
+}
+
+/* Image Styling */
+
+img {
+	display: block;
+	height: 200px;
+	max-width: 100%;
+	margin: auto;
+}
+
+/* Text Styling */
+.text-center {
+	text-align: center;
+}
+
+.main-heading {
+	font-weight: bold;
+}
+
+/* Place Search Styling */
+.place-card {
+	margin: 40px;
+	padding: 20px;
+	width: 22rem;
+	max-height: 20rem;
+	background-color: whitesmoke;
+	border: 1px solid #0b3c5d;
+}
+
+/* All Users Styling */
+.circle {
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	margin: auto;
+	padding: 20px;
+}
+
+.user {
+	display: block;
+	margin: 50px;
+}
+
+/* ul Styling */
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Button Styling */
+button {
+	background-color: lightslategray;
+	color: white;
+	border-radius: 5px;
+}
+
+/* Form Styling */
+.sticky-margin {
+	padding-top: 25%;
+}
+
+textarea {
+	height: 200px;
+	width: 99%;
+	border: 1px solid darkgray;
+	border-radius: 5px;
+}
+
+/* Place Reviews Styling */
+.review-card {
+	margin: 40px auto 40px auto;
+	width: 80%;
+	padding: 2rem;
+	background-color: whitesmoke;
+	border: 1px solid #0b3c5d;
+}
+
+.profile-pic {
+	height: 150px;
 }
 
 /* Link Styling */
 a {
 	text-decoration: none;
-	color: #4c4c48;
+	color: red;
 }
 
 a:hover {
 	text-decoration: underline;
 }
-
-nav a {
-	color: #7b827f;
-	font-weight: bold;
-	font-size: 18px;
-}
-
-nav a:hover {
-	color: whitesmoke;
-	text-decoration: none;
-}
-
-/* Body Styling */
-
-body {
-    background-color: #f3ede7;
-    font-family: 'Open Sans', sans-serif;
-	color: #4c4c48;
-    margin: 5px;
-    padding: 10px;
-}
-
-nav {
-	margin: 40px 0 40px 0;
-	background-color: #bfd1d2;
-	padding: 30px;
-	text-align: center;
-}
-
-nav li {
-	margin: 40px;
-}
-
-div, form {
-	margin-bottom: 10px;
-}
-
-.horizontal-list li {
-	display: inline;
-} 
-
-img {
-	height: 200px;
-	width: auto;
-}
-
-h1 {
-	font-size: 26px;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px;
-}
-
-h3 {
-    font-size: 18px;
-}
-
-h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.start {
-	text-align: center;
-	padding: 5px;
-}
-
-#about-me, #follow {
-	text-align: center;
-}
-
-.hint {
-	font-size: 12px;
-}
-
-.active-form {
-	background-color: rgb(237, 255, 255);
-	padding: 10px;
-}
-
-.activity-header {
-	font-weight: bold;
-}
-
-/* Flash Message Styling */
-
-.flash-msg {
-    background-color: rgb(237, 255, 255);
-    color: black;
-    padding: 10px;
-}
-

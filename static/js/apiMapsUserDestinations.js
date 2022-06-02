@@ -41,14 +41,14 @@ function initMap() {
             
             const infoWindow = new google.maps.InfoWindow();
 
-            const image = "/static/images/mapmarkerdarkred.png";
+            const image = "/static/images/mapmarkerprussianblue.png";
 
             for (const destination in destinations ) {
 
                 formatted_address = destinations[destination]["results"][0]["formatted_address"];
 
                 const contentString = 
-                `<h1 id="firstHeading" class="infoWindow">${formatted_address}</h1>`;
+                `<h1 class="infoWindow firstHeading">${formatted_address}</h1>`;
 
                 const placeMarker = new google.maps.Marker({
                     position: {

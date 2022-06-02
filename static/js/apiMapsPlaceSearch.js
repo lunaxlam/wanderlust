@@ -14,7 +14,7 @@ function initMap() {
             const place_address = data["address"];
             const place_url = data["place_url"];
 
-            const map = new google.maps.Map(document.querySelector('#map'),{
+            const map = new google.maps.Map(document.querySelector('#place-map'),{
                 center: {
                     lat: place_lat,
                     lng: place_lng,
@@ -24,8 +24,8 @@ function initMap() {
             });
 
             const contentString = 
-            `<h1 id="firstHeading" class="infoWindow">${place_name}</h1>` +
-            `<div id="bodyContent" class="infoWindow">` +
+            `<h1 id="main-heading" class="infoWindow center-text">${place_name}</h1>` +
+            `<div id="bodyContent" class="infoWindow center-text">` +
             `<p>${place_address}</p>` +
             `<p><a href="${place_url}" target="_blank">View on Google Maps</a></p>` +
             `</div>`;

@@ -6,10 +6,10 @@ function initMap() {
         .then((response) => response.json())
         .then((activities) => {
 
-            const mount = document.querySelector('#map');
+            const mount = document.querySelector('#saved-map');
             mount.hidden = false;
 
-            const map = new google.maps.Map(document.querySelector('#map'),{
+            const map = new google.maps.Map(document.querySelector('#saved-map'),{
                 center: {
                     lat: activities[0]['results']['geometry']['location']['lat'],
                     lng: activities[0]['results']['geometry']['location']['lng'],
@@ -29,7 +29,7 @@ function initMap() {
                 const place_url = activities[activity]['results']['url']
 
                 const contentString = 
-                `<h1 id="firstHeading" class="infoWindow">${place_name}</h1>` +
+                `<h1 class="infoWindow main-heading">${place_name}</h1>` +
                 `<div id="bodyContent" class="infoWindow">` +
                 `<p>${place_address}</p>` +
                 `<p><a href="${place_url}" target="_blank">View on Google Maps</a></p>` +

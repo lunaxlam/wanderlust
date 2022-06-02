@@ -24,15 +24,15 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
 
         return (
             <ul>
-                <li className='activity-header'>{location} </li>    
-                <li className='activity-header'>{dates} </li> 
+                <li className='main-heading'>{location} </li>    
+                <li className='main-heading'>{dates} </li> 
                 <li>Start: {start} </li> 
                 <li>End: {end} </li>       
                 <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
                 <li>Phone: {phone} </li>
                 <button onClick={onClick} 
                     id='delete' 
-                    value={activityID}>Delete Activity
+                    value={activityID}>Delete
                 </button>
                 <br /><br />
             </ul>
@@ -42,8 +42,8 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
 
         return (
             <ul>
-                <li className='activity-header'>{location} </li>    
-                <li className='activity-header'>{dates} </li> 
+                <li className='main-heading'>{location} </li>    
+                <li className='main-heading'>{dates} </li> 
                 <li>Start: {start} </li> 
                 <li>End: {end} </li>       
                 <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
@@ -51,7 +51,7 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
                 <li>Notes: {notes} </li>
                 <button onClick={onClick} 
                     id='delete' 
-                    value={activityID}>Delete Activity
+                    value={activityID}>Delete
                 </button>
                 <br /><br />
             </ul>
