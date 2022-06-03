@@ -22,7 +22,7 @@ function CreateItinerary() {
                 </div>
                 <div class='col-md-12'>
                     <label for='itinerary-country' class='form-label'>Country</label>
-                    <input type='text' class='form-control' name='country' id='destination-country' pattern='(\\b\\w{3}\\b' required>
+                    <input type='text' class='form-control' name='country' id='destination-country' pattern='\\b[a-zA-Z]{3}\\b' required>
                     <p class='hint'>Country code must be entered as three-letter 
                         <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3' 
                             target='_blank'>ISO-3166</a> code standard. Need a 
