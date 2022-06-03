@@ -35,7 +35,8 @@
                     <button type="submit" 
                         formaction="/itinerary/{{ itinerary_id }}/search" 
                         name="pagetoken" 
-                        value="{{ data['next_page_token'] }}">View More Results
+                        value="{{ data['next_page_token'] }}"
+                        class="btn btn-secondary">View More Results
                     </button>
                 </form>
             {% else %}

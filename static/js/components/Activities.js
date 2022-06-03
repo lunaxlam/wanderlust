@@ -1,6 +1,9 @@
 'use strict';
 
-function Activity( { dates, start, end, location, url, formattedAddress, phone, notes, activityID }) {
+function Activity( { dates, start, end, location, url, formattedAddress, phone, notes, activityID, itineraryID, placeID}) {
+
+    const edit_url = `/itinerary/${itineraryID}/edit_activity/${activityID}/${placeID}`
+
 
     const onClick = (evt) => {
         const clicked_button = evt.target;
@@ -24,17 +27,19 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
 
         return (
             <ul>
+                <button onClick={onClick} 
+                    id='delete' 
+                    value={activityID}
+                    className='btn btn-danger btn-sm fa fa-close'>
+                </button>
                 <li className='main-heading'>{location} </li>    
                 <li className='main-heading'>{dates} </li> 
                 <li>Start: {start} </li> 
                 <li>End: {end} </li>       
                 <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
                 <li>Phone: {phone} </li>
-                <button onClick={onClick} 
-                    id='delete' 
-                    value={activityID}>Delete
-                </button>
-                <br /><br />
+                <br />
+                <a href={edit_url}><button class="btn btn-outline-danger btn-sm">Edit Activity</button></a>
             </ul>
         );
 
@@ -43,19 +48,20 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
         return (
             <div className="container saved-activity">
                 <ul>
-                    <li class="activity-heading">{location} </li>    
-                    <li class="activity-heading">{dates} </li> 
+                    <button onClick={onClick} 
+                        id='delete' 
+                        value={activityID}
+                        className='btn btn-danger btn-sm fa fa-close'>
+                    </button>
+                    <li className="main-heading">{location} </li>    
+                    <li className="main-heading">{dates} </li> 
                     <li>Start: {start} </li> 
                     <li>End: {end} </li>       
                     <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
                     <li>Phone: {phone} </li>
                     <li>Notes: {notes} </li>
-                    <button onClick={onClick} 
-                        id='delete' 
-                        value={activityID}
-                        class="btn btn-danger btn-sm">Delete
-                    </button>
-                    <br /><br />
+                    <br />
+                    <a href={edit_url}><button className="btn btn-outline-danger btn-sm">Edit Activity</button></a>
                 </ul>
             </div>
         );
@@ -104,6 +110,8 @@ function ActivitiesContainer() {
                 phone={phone}
                 notes={activities[i]['notes']}
                 activityID={activities[i]['activity_id']}
+                itineraryID={activities[i]['itinerary_id']}
+                placeID={activities[i]['place_id']}
             />
         )
     }

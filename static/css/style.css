@@ -24,6 +24,10 @@ ul {
 /* BUTTON STYLES
 /*******************************************/
 
+#delete {
+	float: right;
+}
+
 button a, button a:hover {
 	color: white;
 }
@@ -77,7 +81,7 @@ textarea {
 /* HEADING STYLES
 /*******************************************/
 
-.main-heading, h1{
+.main-heading, h1, h5{
 	font-weight: bold;
 }
 
@@ -187,15 +191,20 @@ video {
 /*******************************************/
 
 /* Activities Styling */
-.saved-activity {
-	background-color: #d3d3d3;
-	padding: 20px 20px 10px 20px;
-	margin-bottom: 10px;
-	border-radius: 10px;
+#all-activities {
+	padding-top: 10px;
 }
 
-.activity-heading, h5 {
-	font-weight: bold;
+#saved-activities {
+	padding-right: 40px;
+}
+
+.saved-activity {
+	background-color: #d3d3d3;
+	padding: 20px;
+	margin-left: 0;
+	margin-bottom: 10px;
+	border-radius: 10px;
 }
 
 /* Card Styling */

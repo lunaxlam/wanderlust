@@ -25,6 +25,8 @@ API_KEY = os.environ['GOOGLE_API_KEY']
 def show_welcome():
     """Return homepage"""
 
+    session["user"] = None
+
     return render_template("home.html")
 
 
@@ -146,6 +148,46 @@ def show_profile(username):
     followers = user.followers
 
     return render_template("user_profile.html", user=user, user_itineraries=itineraries, following=following, followers=followers, API_KEY=API_KEY)
+
+
+@app.route("/user/edit_user", methods=["POST", "GET"])
+def edit_user():
+    """Edit the logged-in user"""
+
+    user = User.get_user_by_user_id(session["user_id"])
+
+    if request.method == "GET":
+        return render_template("create_account.html") 
+    else:
+
+        formData = dict(request.form)
+
+        email = formData["email"]
+        password = formData["password"]
+        username = formData["username"]
+        fname = formData["fname"]
+        lname = formData["lname"]
+        locale = formData["locale"]
+        territory = formData["territory"]
+        country = formData["country"]
+        about_me = formData["about_me"]
+
+        if password != "":
+            password = Bcrypt().generate_password_hash(password).decode('utf-8')
+        
+        user.edit_user(email=email, 
+                            password=password, 
+                            username=username, 
+                            fname=fname, 
+                            lname=lname, 
+                            locale=locale, 
+                            territory=territory, 
+                            country=country, 
+                            about_me=about_me)
+        
+        flash("Account updated!")
+
+        return redirect(f"/user/{session['user']}")
 
 
 @app.route("/user/<username>/follow_me")
@@ -382,6 +424,34 @@ def add_activity(itinerary_id, place_id):
     flash("Success! New activity added.")
 
     return redirect(f"/itinerary/{itinerary_id}")
+
+
+@app.route("/itinerary/<itinerary_id>/edit_activity/<activity_id>/<place_id>", methods=["POST", "GET"])
+def edit_activity(itinerary_id, activity_id, place_id):
+    """Edit the logged-in user"""
+
+    activity = Activity.get_activity_by_activity_id(activity_id)
+
+    if request.method == "GET":
+        return render_template("edit_activity.html", itinerary_id=itinerary_id, activity_id=activity_id, place_id=place_id) 
+    else:
+
+        itinerary_id = itinerary_id
+
+        formData = dict(request.form)
+        print(formData)
+
+        start = formData["start"]
+        end = formData["end"]
+        notes = formData["notes"]
+
+        activity.edit_activity(start=start, 
+                            end=end, 
+                            notes=notes)
+        
+        flash("Activity updated!")
+
+        return redirect(f"/itinerary/{itinerary_id}")
 
 
 ### API Routes  ###

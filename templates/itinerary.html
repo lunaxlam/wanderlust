@@ -17,7 +17,6 @@
         {% else %}
             <div class="text-center">
                 <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}" class="btn btn-secondary btn-sm">Add Destination</button>
-                <button data-bs-target="#search" data-bs-toggle="collapse" class="btn btn-secondary btn-sm">Add Activity</button>
                 <a href="/itinerary/{{ itinerary.itinerary_id }}/delete_itinerary"><button class="btn btn-danger btn-sm">Delete Itinerary</button></a>
             </div>
             <section id="add-destination-form"></section>
@@ -26,40 +25,6 @@
         {% if session["user_id"] != itinerary.user_id %}
             <button id="clone-trip" name="{{ itinerary.itinerary_id }}" }}" class="btn btn-secondary btn-sm">Clone Itinerary</button>
             <section id="clone-trip-form"></section>
-        {% else %}
-
-            <div id="search" class="search-form collapse">
-                <h3>Search Location to Add Activity</h3>
-                <div>
-                    <h5>By Name or Address</h5>
-                    <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" method="POST">
-                        <div class="col-md-6">
-                            <input id="autocomplete" type="text" class="form-control" size="50" placeholder="Ricobene's" />
-                            <section id="autocomplete-mount"></section>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="search-form">
-                    <h5>By Point of Interest</h5>
-                    <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id }}/search">
-                        <div class="col-md-6">
-                            <label for="search-keyword" class="form-label">Description</label>
-                            <input type="text" class="form-control" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="search-location" class="form-label">Location</label>
-                            <input type="text" class="form-control" name="location" id="search-location" placeholder="Chicago" required>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         {% endif %}
         
         <div class="sub-main">
@@ -67,9 +32,45 @@
             <div id="saved-map" class="all-maps" hidden></div>
         </div>
 
-        <div class="sub-main">
-            <h2>Activities</h2>
-            <div id="saved-activities"></div>
+        <div id="all-activities" class="row align-items-start">
+            <div class="col">
+                <h2>Activities</h2>
+                <div id="saved-activities"></div>
+            </div>
+            {% if session["user_id"] == itinerary.user_id %}
+                <div id="activity-search" class="col">
+                    <h2>Add New Activity</h3>
+                    <div class="sub-main">
+                        <h5>Search Activity Location by Name or Address</h5>
+                        <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" method="POST">
+                            <div class="col-md-12">
+                                <input id="autocomplete" type="text" class="form-control" size="50" placeholder="Ricobene's" />
+                                <section id="autocomplete-mount"></section>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="search-form">
+                        <h5>Search Activity Location by Point of Interest</h5>
+                        <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id }}/search">
+                            <div class="col-md-12">
+                                <label for="search-keyword" class="form-label">Description</label>
+                                <input type="text" class="form-control" name="keyword" id="search-keyword" placeholder="Italian Restaurants">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="search-location" class="form-label">Location</label>
+                                <input type="text" class="form-control" name="location" id="search-location" placeholder="Chicago" required>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 

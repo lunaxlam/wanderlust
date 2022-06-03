@@ -31,7 +31,7 @@ class User(db.Model):
         """A string representation of a User"""
 
         return f"<User user_id={self.user_id} username={self.username} email={self.email} locale={self.locale} territory={self.territory} country={self.country}>"
-
+    
     @classmethod
     def create_user(cls, email, password, username, fname, lname, locale, territory, country, about_me):
         """Create and return a new user"""
@@ -100,6 +100,39 @@ class User(db.Model):
         """Returns a list of all users by country"""
 
         return cls.query.filter(cls.country == country).all()
+    
+    def edit_user(self, email="", password="", username="", fname="", lname="", locale="", territory="", country="", about_me=""):
+        """Edit a current user"""
+
+        if email != "": 
+            self.email = email.lower()
+        
+        if password != "":
+            self.password = password
+        
+        if username != "":
+            self.username = username.lower()
+        
+        if fname != "": 
+            self.fname = fname.title()
+        
+        if lname != "":
+            self.lname = lname.title()
+
+        if locale != "":
+            self.locale = locale.title()
+        
+        if territory != "":
+            self.territory = territory.title()
+        
+        if country != "":
+            self.country = country.upper()
+        
+        if about_me != "":
+            self.about_me = about_me
+                
+        db.session.add(self)
+        db.session.commit()
 
 
 class Follower(db.Model):
@@ -289,6 +322,12 @@ class Activity(db.Model):
         return activity
     
     @classmethod
+    def get_activity_by_activity_id(cls, activity_id):
+        """Return a user object by user_id"""
+
+        return cls.query.filter(cls.activity_id == activity_id).first()
+    
+    @classmethod
     def clone_activities(cls, original_itinerary_id, clone_itinerary_id):
         """Clone activities from database"""
 
@@ -326,6 +365,41 @@ class Activity(db.Model):
         """Return all itinerary activity items by itinerary_id"""
 
         return cls.query.filter(cls.itinerary_id == itinerary_id).all()
+    
+    def edit_activity(self, start="", end="", notes=""):
+        """Edit a current user"""
+
+        if start != "" and end != "":
+         
+            # Convert string-datetime into datetime object
+            if isinstance(start, str) and isinstance(end, str):
+                start = datetime.strptime(start, "%Y-%m-%dT%H:%M")
+                end = datetime.strptime(end, "%Y-%m-%dT%H:%M")
+
+            # Update string output of datetime object
+            start_time = start.strftime("%-I:%M %p")
+            end_time = end.strftime("%-I:%M %p")
+
+            # Set string output of datetime object to locale representation
+            start_date = start.strftime("%x %Z")
+            end_date = end.strftime("%x %Z")
+
+            if start_date != end_date:
+                dates = f"{start_date} to {end_date}"
+                start_time = f"{start_time} on {start_date}"
+                end_time = f"{end_time} on {end_date}"
+            else:
+                dates = start_date
+            
+            self.start = start_time
+            self.end = end_time
+            self.dates = dates
+        
+        if notes != "":
+            self.notes = notes
+                
+        db.session.add(self)
+        db.session.commit()
 
 
 class Location(db.Model):

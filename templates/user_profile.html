@@ -10,6 +10,8 @@
 
         {% if user.username != session["user"] %}
             <button class="btn btn-secondary btn-sm"><a href="/user/{{ user.username }}/follow_me">Follow Me</a></button>
+        {% else %}
+            <button class="btn btn-secondary btn-sm"><a href="/user/edit_user">Edit Account</a></button>
         {% endif %}
         <button data-bs-target="#my-followers" data-bs-toggle="collapse" class="btn btn-secondary btn-sm">Followers</button>
         <button data-bs-target="#following" data-bs-toggle="collapse" class="btn btn-secondary btn-sm">Following</button>
