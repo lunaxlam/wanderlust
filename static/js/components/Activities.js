@@ -41,20 +41,23 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
     } else {
 
         return (
-            <ul>
-                <li className='main-heading'>{location} </li>    
-                <li className='main-heading'>{dates} </li> 
-                <li>Start: {start} </li> 
-                <li>End: {end} </li>       
-                <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
-                <li>Phone: {phone} </li>
-                <li>Notes: {notes} </li>
-                <button onClick={onClick} 
-                    id='delete' 
-                    value={activityID}>Delete
-                </button>
-                <br /><br />
-            </ul>
+            <div className="container saved-activity">
+                <ul>
+                    <li class="activity-heading">{location} </li>    
+                    <li class="activity-heading">{dates} </li> 
+                    <li>Start: {start} </li> 
+                    <li>End: {end} </li>       
+                    <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
+                    <li>Phone: {phone} </li>
+                    <li>Notes: {notes} </li>
+                    <button onClick={onClick} 
+                        id='delete' 
+                        value={activityID}
+                        class="btn btn-danger btn-sm">Delete
+                    </button>
+                    <br /><br />
+                </ul>
+            </div>
         );
 
     } 

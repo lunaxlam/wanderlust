@@ -42,7 +42,7 @@ def process_login():
             session["user"] = f"{user.username}"
             session["user_id"] = user.user_id
 
-            flash(f"Success! Welcome back to Wanderlust, {user.fname}.")
+            flash(f"Success! Welcome back to Wanderlust, {user.fname}!")
             
             return redirect(f"/user/{session['user']}")
         else:
@@ -68,47 +68,52 @@ def process_logout():
 
 ### User Routes  ###
 
-@app.route("/create_user", methods=["POST"])
+@app.route("/create_account", methods=["POST", "GET"])
 def create_user():
     """Register a new user."""
 
-    email = request.form.get("email")
 
-    if (User.get_user_by_email(email)):
-        flash("Your account already exists! Please log-in instead.")
-
-        return redirect("/")
+    if request.method == "GET":
+        return render_template("create_account.html") 
     else: 
-        formData = dict(request.form)
 
-        password = formData["password"]
-        username = formData["username"]
-        fname = formData["fname"]
-        lname = formData["lname"]
-        locale = formData["locale"]
-        territory = formData["territory"]
-        country = formData["country"]
-        about_me = formData["about_me"]
+        email = request.form.get("email")
 
-        # Hash and add salt to the password
-        password_hash = Bcrypt().generate_password_hash(password).decode('utf-8')
+        if (User.get_user_by_email(email)):
+            flash("Your account already exists! Please log-in instead.")
+            return redirect("/")
+        else:
 
-        user = User.create_user(email, 
-                                password_hash,
-                                username,
-                                fname,
-                                lname,
-                                locale,
-                                territory,
-                                country,
-                                about_me)
+            formData = dict(request.form)
 
-        session["user"] = f"{user.username}"
-        session["user_id"] = user.user_id
+            password = formData["password"]
+            username = formData["username"]
+            fname = formData["fname"]
+            lname = formData["lname"]
+            locale = formData["locale"]
+            territory = formData["territory"]
+            country = formData["country"]
+            about_me = formData["about_me"]
 
-        flash("Success! Account created. Welcome to Wanderlust.")
+            # Hash and add salt to the password
+            password_hash = Bcrypt().generate_password_hash(password).decode('utf-8')
 
-        return redirect(f"/user/{session['user']}")
+            user = User.create_user(email, 
+                                    password_hash,
+                                    username,
+                                    fname,
+                                    lname,
+                                    locale,
+                                    territory,
+                                    country,
+                                    about_me)
+
+            session["user"] = f"{user.username}"
+            session["user_id"] = user.user_id
+
+            flash("Success! Account created. Welcome to Wanderlust!")
+
+            return redirect(f"/user/{session['user']}")
 
 
 @app.route("/users")
@@ -157,7 +162,7 @@ def follower_user(username):
 
     for follower in followers:
         if follower.follower_id == user_follower:
-            flash(f"You are already following {username}.")
+            flash(f"You are already following {username}!")
             return redirect(f"/user/{username}")
 
     Follower.create_follower(follower_id=user_follower, user_followed_id=user_followed_id)
@@ -375,6 +380,8 @@ def add_activity(itinerary_id, place_id):
     notes = formData["notes"]
 
     Activity.create_activity(itinerary_id, start, end, notes, place_id)
+
+    flash("Success! New activity added.")
 
     return redirect(f"/itinerary/{itinerary_id}")
 

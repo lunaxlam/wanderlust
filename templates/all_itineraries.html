@@ -11,34 +11,34 @@
         <div id="filter-itineraries"></div>
 
 
-        <form action="/api/itineraries/by_locale">
+        <form action="/api/itineraries/by_locale" class="filter">
             <label for="locale">Locale:</label>
             <select name="locale" id="locale-select">
                 {% for locale in locales %}
                     <option value="{{ locale }}">{{ locale }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" name="locale" id="locale-btn" value="Submit">
+            <input type="submit" name="locale" id="locale-btn" class="btn btn-secondary btn-sm" value="Submit">
         </form>
 
-        <form action="/api/itineraries/by_territory">
+        <form action="/api/itineraries/by_territory" class="filter">
             <label for="territory">Territory:</label>
             <select name="territory" id="territory-select">
                 {% for territory in territories %}
                     <option value="{{ territory }}">{{ territory }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" name="territory" id="territory-btn" value="Submit">
+            <input type="submit" name="territory" id="territory-btn" class="btn btn-secondary btn-sm" value="Submit">
         </form>
 
-        <form action="/api/itineraries/by_country">
+        <form action="/api/itineraries/by_country" class="filter">
             <label for="country">Country:</label>
             <select name="country" id="country-select">
                 {% for country in countries %}
                     <option value="{{ country }}">{{ country }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" name="country" id="country-btn" value="Submit">
+            <input type="submit" name="country" id="country-btn" class="btn btn-secondary btn-sm" value="Submit">
         </form>
 
         <div id="results">

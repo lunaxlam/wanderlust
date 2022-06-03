@@ -23,7 +23,7 @@ addBtn.addEventListener('click', (evt) => {
                     <input type='text' class='form-control' name='overview' id='itinerary-overview' required>
                 </div>
                 <div class='col-12'>
-                    <button type='submit' class='btn btn-primary'>Submit</button>
+                    <button type='submit' class='btn btn-secondary btn-sm'>Submit</button>
                 </div>
             </form>`
 

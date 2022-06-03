@@ -3,19 +3,19 @@
 
 
 {% block body %}
-    <div class="container">
-        <h1>Welcome to Wanderlust!</h1>
-        <h2 class="start">Adventure awaits...</h2>
-        <div class="container">
-            <span id="log-in"></span>
-            <span id="create-user"></span>  
-        </div>
-        <div id="display-form" class="flexbox col center"></div> 
+    <div class="video-container">
+        <video autoplay muted loop poster="static/images/destinations/clouds.png">
+            <source src="/static/images/destinations/cloudysky.mp4" type="video/mp4">
+        </video>
     </div>
 
-{% endblock %}
-
-{% block js %}  
-        <script src="/static/js/components/LogIn.js" type="text/jsx"></script>
-        <script src="/static/js/components/CreateUser.js" type="text/jsx"></script>
+    <div class="container-fluid text-center main">
+        <h1>Welcome to Wanderlust!</h1>
+        <h3>Adventure awaits...</h3>
+    </div>
+    <div class="row no-gutters">
+        <img class="col-4 welcome-col" src="/static/images/destinations/sf.jpg">
+        <img class="col-4 welcome-col" src="/static/images/destinations/passports.jpg">
+        <img class="col-4 welcome-col" src="/static/images/destinations/cave.jpg">
+    </div>
 {% endblock %}

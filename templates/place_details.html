@@ -13,32 +13,42 @@
             {% endif %}
 
             {% if "rating" in results %}
-                <h5>Rating</h5> 
-                <p>{{ results["rating"] }} out of {{ results["user_ratings_total"] }} reviews</p>
+                <div class="sub-main">
+                    <h5>Rating</h5> 
+                    <p>{{ results["rating"] }} out of {{ results["user_ratings_total"] }} reviews</p>
+                </div>
             {% endif %}
 
             {% if "formatted_address" in results %}
-                <h5>Address</h5>
-                <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a>
+                <div class="sub-main">
+                    <h5>Address</h5>
+                    <a href="{{ results['url'] }}" target="_blank">{{ results["formatted_address"] }}</a>
+                </div>
             {% endif %}
             
             {% if "phone" in results %}
-                <h5>Phone</h5>
-                <p> {{ results["phone"] }}</p>
+                <div class="sub-main">
+                    <h5>Phone</h5>
+                    <p> {{ results["phone"] }}</p>
+                </div>
             {% endif %}
 
             {% if "website" in results %}
-                <h5>Website</h5>
-                <a href="{{ results['website'] }}" target="_blank">{{ results["name"] }}</a>
+                <div class="sub-main">
+                    <h5>Website</h5>
+                    <a href="{{ results['website'] }}" target="_blank">{{ results["name"] }}</a>
+                </div>
             {% endif %}
 
             {% if "hours" in results %}
-                <h5>Business Hours</h5> 
-                <ul>
-                {% for hour in hours %}
-                    <li>{{ hour }}</li>
-                {% endfor %}
-                </ul>
+                <div class="sub-main">
+                    <h5>Business Hours</h5> 
+                    <ul>
+                    {% for hour in hours %}
+                        <li>{{ hour }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
 
             {% if results["opening_hours"]["weekday_text"] %}
@@ -50,40 +60,41 @@
                 </ul>
             {% endif %}
 
-            <div id="place-map" class="all-maps"></div>
+            <div class="sub-main">
+                <h5>Map</h5>
+                <div id="place-map" class="all-maps"></div>
+            </div>
 
             {% if "reviews" in results %}
                 <h3>Recent Reviews:</h3>
                 {% for review in results["reviews"] %}
                     <section class="review-card text-center">
                         <a href='{{ review["author_url"] }}' target="_blank"><img src='{{ review["profile_photo_url"] }}' class="profile-pic"></a>
-                        <a href='{{ review["author_url"] }}' target="_blank"><p class="main-heading">{{ review["author_name"] }}</p></a>
+                        <a href='{{ review["author_url"] }}' target="_blank">{{ review["author_name"] }}</a>
                         <p>Rating: {{ review["rating"] }}/5</p>
-                        <br />
                         <p>{{ review["text"] }}</p>
                     </section>
                 {% endfor %}
             {% endif %}
         </div>
 
-        <div class="col sticky-top sticky-margin">
-            <h2 id="form-large" class="center-text">Ready to add <span class="main-heading">{{ results["name"] }}</span> to Itinerary?</h2>
-                
-            <form class="row g-3" action="/itinerary/{{ itinerary_id }}/{{ place_id }}/add_activity">
+        <div class="col sticky-top sticky-margin"> 
+            <form id="place-form" class="row g-3" action="/itinerary/{{ itinerary_id }}/{{ place_id }}/add_activity">
+                <h4 class="text-center main-heading">Ready to add <a href="{{ results['url'] }}" target="_blank">{{ results["name"] }}</a> to Itinerary?</h4><br>            
                 <div class="col-md-6">
-                    <label for="activity-start" class="form-label">Start</label>
+                    <label for="activity-start" class="form-label lb-lg">Start</label>
                     <input type="datetime-local" class="form-control" name="start" id="activity-start">
                 </div>
                 <div class="col-md-6">
-                    <label for="activity-end" class="form-label">End</label>
+                    <label for="activity-end" class="form-label lb-lg">End</label>
                     <input type="datetime-local" class="form-control" name="end" id="activity-end">
                 </div>
                 <div class="col-md-12">
-                    <label for="activity-notes" class="form-label">Activity Notes</label>
-                    <textarea name="notes" id="activity-notes" class="form-control"></textarea>
+                    <label for="activity-notes" class="form-label lb-lg">Activity Notes</label>
+                    <textarea name="notes" id="activity-notes" class="form-control lb-lg"></textarea>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-secondary">Submit</button>
                 </div>
             </form>
 

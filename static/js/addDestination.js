@@ -13,7 +13,8 @@ addBtn.addEventListener('click', (evt) => {
 
         document.querySelector('#add-destination-form').insertAdjacentHTML(
             'beforeend',
-            `<form class='row g-3' action='/itinerary/${itinerary_id}/add_destination' method='POST'>
+            `<h2>Add Destination to Itinerary</h2>
+            <form class='row g-3' action='/itinerary/${itinerary_id}/add_destination' method='POST'>
                 <div class='col-md-12'>
                     <label for='destination-name' class='form-label'>Locale</label>
                     <input type='text' class='form-control' name='locale' id='destination-locale' required>
@@ -24,15 +25,16 @@ addBtn.addEventListener('click', (evt) => {
                 </div>
                 <div class='col-md-12'>
                     <label for='destination-country' class='form-label'>Country</label>
-                    <input type='text' class='form-control' name='country' id='destination-country' pattern='(\\b\\w{3}\\b' required>
-                    <p class='hint'>Country code must be entered as three-letter 
-                        <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3' 
-                            target='_blank'>ISO-3166</a> code standard. Need a 
-                        <a href='/countries' target='_blank'>hint</a>?
-                    </p>
+                    <input type='text' class='form-control' name='country' id='destination-country' required>
+                    <small id="countryCodeHelpBlock" class="form-text text-muted">
+                    Country code must be entered as three-letter 
+                    <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3' 
+                        target='_blank'>ISO-3166</a> code standard. Need a 
+                    <a href='/countries' target='_blank'>hint</a>?
+                  </small>
                 </div>
                 <div class='col-12'>
-                    <button type='submit' class='btn btn-primary'>Submit</button>
+                    <button type='submit' class="btn btn-secondary btn-sm">Submit</button>
                 </div>
             </form>`
         )
