@@ -13,7 +13,7 @@
         </div>
 
         {% if session["user_id"] != itinerary.user_id %}
-            <h6 class="text-center">Created by <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h6>            
+            <h6 class="text-center">@<a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h6>            
         {% else %}
             <div class="text-center">
                 <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}" class="btn btn-secondary btn-sm">Add Destination</button>
