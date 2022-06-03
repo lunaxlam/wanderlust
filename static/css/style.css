@@ -190,6 +190,11 @@ video {
 /* ADDITIONAL STYLES
 /*******************************************/
 
+/* Home Styling */
+#home-header {
+	padding-top: 50px;
+}
+
 /* Activities Styling */
 #all-activities {
 	padding-top: 10px;
