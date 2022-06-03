@@ -61,8 +61,6 @@ def process_logout():
 
     session.pop("user")
 
-    flash("Goodbye.")
-
     return redirect("/")
 
 
@@ -248,7 +246,7 @@ def show_itinerary(itinerary_id):
 
         Activity.clone_activities(original_itinerary_id=itinerary_id, clone_itinerary_id=clone_itinerary.itinerary_id)
 
-        flash(f"Success! {itinerary_name} created.")
+        flash(f"Success! {itinerary_name} was created.")
 
         return redirect(f"/itinerary/{clone_itinerary.itinerary_id}")
 

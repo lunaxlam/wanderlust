@@ -13,7 +13,7 @@ addBtn.addEventListener('click', (evt) => {
 
         document.querySelector('#add-destination-form').insertAdjacentHTML(
             'beforeend',
-            `<h2>Add Destination to Itinerary</h2>
+            `<h3>Add Destination to Itinerary</h3>
             <form class='row g-3' action='/itinerary/${itinerary_id}/add_destination' method='POST'>
                 <div class='col-md-12'>
                     <label for='destination-name' class='form-label'>Locale</label>

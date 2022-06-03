@@ -34,10 +34,10 @@ function initMap() {
                     const place_url = activities[activity]['results']['url']
 
                     const contentString = 
-                    `<h1 id="main-heading" class="infoWindow">${place_name}</h1>` +
-                    `<div id="bodyContent" class="infoWindow">` +
-                    `<p>${place_address}</p>` +
-                    `<p><a href="${place_url}" target="_blank">View on Google Maps</a></p>` +
+                    `<h1 class="infoWindow main-heading text-center">${place_name}</h1>` +
+                    `<div class="infoWindow">` +
+                    `<p class="text-center">${place_address}</p>` +
+                    `<p class="text-center"><a href="${place_url}" target="_blank">View on Google Maps</a></p>` +
                     `</div>`;
 
                     const placeMarker = new google.maps.Marker({

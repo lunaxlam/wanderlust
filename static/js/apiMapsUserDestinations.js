@@ -48,7 +48,7 @@ function initMap() {
                 formatted_address = destinations[destination]["results"][0]["formatted_address"];
 
                 const contentString = 
-                `<h1 class="infoWindow firstHeading">${formatted_address}</h1>`;
+                `<h1 class="infoWindow main-heading">${formatted_address}</h1>`;
 
                 const placeMarker = new google.maps.Marker({
                     position: {

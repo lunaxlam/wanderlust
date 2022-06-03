@@ -24,8 +24,8 @@ function initMap() {
             });
 
             const contentString = 
-            `<h1 id="main-heading" class="infoWindow center-text">${place_name}</h1>` +
-            `<div id="bodyContent" class="infoWindow center-text">` +
+            `<h1 id="main-heading text-center" class="infoWindow center-text">${place_name}</h1>` +
+            `<div class="infoWindow text-center">` +
             `<p>${place_address}</p>` +
             `<p><a href="${place_url}" target="_blank">View on Google Maps</a></p>` +
             `</div>`;

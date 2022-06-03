@@ -66,15 +66,17 @@
             </div>
 
             {% if "reviews" in results %}
-                <h3>Recent Reviews:</h3>
-                {% for review in results["reviews"] %}
-                    <section class="review-card text-center">
-                        <a href='{{ review["author_url"] }}' target="_blank"><img src='{{ review["profile_photo_url"] }}' class="profile-pic"></a>
-                        <a href='{{ review["author_url"] }}' target="_blank">{{ review["author_name"] }}</a>
-                        <p>Rating: {{ review["rating"] }}/5</p>
-                        <p>{{ review["text"] }}</p>
-                    </section>
-                {% endfor %}
+                <div class="sub-main">
+                    <h4>Recent Reviews:</h4>
+                    {% for review in results["reviews"] %}
+                        <section class="review-card text-center">
+                            <a href='{{ review["author_url"] }}' target="_blank"><img src='{{ review["profile_photo_url"] }}' class="profile-pic"></a>
+                            <a href='{{ review["author_url"] }}' target="_blank">{{ review["author_name"] }}</a>
+                            <p>Rating: {{ review["rating"] }}/5</p>
+                            <p>{{ review["text"] }}</p>
+                        </section>
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
 

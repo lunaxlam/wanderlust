@@ -1,14 +1,137 @@
-/*	Google Fonts Import	*/
+/******************************************
+/* FONT STYLES
+/*******************************************/
+
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap');
 
-/* Flash Message Styling */
+/******************************************
+/* BASE STYLES
+/*******************************************/
+
+body {
+    font-family: 'Lato', sans-serif;
+	background-color: whitesmoke;
+	color: black;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+/******************************************
+/* BUTTON STYLES
+/*******************************************/
+
+button a, button a:hover {
+	color: white;
+}
+
+/******************************************
+/* FORM STYLES
+/*******************************************/
+
+#place-form {
+	padding: 20px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: #d3d3d3;
+
+}
+
+.filter {
+	padding: 5px;
+}
+
+.lb-lg {
+	font-size: 20px;
+}
+
+.sticky-margin {
+	padding-top: 20%;
+}
+
+.search-form {
+	margin-top: 2rem;
+}
+
+textarea {
+	height: 100px;
+	width: 99%;
+	border: 1px solid darkgray;
+	border-radius: 5px;
+}
+
+/******************************************
+/* FLASH MESSAGING STYLES
+/*******************************************/
+
 .flash-msg {
     background-color: lightgoldenrodyellow;
     color: black; 
     padding: .5rem;
 }
 
-/*	Maps Styling */
+/******************************************
+/* HEADING STYLES
+/*******************************************/
+
+.main-heading, h1{
+	font-weight: bold;
+}
+
+/******************************************
+/* IMAGE STYLES
+/*******************************************/
+
+img {
+	display: block;
+	height: 200px;
+	max-width: 100%;
+	margin: auto;
+}
+
+/******************************************
+/* LAYOUT STYLES
+/*******************************************/
+
+footer {
+	padding: 40px;
+}
+
+.main {
+	padding: 20px;
+}
+
+.sub-main {
+	margin: 20px 0 20px 0;
+}
+
+.welcome-col {
+	height: 600px;
+	margin: 0;
+	padding: 0;
+}
+
+/******************************************
+/* LINK STYLES
+/*******************************************/
+
+a {
+	text-decoration: none;
+	color: #0096c7;
+}
+
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+/******************************************
+/* MAPS STYLES
+/*******************************************/
+
 .all-maps {
 	margin: auto;
 	margin-top: 10px;
@@ -32,7 +155,9 @@
 	color: #000000;
 }
 
-/* Navbar Styling */
+/******************************************
+/* NAV BAR STYLES
+/*******************************************/
 
 nav {
 	margin-bottom: 40px;
@@ -43,47 +168,35 @@ nav a, nav a:hover {
 	color: #023e8a;
 }
 
-/* Image Styling */
+/******************************************
+/* VIDEO STYLES
+/*******************************************/
 
-img {
-	display: block;
-	height: 200px;
-	max-width: 100%;
-	margin: auto;
+video {
+	width: 100vw;
+	height: 100vh;
+	object-fit: cover;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -2;
 }
 
-.welcome-col {
-	height: 600px;
-	margin: 0;
-	padding: 0;
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
+
+/* Activities Styling */
+.saved-activity {
+	background-color: #d3d3d3;
+	padding: 20px 20px 10px 20px;
+	margin-bottom: 10px;
+	border-radius: 10px;
 }
 
-/* Body Styling */
-body {
-    font-family: 'Lato', sans-serif;
-	background-color: whitesmoke;
-	color: black;
-}
-
-.main {
-	padding: 20px;
-}
-
-.sub-main {
-	margin: 20px 0 20px 0;
-}
-
-/* Footer Styling */
-
-footer {
-	padding: 40px;
-}
-
-/* Text Styling */
-.main-heading, h1{
+.activity-heading, h5 {
 	font-weight: bold;
 }
-
 
 /* Card Styling */
 .place-card, .review-card {
@@ -108,7 +221,7 @@ footer {
 	height: 100px;
 }
 
-/* All Users Styling */
+/* Users Styling */
 .circle {
 	height: 200px;
 	width: 200px;
@@ -120,82 +233,4 @@ footer {
 .user {
 	display: block;
 	margin: 50px;
-}
-
-/* ul Styling */
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-/* Form Styling */
-#place-form {
-	padding: 20px;
-	border: 1px solid black;
-	border-radius: 5px;
-	background-color: #d3d3d3;
-
-}
-
-.lb-lg {
-	font-size: 20px;
-}
-
-.sticky-margin {
-	padding-top: 20%;
-}
-
-.search-form {
-	margin-top: 2rem;
-}
-
-.filter {
-	padding: 5px;
-}
-
-textarea {
-	height: 100px;
-	width: 99%;
-	border: 1px solid darkgray;
-	border-radius: 5px;
-}
-
-
-/* Link Styling */
-a {
-	text-decoration: none;
-	color: #0096c7;
-}
-
-a:hover {
-	text-decoration: none;
-	color: black;
-}
-
-button a, button a:hover {
-	color: white;
-}
-
-.saved-activity {
-	background-color: #d3d3d3;
-	padding: 20px 20px 10px 20px;
-	margin-bottom: 10px;
-	border-radius: 10px;
-}
-
-.activity-heading, h5 {
-	font-weight: bold;
-}
-
-/* Homepage Video Styling */
-
-video {
-	width: 100vw;
-	height: 100vh;
-	object-fit: cover;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: -2;
 }

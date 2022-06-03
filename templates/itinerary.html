@@ -6,14 +6,14 @@
     <div class="container">
         <div class="text-center">
             <h1>{{ itinerary.itinerary_name }}</h1>
-            <h3>{{ itinerary.overview }}</h3>
+            <h4>{{ itinerary.overview }}</h4>
                 {% for destination in destinations %}
-                    <ul><h3>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</h3></ul>
+                    <h5>{{ destination.locale }}, {{ destination.territory }}, {{ destination.country }}</h5>
                 {% endfor %}
         </div>
 
         {% if session["user_id"] != itinerary.user_id %}
-            <h4 class="text-center">Created by <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h4>            
+            <h6 class="text-center">Created by <a href="/user/{{ itinerary.user.username }}">{{itinerary.user.username}}</a></h6>            
         {% else %}
             <div class="text-center">
                 <button id="add-destination" name="{{ itinerary.itinerary_id }}" }}" class="btn btn-secondary btn-sm">Add Destination</button>
@@ -29,9 +29,9 @@
         {% else %}
 
             <div id="search" class="search-form collapse">
-                <h2>Search Location to Add Activity</h2>
+                <h3>Search Location to Add Activity</h3>
                 <div>
-                    <h3>By Name or Address</h3>
+                    <h5>By Name or Address</h5>
                     <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id}}/search/{{ itinerary.itinerary_id }}/details" method="POST">
                         <div class="col-md-6">
                             <input id="autocomplete" type="text" class="form-control" size="50" placeholder="Ricobene's" />
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="search-form">
-                    <h3>By Point of Interest</h3>
+                    <h5>By Point of Interest</h5>
                     <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id }}/search">
                         <div class="col-md-6">
                             <label for="search-keyword" class="form-label">Description</label>
