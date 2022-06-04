@@ -77,10 +77,9 @@
 {% endblock %}
 
 {% block js %}
-    <!-- React -->
-    <script src="/static/js/components/Activities.js" type="text/jsx"></script>
-
     {% if session["user_id"] == itinerary.user_id %}
+        <!-- React -->
+        <script src="/static/js/components/sessionActivities.js" type="text/jsx"></script>
         <script src="/static/js/addDestination.js"></script>
          <!-- Maps API -->
         <script src="/static/js/apiMapsAutocomplete.js"></script>
@@ -88,6 +87,8 @@
             src="https://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initMap">
         </script>
     {% else %}
+        <!-- React -->
+        <script src="/static/js/components/nonSessionActivities.js" type="text/jsx"></script>
         <script src="/static/js/cloneItinerary.js"></script>
          <!-- Maps API -->
         <script src="/static/js/apiMapsSavedPlace.js"></script>
