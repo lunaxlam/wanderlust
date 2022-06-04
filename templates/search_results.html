@@ -21,11 +21,11 @@
                             alt="default"
                             class="place-img">
                     {% endif %}
-                    <div class="flex-shrink-1">
+                    <div>
                         <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
                                     target="blank">{{ result["name"] }}</a>
                         {% if "formatted_address" in result %}
-                            <p>{{ result["formatted_address"] }}</p>
+                            <p class="place-address">{{ result["formatted_address"] }}</p>
                         {% endif %}
                     </div>
                 </div>

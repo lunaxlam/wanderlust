@@ -111,11 +111,12 @@ textarea {
 	max-height: 66%;
 	max-width: 100%;
 	margin: auto;
-	padding: 15px 0 10px 0;
+	padding-bottom: 5px;
 }
 
 .profile-pic {
 	height: 100px;
+	padding-top: 5px;
 }
 
 /******************************************
@@ -239,6 +240,11 @@ video {
 }
 
 /* Card Styling */
+
+.place-address {
+	font-size: 18px;
+}
+
 .place-card, .review-card {
 	background-color: #faf3dd;
 	border: 1px solid black;
@@ -267,6 +273,5 @@ video {
 }
 
 .user {
-	display: block;
-	margin: 50px;
+	margin: 20px;
 }
