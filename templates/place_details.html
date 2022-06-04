@@ -51,13 +51,15 @@
                 </div>
             {% endif %}
 
-            {% if results["opening_hours"]["weekday_text"] %}
-                <h5>Operating Hours</h5>
-                <ul>
-                    {% for text in results["opening_hours"]["weekday_text"] %}
-                        <li>{{ text }}<li>
-                    {% endfor %}
-                </ul>
+            {% if "opening_hours" in results %}
+                <div class="sub-main">
+                    <h5>Operating Hours</h5>
+                    <ul>
+                        {% for text in results["opening_hours"]["weekday_text"] %}
+                            <li>{{ text }}<li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
 
             <div class="sub-main">
@@ -73,11 +75,17 @@
                             <a href='{{ review["author_url"] }}' target="_blank"><img src='{{ review["profile_photo_url"] }}' class="profile-pic"></a>
                             <a href='{{ review["author_url"] }}' target="_blank">{{ review["author_name"] }}</a>
                             <p>Rating: {{ review["rating"] }}/5</p>
-                            <p>{{ review["text"] }}</p>
+                            <p class="overflow-scroll">{{ review["text"] }}</p>
                         </section>
                     {% endfor %}
                 </div>
+            {% else %}
+                <div class="sub-main">
+                    <h5>Recent Reviews:</h5>
+                    <p>Currently no reviews for {{ results["name"] }}!</p>
+                </div>
             {% endif %}
+
         </div>
 
         <div class="col sticky-top sticky-margin"> 

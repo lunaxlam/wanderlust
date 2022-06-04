@@ -426,32 +426,28 @@ def add_activity(itinerary_id, place_id):
     return redirect(f"/itinerary/{itinerary_id}")
 
 
-@app.route("/itinerary/<itinerary_id>/edit_activity/<activity_id>/<place_id>", methods=["POST", "GET"])
-def edit_activity(itinerary_id, activity_id, place_id):
+@app.route("/itinerary/<itinerary_id>/edit_activity/<activity_id>", methods=["POST"])
+def edit_activity(itinerary_id, activity_id):
     """Edit the logged-in user"""
 
     activity = Activity.get_activity_by_activity_id(activity_id)
 
-    if request.method == "GET":
-        return render_template("edit_activity.html", itinerary_id=itinerary_id, activity_id=activity_id, place_id=place_id) 
-    else:
+    itinerary_id = itinerary_id
 
-        itinerary_id = itinerary_id
+    formData = dict(request.form)
+    print(formData)
 
-        formData = dict(request.form)
-        print(formData)
+    start = formData["start"]
+    end = formData["end"]
+    notes = formData["notes"]
 
-        start = formData["start"]
-        end = formData["end"]
-        notes = formData["notes"]
+    activity.edit_activity(start=start, 
+                        end=end, 
+                        notes=notes)
+    
+    flash("Activity updated!")
 
-        activity.edit_activity(start=start, 
-                            end=end, 
-                            notes=notes)
-        
-        flash("Activity updated!")
-
-        return redirect(f"/itinerary/{itinerary_id}")
+    return redirect(f"/itinerary/{itinerary_id}")
 
 
 ### API Routes  ###
@@ -561,7 +557,7 @@ def saved_place_data():
 def delete_activity():
     """Delete activity from database"""
 
-    activity_id = request.args.get("activity_id")
+    activity_id = request.args.get("activityID")
 
     Activity.delete_activity(activity_id)
 

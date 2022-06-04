@@ -8,35 +8,38 @@
 
         <div class="row row-cols-auto d-flex justify-content-center">
             {% for result in results %}
-                <div class="col text-center place-card">
+                <div class="col place-card">
                     {% if "photos" in result %}
                         <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
                                     target="blank">
                             <img src="{{ photo_url }}{{ result['photos'][0]['photo_reference'] }}" 
-                                alt="{{ result['name'] }} image">
+                                alt="{{ result['name'] }} image"
+                                class="place-img">
                         </a>
                     {% else %}
                         <img src="https://images.pexels.com/photos/776538/pexels-photo-776538.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                            alt="default">
+                            alt="default"
+                            class="place-img">
                     {% endif %}
-                    <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
-                                target="blank"
-                                class="main-heading">{{ result["name"] }}</a>
-                    {% if "formatted_address" in result %}
-                        <p>{{ result["formatted_address"] }}</p>
-                    {% endif %}
+                    <div class="flex-shrink-1">
+                        <a href="/itinerary/{{ itinerary_id }}/search/{{ result['place_id'] }}/details" 
+                                    target="blank">{{ result["name"] }}</a>
+                        {% if "formatted_address" in result %}
+                            <p>{{ result["formatted_address"] }}</p>
+                        {% endif %}
                     </div>
+                </div>
             {% endfor %}
         </div>
 
-        <div class="container d-flex justify-content-center">
+        <div id="view-more-btn" class="container d-flex justify-content-center">
             {% if  "next_page_token" in data %}
                 <form method="POST">
                     <button type="submit" 
                         formaction="/itinerary/{{ itinerary_id }}/search" 
                         name="pagetoken" 
                         value="{{ data['next_page_token'] }}"
-                        class="btn btn-secondary">View More Results
+                        class="btn btn-primary btn-lg">View More Results
                     </button>
                 </form>
             {% else %}

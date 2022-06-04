@@ -7,7 +7,7 @@ function CreateItinerary() {
         if (document.querySelector('#mount-itinerary').innerHTML === '') {
 
             document.querySelector('#mount-itinerary').innerHTML =
-            `<form class='row g-3 main' action='/create_itinerary' method='POST'>
+            `<form class='row g-3 sub-main' action='/create_itinerary' method='POST'>
                 <div class='col-md-12'>
                     <label for='itinerary-name' class='form-label'>Name</label>
                     <input type='text' class='form-control' name='name' id='itinerary-name' required>
@@ -34,7 +34,7 @@ function CreateItinerary() {
                     <input type='text' class='form-control' name='overview' id='itinerary-overview' required>
                 </div>
                 <div class='col-12'>
-                    <button type='submit' class='btn btn-secondary btn-sm'>Submit</button>
+                    <button type='submit' class='btn btn-primary btn-sm'>Submit</button>
                 </div>
             </form>`
 

@@ -1,27 +1,6 @@
 'use strict';
 
-function Activity( { dates, start, end, location, url, formattedAddress, phone, notes, activityID, itineraryID, placeID}) {
-
-    const edit_url = `/itinerary/${itineraryID}/edit_activity/${activityID}/${placeID}`
-
-
-    const onClick = (evt) => {
-        const clicked_button = evt.target;
-
-        const activity_id = clicked_button.getAttribute("value");
-
-        const queryString = new URLSearchParams({activity_id}).toString();
-
-        fetch(`/api/delete_activity?${queryString}`)
-            .then((response) => response.json())
-            .then((data) => {
-                alert(data.status);
-                document.location.reload();
-            })
-        .catch(() => {
-            alert('Something went wrong! Unable to delete activity.')
-        })
-    }
+function Activity( { dates, start, end, location, url, formattedAddress, phone, notes }) {
 
     if (notes === '') {
 

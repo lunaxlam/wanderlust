@@ -38,7 +38,7 @@
                 <div id="saved-activities"></div>
             </div>
             {% if session["user_id"] == itinerary.user_id %}
-                <div id="activity-search" class="col">
+                <div id="activity-search" class="col search-location">
                     <h2>Add New Activity</h3>
                     <div class="sub-main">
                         <h5>Search Activity Location by Name or Address</h5>
@@ -48,12 +48,12 @@
                                 <section id="autocomplete-mount"></section>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
+                                <button type="submit" class="btn btn-secondary btn-sm">Search</button>
                             </div>
                         </form>
                     </div>
 
-                    <div class="search-form">
+                    <div class="search-poi">
                         <h5>Search Activity Location by Point of Interest</h5>
                         <form class="row g-3" action="/itinerary/{{ itinerary.itinerary_id }}/search">
                             <div class="col-md-12">
@@ -65,7 +65,7 @@
                                 <input type="text" class="form-control" name="location" id="search-location" placeholder="Chicago" required>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
+                                <button type="submit" class="btn btn-secondary btn-sm">Search</button>
                             </div>
                         </form>
                     </div>

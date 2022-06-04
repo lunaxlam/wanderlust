@@ -1,16 +1,14 @@
 'use strict';
 
-function Activity( { dates, start, end, location, url, formattedAddress, phone, notes, activityID, itineraryID, placeID}) {
+function Activity( { dates, start, end, location, url, formattedAddress, phone, notes, activityID, itineraryID }) {
 
-    const edit_url = `/itinerary/${itineraryID}/edit_activity/${activityID}/${placeID}`
+    const deleteActivity = (evt) => {
 
+        const deleteButton = evt.target;
 
-    const onClick = (evt) => {
-        const clicked_button = evt.target;
+        const activityID = deleteButton.getAttribute('value');
 
-        const activity_id = clicked_button.getAttribute("value");
-
-        const queryString = new URLSearchParams({activity_id}).toString();
+        const queryString = new URLSearchParams({activityID}).toString();
 
         fetch(`/api/delete_activity?${queryString}`)
             .then((response) => response.json())
@@ -23,11 +21,40 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
         })
     }
 
+    const editActivity = (evt) => {
+
+        const editButton = evt.target;
+
+        const activityID = editButton.getAttribute('value');
+
+        document.querySelector(`#edit-activity-form${activityID}`).innerHTML =
+        `<div class='edit-activity-container'>
+            <form class="row g-3 sub-main" action="/itinerary/${itineraryID}/edit_activity/${activityID}" method="POST">
+                <h5 class="">Edit Activity at ${location}</h5><br>            
+                <div class="col-md-6">
+                    <label for="activity-start" class="form-label lb-lg">Start</label>
+                    <input type="datetime-local" class="form-control" name="start" id="activity-start">
+                </div>
+                <div class="col-md-6">
+                    <label for="activity-end" class="form-label lb-lg">End</label>
+                    <input type="datetime-local" class="form-control" name="end" id="activity-end">
+                </div>
+                <div class="col-md-12">
+                    <label for="activity-notes" class="form-label lb-lg">Activity Notes</label>
+                    <textarea name="notes" id="activity-notes" class="form-control lb-lg"></textarea>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-outline-danger">Update</button>
+                </div>
+            </form>
+        </div>`
+    }
+
     if (notes === '') {
 
         return (
             <ul>
-                <button onClick={onClick} 
+                <button onClick={deleteActivity} 
                     id='delete' 
                     value={activityID}
                     className='btn btn-danger btn-sm fa fa-close'>
@@ -39,29 +66,45 @@ function Activity( { dates, start, end, location, url, formattedAddress, phone, 
                 <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
                 <li>Phone: {phone} </li>
                 <br />
-                <a href={edit_url}><button class="btn btn-outline-danger btn-sm">Edit Activity</button></a>
+                <button 
+                    onClick={editActivity}
+                    value= {activityID}
+                    className='btn btn-outline-danger btn-sm'
+                    data-bs-target={`#edit-activity-form${activityID}`}
+                    data-bs-toggle='collapse'>
+                        Edit Activity
+                </button>
+                <div id={`edit-activity-form${activityID}`}></div>
             </ul>
         );
 
     } else {
 
         return (
-            <div className="container saved-activity">
+            <div className='container saved-activity'>
                 <ul>
-                    <button onClick={onClick} 
+                    <button onClick={deleteActivity} 
                         id='delete' 
                         value={activityID}
                         className='btn btn-danger btn-sm fa fa-close'>
                     </button>
-                    <li className="main-heading">{location} </li>    
-                    <li className="main-heading">{dates} </li> 
+                    <li className='main-heading'>{location} </li>    
+                    <li className='main-heading'>{dates} </li> 
                     <li>Start: {start} </li> 
                     <li>End: {end} </li>       
                     <li>Address: <a href={url} target='_blank' rel='noopener noreferrer'>{formattedAddress}</a></li>
                     <li>Phone: {phone} </li>
                     <li>Notes: {notes} </li>
                     <br />
-                    <a href={edit_url}><button className="btn btn-outline-danger btn-sm">Edit Activity</button></a>
+                    <button 
+                        onClick={editActivity}
+                        value= {activityID}
+                        className='btn btn-outline-danger btn-sm'
+                        data-bs-target={`#edit-activity-form${activityID}`}
+                        data-bs-toggle='collapse'>
+                            Edit Activity
+                    </button>
+                    <div id={`edit-activity-form${activityID}`}></div>
                 </ul>
             </div>
         );
@@ -111,7 +154,6 @@ function ActivitiesContainer() {
                 notes={activities[i]['notes']}
                 activityID={activities[i]['activity_id']}
                 itineraryID={activities[i]['itinerary_id']}
-                placeID={activities[i]['place_id']}
             />
         )
     }
