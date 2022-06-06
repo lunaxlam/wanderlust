@@ -22,26 +22,65 @@ User passwords are hashed and salted with bcrypt.
 ## **Tech Stack**
 Backend: Flask, Python, PostgreSQL, SQLAlchemy ORM<br />
 Frontend: CSS 3, HTML5, JavaScript, Jinja, ReactJS<br/> 
-APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/), [Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview), [Places API](https://developers.google.com/maps/documentation/places/web-service)<br />, [Random User Generator](https://randomuser.me/)<br />
+APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/), [Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview), [Places API](https://developers.google.com/maps/documentation/places/web-service); [Random User Generator](https://randomuser.me/)<br />
 Libraries: [Faker](https://faker.readthedocs.io/en/master/), [Flask-Bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/)
 
 ## **Features**
-### Login and Registration
-<p align="center">
-  <img 
-    width="800"
-    src="/static/images/readmemd/home.gif"
-  >
-</p>
+### Login and New Account Registration
+Returning users are able to login by authenticating their email and password in the login form embedded in the navigation bar.
 
-### [Section]
-Detail <br />
+<img src="/static/images/sitenav/home.gif">
 
-### [Section]
-Detail <br /> 
+New users are able to register an account by clicking on the "Create Account" link.
 
-### [Section]
-Detail <br /> 
+<img src="/static/images/sitenav/createaccount.png">
+
+### Edit Account, View Follower/Following Activity, and View User Profile
+After logging in, users are routed to their profile where they can:
+- Edit their account information
+- View their "Followers" and "Following" activity
+
+<img src="/static/images/sitenav/profile.png">
+
+Users are also able to view their personalized travel map with pinned markers of previously-visited destinations, as well as their past  past travel itineraries 
+
+<img src="/static/images/sitenav/usermapitin.png">
+
+### Create New Itinerary
+Users can create a new travel itinerary.
+<img src="/static/images/sitenav/createitinerary.png">
+
+### View, Edit, and Delete a Saved Itinerary
+Users can view, edit, and delete saved itineraries.
+<img src="/static/images/sitenav/itinerary.png">
+
+### View, Edit, and Delete Saved Activities
+Users can view, edit, and delete saved activities of an itinerary.
+<img src="/static/images/sitenav/editactivity.png">
+
+### Search New Activity Location
+Users are able to search for a new activity location by using the Google Maps JavaScript autocomplete search by name or address.<br />
+Alternatively, users cans earch for a new activity location by Point of Interest, which makes a regular HTTP GET request to the Google Places Text Search API endpoint. 
+<img src="/static/images/sitenav/addactivity.png">
+
+### View Location Search Results
+Users are able to view up to 20 location search results per page and have the ability to click on the "View More Results" button to return additional results. 
+<img src="/static/images/sitenav/searchresults.png">
+<img src="/static/images/sitenav/viewmore.png">
+
+### View Place Metadata and Save Location to a New Activity
+<img src="/static/images/sitenav/place.png">
+<img src="/static/images/sitenav/place reviews.png">
+
+### Filter and View Other User Itineraries
+<img src="/static/images/sitenav/filter.png">
+
+### View Other Users
+<img src="/static/images/sitenav/community.png">
+
+### View Another User's Profile and Follow Users
+<img src="/static/images/sitenav/anotheruser.png">
+
 
 ## **Installation**
 To run *Wanderlust*: <br />
