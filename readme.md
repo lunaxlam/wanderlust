@@ -3,7 +3,7 @@ A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)
 
 ## **Table of Contents**
 * [Background](https://github.com/lunaxlam/wanderlust#background)
-* [Wanderlust](https://github.com/lunaxlam/wanderlust#wanderlust)
+* [Wanderlust](https://github.com/lunaxlam/wanderlust#wanderlust-1)
 * [Tech Stack](https://github.com/lunaxlam/wanderlust#tech-stack) 
 * [Features](https://github.com/lunaxlam/wanderlust#features)
 * [Installation](https://github.com/lunaxlam/wanderlust#installation)
