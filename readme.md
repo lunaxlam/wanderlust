@@ -58,12 +58,12 @@ Users are able to view and delete a saved itinerary, as well as add additional d
 <img src="/static/images/sitenav/itinerary.png">
 
 ### View, Edit, and Delete Saved Activities
-Users are able to view, edit, and delete saved activities of a saved activity. Place-related metadata for an activity location are rendered in real-time by an API call to the Google Places API. 
+Users are able to view, edit, and delete saved itinerary activities. Place-related metadata for each saved activity are rendered in real-time by an API call to the Google Places API. 
 
 <img src="/static/images/sitenav/editactivity.png">
 
 ### Search New Activity Location
-Users are able to search for a new activity location by using the Google Maps JavaScript autocomplete search by name or address. Alternatively, users are able to search for a new activity location by Point of Interest, which makes a regular HTTP GET request to the Google Places Text Search API endpoint. 
+Users are able to search for a new activity location by conducting an autocomplete location search by name or address. Alternatively, users are able to search for a new activity location by point of interest, which makes a regular HTTP GET request to the Google Places Text Search API endpoint. 
 
 <img src="/static/images/sitenav/addactivity.png">
 
