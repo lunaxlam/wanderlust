@@ -69,13 +69,9 @@ Users are also able to click on the "View More Results" button to return additio
 <img src="/static/images/sitenav/viewmore.png">
 
 ### View Place Metadata and Save Location to a New Activity
-Users are able to view a specific location and view place-related metadata such as ratings, website, address, phone number, and more. 
+Users are able to view a specific location and view place-related metadata such as ratings, website, address, phone number, and more. Users are then able to save the location to a new activity card.
 
-<br/><br/>
-Users are able to save the location to a new activity card.
-
-<img src="/static/images/sitenav/place.png"><br />
-<img src="/static/images/sitenav/placereviews.png">
+<img src="/static/images/sitenav/place.png">
 
 ### View and Filter Other User Itineraries
 Users are able to view itineraries of other users and filter itineraries by locale (city), territory (state), and country.
