@@ -47,38 +47,46 @@ Users are also able to view their personalized travel map with pinned markers of
 <img src="/static/images/sitenav/usermapitin.png">
 
 ### Create New Itinerary
-Users can create a new travel itinerary.
+Users are able to create a new travel itinerary.
 <img src="/static/images/sitenav/createitinerary.png">
 
 ### View, Edit, and Delete a Saved Itinerary
-Users can view, edit, and delete saved itineraries.
+Users are able to view, edit, and delete saved itineraries.
 <img src="/static/images/sitenav/itinerary.png">
 
 ### View, Edit, and Delete Saved Activities
-Users can view, edit, and delete saved activities of an itinerary.
+Users are able to view, edit, and delete saved activities of an itinerary.
 <img src="/static/images/sitenav/editactivity.png">
 
 ### Search New Activity Location
-Users are able to search for a new activity location by using the Google Maps JavaScript autocomplete search by name or address.<br />
-Alternatively, users cans earch for a new activity location by Point of Interest, which makes a regular HTTP GET request to the Google Places Text Search API endpoint. 
+Users are able to search for a new activity location by using the Google Maps JavaScript autocomplete search by name or address. Alternatively, users are able to search for a new activity location by Point of Interest, which makes a regular HTTP GET request to the Google Places Text Search API endpoint. 
 <img src="/static/images/sitenav/addactivity.png">
 
 ### View Location Search Results
-Users are able to view up to 20 location search results per page and have the ability to click on the "View More Results" button to return additional results. 
+Users are able to view up to 20 location search results per page. 
 <img src="/static/images/sitenav/searchresults.png">
+Users are also able to click on the "View More Results" button to return additional results. 
 <img src="/static/images/sitenav/viewmore.png">
 
 ### View Place Metadata and Save Location to a New Activity
-<img src="/static/images/sitenav/place.png">
-<img src="/static/images/sitenav/place reviews.png">
+Users are able to view a specific location and view place-related metadata such as ratings, website, address, phone number, and more. 
 
-### Filter and View Other User Itineraries
+<br/><br/>
+Users are able to save the location to a new activity card.
+
+<img src="/static/images/sitenav/place.png"><br />
+<img src="/static/images/sitenav/placereviews.png">
+
+### View and Filter Other User Itineraries
+Users are able to view itineraries of other users and filter itineraries by locale (city), territory (state), and country.
 <img src="/static/images/sitenav/filter.png">
 
 ### View Other Users
+Users are able to view all users of the application. 
 <img src="/static/images/sitenav/community.png">
 
 ### View Another User's Profile and Follow Users
+Users are able to view another user's profile and follow another user.
 <img src="/static/images/sitenav/anotheruser.png">
 
 
