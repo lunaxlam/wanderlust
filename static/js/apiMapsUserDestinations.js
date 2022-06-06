@@ -41,7 +41,7 @@ function initMap() {
             
             const infoWindow = new google.maps.InfoWindow();
 
-            const image = "/static/images/mapmarkers/mapmarkerwanderlustblue.png";
+            const image = "/static/images/mapmarkerwanderlustblue.png";
 
             for (const destination in destinations ) {
 

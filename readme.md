@@ -29,7 +29,7 @@ Libraries: [Faker](https://faker.readthedocs.io/en/master/), [Flask-Bcrypt](http
 ### Login and Registration
 <p align="center">
   <img 
-    width="600"
+    width="800"
     src="/static/images/readmemd/home.gif"
   >
 </p>

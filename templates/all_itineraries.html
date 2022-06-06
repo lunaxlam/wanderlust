@@ -14,6 +14,7 @@
         <form action="/api/itineraries/by_locale" class="filter">
             <label for="locale">Locale:</label>
             <select name="locale" id="locale-select">
+                <option></option>
                 {% for locale in locales %}
                     <option value="{{ locale }}">{{ locale }}</option>
                 {% endfor %}
@@ -24,6 +25,7 @@
         <form action="/api/itineraries/by_territory" class="filter">
             <label for="territory">Territory:</label>
             <select name="territory" id="territory-select">
+                    <option></option>
                 {% for territory in territories %}
                     <option value="{{ territory }}">{{ territory }}</option>
                 {% endfor %}
@@ -34,6 +36,7 @@
         <form action="/api/itineraries/by_country" class="filter">
             <label for="country">Country:</label>
             <select name="country" id="country-select">
+                    <option></option>
                 {% for country in countries %}
                     <option value="{{ country }}">{{ country }}</option>
                 {% endfor %}
