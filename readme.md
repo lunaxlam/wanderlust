@@ -48,24 +48,31 @@ Users are also able to view their personalized travel map with pinned markers of
 
 ### Create New Itinerary
 Users are able to create a new travel itinerary.
+
 <img src="/static/images/sitenav/createitinerary.png">
 
 ### View, Edit, and Delete a Saved Itinerary
 Users are able to view, edit, and delete saved itineraries.
+
 <img src="/static/images/sitenav/itinerary.png">
 
 ### View, Edit, and Delete Saved Activities
 Users are able to view, edit, and delete saved activities of an itinerary.
+
 <img src="/static/images/sitenav/editactivity.png">
 
 ### Search New Activity Location
 Users are able to search for a new activity location by using the Google Maps JavaScript autocomplete search by name or address. Alternatively, users are able to search for a new activity location by Point of Interest, which makes a regular HTTP GET request to the Google Places Text Search API endpoint. 
+
 <img src="/static/images/sitenav/addactivity.png">
 
 ### View Location Search Results
 Users are able to view up to 20 location search results per page. 
+
 <img src="/static/images/sitenav/searchresults.png">
+
 Users are also able to click on the "View More Results" button to return additional results. 
+
 <img src="/static/images/sitenav/viewmore.png">
 
 ### View Place Metadata and Save Location to a New Activity
@@ -75,14 +82,17 @@ Users are able to view a specific location and view place-related metadata such 
 
 ### View and Filter Other User Itineraries
 Users are able to view itineraries of other users and filter itineraries by locale (city), territory (state), and country.
+
 <img src="/static/images/sitenav/filter.png">
 
 ### View Other Users
 Users are able to view all users of the application. 
+
 <img src="/static/images/sitenav/community.png">
 
 ### View Another User's Profile and Follow Users
 Users are able to view another user's profile and follow another user.
+
 <img src="/static/images/sitenav/anotheruser.png">
 
 
