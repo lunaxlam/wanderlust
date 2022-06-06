@@ -43,7 +43,7 @@ After logging in, users are routed to their profile where they can:
 
 <img src="/static/images/sitenav/profile.png">
 
-Users are also able to view their personalized travel map with pinned markers of previously-visited destinations, as well as their past  past travel itineraries 
+Users are also able to view their personalized travel map with pinned markers of previously-visited destinations, and view their past travel itineraries 
 
 <img src="/static/images/sitenav/usermapitin.png">
 
