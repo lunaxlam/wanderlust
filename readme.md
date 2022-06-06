@@ -3,6 +3,7 @@ A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)
 
 ## **Table of Contents**
 * [Background](https://github.com/lunaxlam/wanderlust#background)
+* [Wanderlust](https://github.com/lunaxlam/wanderlust#wanderlust)
 * [Tech Stack](https://github.com/lunaxlam/wanderlust#tech-stack) 
 * [Features](https://github.com/lunaxlam/wanderlust#features)
 * [Installation](https://github.com/lunaxlam/wanderlust#installation)
@@ -13,6 +14,7 @@ As avid travelers, my friends and I strive to make the most out of our adventure
 
 While cloud storage platforms like [Google Drive](https://drive.google.com/) or [Dropbox](https://www.dropbox.com/) are useful for uploading and sharing the travel itineraries, which are often formatted through spreadsheet-programs such as [Microsoft Excel](https://www.microsoft.com/en-us/microsoft-365/excel), there is currently not a platform that provides a standard template design for a travel itinerary (which would help to improve readability for end-users) and publicly share the travel itinerary resource with a community of fellow travel enthusiasts. 
 
+## **Wanderlust**
 *Wanderlust* is a community-driven travel planning application that allows users to create, share, and clone personally curated travel itineraries through a standard form template. Users are able to filter travel itineraries by locale (city), territory (state), or country destinations.
 
 The application utilizes the Google Maps JavaScript and Places APIs to auto-populate metadata about places, including name, address, location, website, ratings, and more. 
