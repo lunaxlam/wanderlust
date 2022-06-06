@@ -100,9 +100,10 @@ textarea {
 
 .place-img {
 	display: block;
-	max-height: 66%;
+	max-height: 200px;
 	max-width: 100%;
-	margin: auto;
+	margin-left: auto;
+	margin-right: auto;
 	padding-bottom: 5px;
 }
 
@@ -232,6 +233,9 @@ video {
 }
 
 /* Card Styling */
+#place-card-content {
+	padding: 5px;
+}
 
 .place-address {
 	font-size: 18px;
