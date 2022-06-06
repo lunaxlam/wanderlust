@@ -26,8 +26,13 @@ APIs: Google Maps Platform - [Maps JavaScript API](https://developers.google.com
 Libraries: [Faker](https://faker.readthedocs.io/en/master/), [Flask-Bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/)
 
 ## **Features**
-### [Section]
-Detail <br />
+### Login and Registration
+<p align="center">
+  <img 
+    width="600"
+    src="/static/images/readmemd/home.gif"
+  >
+</p>
 
 ### [Section]
 Detail <br />
