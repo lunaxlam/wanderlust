@@ -581,4 +581,4 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Connect app to the server
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0")
