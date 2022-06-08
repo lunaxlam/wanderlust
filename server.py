@@ -17,6 +17,7 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 
 # Google API key
 API_KEY = os.environ['GOOGLE_API_KEY']
+API_KEY_FRONT = os.environ['GOOGLE_API_KEY_FRONTEND']
 
 
 ### Standard Routes  ###
@@ -147,7 +148,7 @@ def show_profile(username):
     following = user.following
     followers = user.followers
 
-    return render_template("user_profile.html", user=user, user_itineraries=itineraries, following=following, followers=followers, API_KEY=API_KEY)
+    return render_template("user_profile.html", user=user, user_itineraries=itineraries, following=following, followers=followers, API_KEY=API_KEY_FRONT)
 
 
 @app.route("/user/edit_user", methods=["POST", "GET"])
