@@ -6,6 +6,7 @@ A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)
 * [Tech Stack](https://github.com/lunaxlam/wanderlust#tech-stack) 
 * [Features](https://github.com/lunaxlam/wanderlust#features)
 * [Installation](https://github.com/lunaxlam/wanderlust#installation)
+* [Version 2.0](https://github.com/lunaxlam/wanderlust#)
 
 
 ## **Background**
@@ -143,3 +144,8 @@ In your web browser, navigate to:
 localhost:5000/
 ```
 You can now access *Wanderlust* ! Happy travels.
+
+## **Version 2.0**
+* Enable users to upload a custom profile picture
+* Add Google OAuth to handle credential management and authentication
+* Display sorted itinerary activities by activity date
