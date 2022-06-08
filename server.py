@@ -1,5 +1,6 @@
 """Server for Wanderlust app"""
 
+import sys
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 from flask_bcrypt import Bcrypt
 from jinja2 import StrictUndefined
@@ -539,9 +540,9 @@ def saved_place_data():
             response = requests.get(endpoint, params=payload)
             data = response.json()
 
-            print()
-            print(data)
-            print()
+            print("", file=sys.stderr)
+            print(data, file=sys.stderr)
+            print("", file=sys.stderr)
             
             results = data["result"] 
 
