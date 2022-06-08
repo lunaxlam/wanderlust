@@ -7,7 +7,7 @@ function initMap() {
     fetch('/api/search_place_data')
         .then((response) => response.json())
         .catch(() => {
-            alert('Oh no! The Google API is having issues responding.')
+            alert('Oh no! The Google API trial period has ended for this application.')
         })
         .then((data) => {
 

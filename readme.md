@@ -1,12 +1,14 @@
 # **Wanderlust**
-A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)
+A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)<br/>
+
+Now deployed on AWS: http://54.213.247.172/
 
 ## **Table of Contents**
 * [Background](https://github.com/lunaxlam/wanderlust#background)
 * [Tech Stack](https://github.com/lunaxlam/wanderlust#tech-stack) 
 * [Features](https://github.com/lunaxlam/wanderlust#features)
 * [Installation](https://github.com/lunaxlam/wanderlust#installation)
-* [Version 2.0](https://github.com/lunaxlam/wanderlust#)
+* [Version 2.0](https://github.com/lunaxlam/wanderlust#version-20)
 
 
 ## **Background**

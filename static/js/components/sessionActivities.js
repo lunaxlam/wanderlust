@@ -120,7 +120,7 @@ function ActivitiesContainer() {
         fetch('/api/saved_activities')
         .then((res) => res.json())
         .catch(() => {
-            alert('Oh no! The Google API is having issues responding.')
+            alert('Oh no! The Google API trial period has ended for this application.')
         })
         .then((data) => {
 
