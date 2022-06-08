@@ -98,6 +98,11 @@ textarea {
 /* IMAGE STYLES
 /*******************************************/
 
+#home-pic {
+	height: 50%;
+	width: auto;
+}
+
 .place-img {
 	display: block;
 	max-height: 200px;
@@ -129,9 +134,8 @@ footer {
 }
 
 .welcome-col {
-	height: 600px;
-	margin: 0;
-	padding: 0;
+	height: 400px;
+	width: 300px;
 }
 
 /******************************************
@@ -184,6 +188,7 @@ a:hover {
 nav {
 	margin-bottom: 40px;
 	background-color: #90e0ef;
+	font-size: 16px;
 }
 
 nav a, nav a:hover {
