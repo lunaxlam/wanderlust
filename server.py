@@ -538,6 +538,10 @@ def saved_place_data():
 
             response = requests.get(endpoint, params=payload)
             data = response.json()
+
+            print()
+            print(data)
+            print()
             
             results = data["result"] 
 
@@ -579,7 +583,7 @@ def show_countries():
 if __name__ == "__main__":
 
     # Connect Flask app to the database
-    connect_to_db(app)
+    connect_to_db(app, echo=False)
 
     # Connect app to the server
     app.run(host="0.0.0.0")
