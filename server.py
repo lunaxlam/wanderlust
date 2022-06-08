@@ -277,8 +277,10 @@ def show_itinerary(itinerary_id):
     if request.method == "GET":
         itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
         destinations = itinerary.locations
+
+        activities = Activity.get_activities_by_itinerary_id(itinerary_id)
         
-        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations, API_KEY=API_KEY_FRONT)
+        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations, activities=activities, API_KEY=API_KEY_FRONT)
     else:
         itinerary_name = request.form.get("name")
         overview = request.form.get("overview")

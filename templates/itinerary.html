@@ -27,16 +27,25 @@
             <section id="clone-trip-form"></section>
         {% endif %}
         
-        <div class="sub-main">
-            <h2>Map</h2>
-            <div id="saved-map" class="all-maps" hidden></div>
-        </div>
+        {% if activities|length > 0 %}
+            <div class="sub-main">
+                <h2>Map</h2>
+                <div id="saved-map" class="all-maps" hidden></div>
+            </div>
+        {% endif %}
 
         <div id="all-activities" class="row align-items-start">
-            <div class="col">
-                <h2>Activities</h2>
-                <div id="saved-activities"></div>
-            </div>
+            {% if activities|length > 0 %}
+                <div class="col">
+                    <h2>Activities</h2>
+                    <div id="saved-activities"></div>
+                </div>
+            {% else %}
+                <div class="col">
+                    <h2>Activities</h2>
+                    <p>No activities added yet</p>
+                </div>
+            {% endif %}
             {% if session["user_id"] == itinerary.user_id %}
                 <div id="activity-search" class="col search-location">
                     <h2>Add New Activity</h3>
