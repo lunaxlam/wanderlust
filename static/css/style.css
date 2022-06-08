@@ -258,6 +258,10 @@ video {
 	height: 22rem;
 }
 
+.place-reviews {
+	text-align: center;
+}
+
 .review-card {
 	margin: 40px auto 40px auto;
 	width: 75%;
