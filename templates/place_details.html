@@ -68,8 +68,8 @@
             </div>
 
             {% if "reviews" in results %}
-                <div class="sub-main col justify-content-center">
-                    <h4>Recent Reviews:</h4>
+                <div class="sub-main">
+                    <h5>Recent Reviews:</h4>
                     {% for review in results["reviews"] %}
                         <section class="review-card text-center">
                             <a href='{{ review["author_url"] }}' target="_blank"><img src='{{ review["profile_photo_url"] }}' class="profile-pic"></a>

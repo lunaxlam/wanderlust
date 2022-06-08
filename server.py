@@ -21,7 +21,6 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 API_KEY = os.environ['GOOGLE_API_KEY']
 API_KEY_FRONT = os.environ['GOOGLE_API_KEY_FRONTEND']
 
-
 ### Standard Routes  ###
 
 @app.route("/")
@@ -403,7 +402,7 @@ def view_place_details(itinerary_id, place_id):
     session["place_id"] = place_id
 
     return render_template("place_details.html",
-                            API_KEY=API_KEY_FRONT,
+                            API_KEY=API_KEY,
                             itinerary_id=itinerary_id,
                             place_id=place_id,
                             results=results)
