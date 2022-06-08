@@ -1,11 +1,12 @@
 """Server for Wanderlust app"""
 
-import sys
+
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 from flask_bcrypt import Bcrypt
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, User, Follower, Itinerary, Location, Activity, Country
 import os, requests
+import sys
 
 # Create a Flask instance
 app = Flask(__name__)
@@ -278,7 +279,7 @@ def show_itinerary(itinerary_id):
         itinerary = Itinerary.get_itinerary_by_itinerary_id(itinerary_id)
         destinations = itinerary.locations
         
-        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations, API_KEY=API_KEY)
+        return render_template("itinerary.html", itinerary=itinerary, destinations=destinations, API_KEY=API_KEY_FRONT)
     else:
         itinerary_name = request.form.get("name")
         overview = request.form.get("overview")
@@ -402,7 +403,7 @@ def view_place_details(itinerary_id, place_id):
     session["place_id"] = place_id
 
     return render_template("place_details.html",
-                            API_KEY=API_KEY,
+                            API_KEY=API_KEY_FRONT,
                             itinerary_id=itinerary_id,
                             place_id=place_id,
                             results=results)

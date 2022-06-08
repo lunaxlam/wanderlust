@@ -42,7 +42,7 @@ function ActivitiesContainer() {
         fetch('/api/saved_activities')
         .then((res) => res.json())
         .catch(() => {
-            alert('Something wrong with the route!')
+            alert('Oh no! The Google API is having issues responding.')
         })
         .then((data) => {
 

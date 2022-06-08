@@ -6,6 +6,9 @@ function initMap() {
 
     fetch('/api/search_place_data')
         .then((response) => response.json())
+        .catch(() => {
+            alert('Oh no! The Google API is having issues responding.')
+        })
         .then((data) => {
 
             const place_lat = data["location"]["lat"];

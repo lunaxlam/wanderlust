@@ -4,6 +4,9 @@ function initMap() {
     
     fetch('/api/saved_activities')
         .then((response) => response.json())
+        .catch(() => {
+            alert('Oh no! The Google API is having issues responding.')
+        })
         .then((activities) => {
 
             const mount = document.querySelector('#saved-map');

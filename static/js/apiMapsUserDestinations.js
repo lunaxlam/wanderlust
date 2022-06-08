@@ -6,6 +6,9 @@ function initMap() {
 
     fetch('/api/itinerary_destinations')
         .then((response) => response.json())
+        .catch(() => {
+            alert('Oh no! The Google API is having issues responding.')
+        })
         .then((destinations) => {
 
             const place_lat = destinations[0]["results"][0]["geometry"]["location"]["lat"];
