@@ -1,6 +1,4 @@
 # **Wanderlust**
-A Hackbright Academy Capstone Project by [Luna Lam](https://github.com/lunaxlam)<br/>
-
 Now deployed on AWS: http://54.213.247.172/
 
 ## **Table of Contents**
