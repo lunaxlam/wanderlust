@@ -190,7 +190,7 @@ class Itinerary(db.Model):
     # activities = a list of itinerary Activity objects
 
     def __repr__(self):
-        """A string representation of a travel itinerary"""
+        """A string representation of an itinerary"""
 
         return f"<Itinerary itinerary_id={self.itinerary_id} itinerary_name={self.itinerary_name} user_id={self.user_id} locations={self.locations}>"
     
@@ -277,7 +277,7 @@ class Activity(db.Model):
     notes = db.Column(db.Text, nullable=True)
     place_id = db.Column(db.String, nullable=False)
 
-    # Establish a relationship between Item class and Itinerary class
+    # Establish a relationship between Activity class and Itinerary class
     itinerary = db.relationship("Itinerary", backref="activities")
 
     def __repr__(self):
@@ -287,7 +287,7 @@ class Activity(db.Model):
 
     @classmethod
     def create_activity(cls, itinerary_id, start, end, notes, place_id):
-        """Create and return an itinerary activity item"""
+        """Create and return an activity item"""
 
         # Convert string-datetime into datetime object
         if isinstance(start, str) and isinstance(end, str):
@@ -323,7 +323,7 @@ class Activity(db.Model):
     
     @classmethod
     def get_activity_by_activity_id(cls, activity_id):
-        """Return a user object by user_id"""
+        """Return an activity object by activity_id"""
 
         return cls.query.filter(cls.activity_id == activity_id).first()
     
@@ -356,18 +356,18 @@ class Activity(db.Model):
     
     @classmethod
     def get_activities(cls):
-        """Return all itinerary activity items"""
+        """Return all activity items"""
 
         return cls.query
     
     @classmethod
     def get_activities_by_itinerary_id(cls, itinerary_id):
-        """Return all itinerary activity items by itinerary_id"""
+        """Return all activity items by itinerary_id"""
 
         return cls.query.filter(cls.itinerary_id == itinerary_id).all()
     
     def edit_activity(self, start="", end="", notes=""):
-        """Edit a current user"""
+        """Edit a current activity"""
 
         if start != "" and end != "":
          
