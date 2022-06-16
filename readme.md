@@ -122,6 +122,7 @@ Create and save your Flask and [Google API](https://developers.google.com/maps/g
 ```
 export FLASK_SECRET_KEY="YOUR_KEY_HERE"
 export GOOGLE_API_KEY="YOUR_KEY_HERE"
+export GOOGLE_API_KEY_FRONTEND="YOUR_KEY_HERE"
 ```
 
 Source your secret keys:

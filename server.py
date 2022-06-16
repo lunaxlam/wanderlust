@@ -6,7 +6,8 @@ from flask_bcrypt import Bcrypt
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, User, Follower, Itinerary, Location, Activity, Country
 import os, requests
-import sys
+
+# import sys
 
 # Create a Flask instance
 app = Flask(__name__)
@@ -542,9 +543,9 @@ def saved_place_data():
             response = requests.get(endpoint, params=payload)
             data = response.json()
 
-            print("", file=sys.stderr)
-            print(data, file=sys.stderr)
-            print("", file=sys.stderr)
+            # print("", file=sys.stderr)
+            # print(data, file=sys.stderr)
+            # print("", file=sys.stderr)
             
             results = data["result"] 
 

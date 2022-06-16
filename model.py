@@ -14,7 +14,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)                        #### !!! Sprint 2: hashing and salting when creating a User instance 
+    password = db.Column(db.String, nullable=False)                        
     username = db.Column(db.String(20), nullable=False, unique=True)
     fname = db.Column(db.String(50), nullable=False)
     lname = db.Column(db.String(50), nullable=False)
@@ -488,7 +488,7 @@ def connect_to_db(flask_app, db_uri="postgresql:///wanderlust", echo=True):
     """Connect Flask app to database."""
 
     # Set-up database configurations
-    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri    # Defines the location of the database; uses default user, password, host, and port
+    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri                        # Defines the location of the database; uses default user, password, host, and port
     flask_app.config["SQLALCHEMY_ECHO"] = echo                                  # If True, we enable output of the raw SQL executed by SQLAlchemy
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False                  # Takes up a lot of memory, so set to False        
 
